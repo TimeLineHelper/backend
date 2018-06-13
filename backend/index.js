@@ -1,4 +1,5 @@
-require ('dotenv').config();
+'use strict';
+require('dotenv').config();
 
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI);
@@ -6,7 +7,7 @@ mongoose.connect(process.env.MONGODB_URI);
 const express = require('express');
 const app = express();
 
-// app.use('/api/user', require('../routes/'));
+app.use('/home', require('./routes/timelineRoutes.js'));
 
 const Bundler = require('parcel-bundler');
 const bundler = new Bundler('./public/index.html');
