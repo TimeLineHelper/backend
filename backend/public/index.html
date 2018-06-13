@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Time Line Helper App</title>
 </head>
+
 <body>
   <h1>We love calendars!</h1>
   <div id="root"></div>
   <script src="./src/app.js"></script>
 </body>
+
 </html>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,11 +30,11 @@
   <script>
     let a = document.createElement('a');
     let AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
-    let clientIDQuery = 'client_id=350563151818-12lpsn5ktvpdoam58020dbt1neqfp5ec.apps.googleusercontent.com';
+    let clientIDQuery = 'client_id=1085617298907-hi1l3l8nsm5pq415j27cbsk2rlp9c6nj.apps.googleusercontent.com';
     let responseTypeQuery = 'response_type=code';
     let scopeQuery = 'scope=openid%20profile%20email';
     let promptQuery = 'prompt=consent';
-    let redirectURIQuery = 'redirect_uri=http://localhost:3000/oauth-callback';
+    let redirectURIQuery = 'redirect_uri=http://localhost:3000/callback';
     let formattedURL =
       `${AUTH_URL}?${clientIDQuery}&${responseTypeQuery}&${scopeQuery}&${promptQuery}&${redirectURIQuery}`;
 
@@ -53,6 +56,7 @@
   </script>
   <h1>We love calendars!</h1>
   <div id="root"></div>
-    <script src="./src/app.js"></script>
+  <script src="./src/app.js"></script>
 </body>
+
 </html>
