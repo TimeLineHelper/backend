@@ -1,5 +1,6 @@
 'use strict';
 require('dotenv').config();
+
 let superagent = require('superagent');
 // let cookie = require('cookie');
 
@@ -8,7 +9,7 @@ let superagent = require('superagent');
 const express = require('express');
 const app = express();
 
-// app.use('/api/user', require('../routes/'));
+app.use('/home', require('./routes/timelineRoutes.js'));
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {
