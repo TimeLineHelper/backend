@@ -1904,7 +1904,7 @@ if (undefined !== "production") {
     module.exports = react;
   })();
 }
-},{"object-assign":22,"fbjs/lib/invariant":23,"fbjs/lib/emptyObject":24,"fbjs/lib/warning":25,"fbjs/lib/emptyFunction":26,"prop-types/checkPropTypes":27}],4:[function(require,module,exports) {
+},{"object-assign":22,"fbjs/lib/invariant":23,"fbjs/lib/emptyObject":24,"fbjs/lib/warning":25,"fbjs/lib/emptyFunction":26,"prop-types/checkPropTypes":27}],3:[function(require,module,exports) {
 'use strict';
 
 if (undefined === 'production') {
@@ -3929,7 +3929,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.createBrowserHistory = _createBrowserHistory3.default;
 exports.createHashHistory = _createHashHistory3.default;
 exports.createMemoryHistory = _createMemoryHistory3.default;
-},{"./createBrowserHistory":50,"./createHashHistory":51,"./createMemoryHistory":52,"./LocationUtils":53,"./PathUtils":54}],37:[function(require,module,exports) {
+},{"./createBrowserHistory":50,"./createHashHistory":51,"./createMemoryHistory":52,"./LocationUtils":53,"./PathUtils":54}],43:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4072,7 +4072,7 @@ Router.childContextTypes = {
 };
 
 exports.default = Router;
-},{"warning":28,"invariant":31,"react":4,"prop-types":29}],16:[function(require,module,exports) {
+},{"warning":28,"invariant":31,"react":3,"prop-types":29}],17:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4086,7 +4086,7 @@ var _Router2 = _interopRequireDefault(_Router);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Router2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Router":37}],8:[function(require,module,exports) {
+},{"react-router/es/Router":43}],8:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4170,7 +4170,7 @@ BrowserRouter.propTypes = {
 };
 
 exports.default = BrowserRouter;
-},{"warning":28,"react":4,"prop-types":29,"history":30,"./Router":16}],9:[function(require,module,exports) {
+},{"warning":28,"react":3,"prop-types":29,"history":30,"./Router":17}],9:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4253,7 +4253,7 @@ HashRouter.propTypes = {
 };
 
 exports.default = HashRouter;
-},{"warning":28,"react":4,"prop-types":29,"history":30,"./Router":16}],10:[function(require,module,exports) {
+},{"warning":28,"react":3,"prop-types":29,"history":30,"./Router":17}],10:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4397,7 +4397,7 @@ Link.contextTypes = {
 };
 
 exports.default = Link;
-},{"react":4,"prop-types":29,"invariant":31,"history":30}],32:[function(require,module,exports) {
+},{"react":3,"prop-types":29,"invariant":31,"history":30}],32:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4481,7 +4481,7 @@ MemoryRouter.propTypes = {
 };
 
 exports.default = MemoryRouter;
-},{"warning":28,"react":4,"prop-types":29,"history":30,"./Router":37}],11:[function(require,module,exports) {
+},{"warning":28,"react":3,"prop-types":29,"history":30,"./Router":43}],11:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4928,7 +4928,7 @@ function pathToRegexp (path, keys, options) {
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
 
-},{"isarray":66}],41:[function(require,module,exports) {
+},{"isarray":66}],44:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5010,7 +5010,7 @@ var matchPath = function matchPath(pathname) {
 };
 
 exports.default = matchPath;
-},{"path-to-regexp":58}],35:[function(require,module,exports) {
+},{"path-to-regexp":58}],41:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5191,7 +5191,7 @@ Route.childContextTypes = {
 };
 
 exports.default = Route;
-},{"warning":28,"invariant":31,"react":4,"prop-types":29,"./matchPath":41}],15:[function(require,module,exports) {
+},{"warning":28,"invariant":31,"react":3,"prop-types":29,"./matchPath":44}],15:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5205,7 +5205,7 @@ var _Route2 = _interopRequireDefault(_Route);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Route2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Route":35}],12:[function(require,module,exports) {
+},{"react-router/es/Route":41}],12:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5315,7 +5315,7 @@ NavLink.defaultProps = {
 };
 
 exports.default = NavLink;
-},{"react":4,"prop-types":29,"./Route":15,"./Link":10}],33:[function(require,module,exports) {
+},{"react":3,"prop-types":29,"./Route":15,"./Link":10}],34:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5422,7 +5422,7 @@ Prompt.contextTypes = {
 };
 
 exports.default = Prompt;
-},{"react":4,"prop-types":29,"invariant":31}],13:[function(require,module,exports) {
+},{"react":3,"prop-types":29,"invariant":31}],13:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5436,7 +5436,7 @@ var _Prompt2 = _interopRequireDefault(_Prompt);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Prompt2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Prompt":33}],39:[function(require,module,exports) {
+},{"react-router/es/Prompt":34}],46:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5484,7 +5484,7 @@ var generatePath = function generatePath() {
 };
 
 exports.default = generatePath;
-},{"path-to-regexp":58}],34:[function(require,module,exports) {
+},{"path-to-regexp":58}],33:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5640,7 +5640,7 @@ Redirect.contextTypes = {
 };
 
 exports.default = Redirect;
-},{"react":4,"prop-types":29,"warning":28,"invariant":31,"history":30,"./generatePath":39}],14:[function(require,module,exports) {
+},{"react":3,"prop-types":29,"warning":28,"invariant":31,"history":30,"./generatePath":46}],14:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5654,7 +5654,7 @@ var _Redirect2 = _interopRequireDefault(_Redirect);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Redirect2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Redirect":34}],36:[function(require,module,exports) {
+},{"react-router/es/Redirect":33}],42:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5851,7 +5851,7 @@ StaticRouter.childContextTypes = {
 };
 
 exports.default = StaticRouter;
-},{"warning":28,"invariant":31,"react":4,"prop-types":29,"history":30,"./Router":37}],17:[function(require,module,exports) {
+},{"warning":28,"invariant":31,"react":3,"prop-types":29,"history":30,"./Router":43}],16:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5865,7 +5865,7 @@ var _StaticRouter2 = _interopRequireDefault(_StaticRouter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _StaticRouter2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/StaticRouter":36}],38:[function(require,module,exports) {
+},{"react-router/es/StaticRouter":42}],45:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5976,7 +5976,7 @@ Switch.propTypes = {
 };
 
 exports.default = Switch;
-},{"react":4,"prop-types":29,"warning":28,"invariant":31,"./matchPath":41}],18:[function(require,module,exports) {
+},{"react":3,"prop-types":29,"warning":28,"invariant":31,"./matchPath":44}],18:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5990,7 +5990,7 @@ var _Switch2 = _interopRequireDefault(_Switch);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Switch2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Switch":38}],19:[function(require,module,exports) {
+},{"react-router/es/Switch":45}],19:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6004,7 +6004,7 @@ var _generatePath2 = _interopRequireDefault(_generatePath);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _generatePath2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/generatePath":39}],20:[function(require,module,exports) {
+},{"react-router/es/generatePath":46}],20:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6018,7 +6018,7 @@ var _matchPath2 = _interopRequireDefault(_matchPath);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _matchPath2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/matchPath":41}],59:[function(require,module,exports) {
+},{"react-router/es/matchPath":44}],59:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6088,7 +6088,7 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
 
 module.exports = hoistNonReactStatics;
 
-},{}],40:[function(require,module,exports) {
+},{}],47:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6156,7 +6156,7 @@ var withRouter = function withRouter(Component) {
 };
 
 exports.default = withRouter;
-},{"react":4,"prop-types":29,"hoist-non-react-statics":59,"./Route":35}],21:[function(require,module,exports) {
+},{"react":3,"prop-types":29,"hoist-non-react-statics":59,"./Route":41}],21:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6170,7 +6170,7 @@ var _withRouter2 = _interopRequireDefault(_withRouter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _withRouter2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/withRouter":40}],3:[function(require,module,exports) {
+},{"react-router/es/withRouter":47}],4:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6250,7 +6250,7 @@ exports.Switch = _Switch3.default;
 exports.generatePath = _generatePath3.default;
 exports.matchPath = _matchPath3.default;
 exports.withRouter = _withRouter3.default;
-},{"./BrowserRouter":8,"./HashRouter":9,"./Link":10,"./MemoryRouter":11,"./NavLink":12,"./Prompt":13,"./Redirect":14,"./Route":15,"./Router":16,"./StaticRouter":17,"./Switch":18,"./generatePath":19,"./matchPath":20,"./withRouter":21}],42:[function(require,module,exports) {
+},{"./BrowserRouter":8,"./HashRouter":9,"./Link":10,"./MemoryRouter":11,"./NavLink":12,"./Prompt":13,"./Redirect":14,"./Route":15,"./Router":17,"./StaticRouter":16,"./Switch":18,"./generatePath":19,"./matchPath":20,"./withRouter":21}],35:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -6284,7 +6284,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],43:[function(require,module,exports) {
+},{}],36:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6321,7 +6321,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-},{}],44:[function(require,module,exports) {
+},{}],37:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -6433,7 +6433,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":62}],45:[function(require,module,exports) {
+},{"./isNode":62}],38:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6502,7 +6502,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-},{}],46:[function(require,module,exports) {
+},{}],39:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -6569,7 +6569,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],47:[function(require,module,exports) {
+},{}],40:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -23889,7 +23889,7 @@ if (undefined !== "production") {
     module.exports = reactDom;
   })();
 }
-},{"fbjs/lib/invariant":23,"react":4,"fbjs/lib/warning":25,"fbjs/lib/ExecutionEnvironment":42,"object-assign":22,"fbjs/lib/emptyFunction":26,"prop-types/checkPropTypes":27,"fbjs/lib/getActiveElement":43,"fbjs/lib/shallowEqual":44,"fbjs/lib/containsNode":45,"fbjs/lib/emptyObject":24,"fbjs/lib/hyphenateStyleName":46,"fbjs/lib/camelizeStyleName":47}],5:[function(require,module,exports) {
+},{"fbjs/lib/invariant":23,"react":3,"fbjs/lib/warning":25,"fbjs/lib/ExecutionEnvironment":35,"object-assign":22,"fbjs/lib/emptyFunction":26,"prop-types/checkPropTypes":27,"fbjs/lib/getActiveElement":36,"fbjs/lib/shallowEqual":37,"fbjs/lib/containsNode":38,"fbjs/lib/emptyObject":24,"fbjs/lib/hyphenateStyleName":39,"fbjs/lib/camelizeStyleName":40}],5:[function(require,module,exports) {
 'use strict';
 
 function checkDCE() {
@@ -24023,7 +24023,7 @@ var App = function (_Component2) {
 
 var root = document.getElementById('root');
 _reactDom2.default.render(_react2.default.createElement(App, null), root);
-},{"react":4,"react-router-dom":3,"react-dom":5}],67:[function(require,module,exports) {
+},{"react":3,"react-router-dom":4,"react-dom":5}],67:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -24052,7 +24052,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '49709' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '49920' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
