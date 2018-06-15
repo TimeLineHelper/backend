@@ -2,6 +2,8 @@
 require('dotenv').config();
 let { google } = require('googleapis');
 let privatekey = require('./client_secret.json');
+// const quickstart = require('./quickStart').authorize;
+// const listEvents = require('./quickStart').listEvents;
 
 let superagent = require('superagent');
 // let cookie = require('cookie');
@@ -11,7 +13,7 @@ let superagent = require('superagent');
 const express = require('express');
 const app = express();
 
-app.use('/home', require('./routes/timelineRoutes.js'));
+app.use('/', require('./routes/timelineRoutes.js'));
 
 //make a route that uses quickstart as middleware
 
@@ -50,7 +52,6 @@ app.get('/callback', (req, res) => {
       });
   }
 });
-
 
 
 

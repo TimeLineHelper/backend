@@ -2,10 +2,9 @@
 node_modules/
 yarn.lock
 .cache/
-dist/
+dist/-+
 # Created by https://www.gitignore.io/api/node,linux,macos,windows
 .env
-package-lock.json
 ### Linux ###
 *~
 
@@ -129,11 +128,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-.cache
-package-lock.json
-client_secret.json
-credentials.json
-
 
 
 # End of https://www.gitignore.io/api/node,linux,macos,windows

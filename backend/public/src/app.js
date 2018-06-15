@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import ReactDOM from 'react-dom';
+import TIMLINE from './components/timeline.js';
 
 class MainPage extends Component {
   render() {
@@ -25,7 +26,8 @@ class App extends Component {
     return <BrowserRouter>
       <Fragment>
       <h1>TimeLine App</h1>
-      <Route exact path="/" component={MainPage}/>
+      <Route exact path="/" component={TIMLINE}/>
+      <Route exact path="/timeline" component={MainPage}/>
       </Fragment>
     </BrowserRouter>
   }
