@@ -26,8 +26,8 @@ class App extends Component {
     return <BrowserRouter>
       <Fragment>
       <h1>TimeLine App</h1>
-      <Route exact path="/" component={TIMLINE}/>
-      <Route exact path="/timeline" component={MainPage}/>
+      <Route exact path="/" component={MainPage}/>
+      <Route exact path="/timeline" component={TIMLINE}/>
       </Fragment>
     </BrowserRouter>
   }

@@ -5,7 +5,8 @@ const Timeline = require('../models/model.js');
 
 
 
-router.get('/', (req, res) => {
-  console.log('route');
+router.get('/getcaldata', (req,res) => {
+  console.log('route was hit');
+  res.send('woooooo');
 });
 module.exports = router;

@@ -11,6 +11,12 @@ export default class TIMLINE extends Component {
   
   calanderButton = () => {
     console.log('button clicked');  
+    fetch('http://localhost:3000/getcaldata')
+      .then(res => res.json())
+      .then(json => {
+        console.log('25 results:json', json);
+      
+      })
   }
 
   render() {
