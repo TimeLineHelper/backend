@@ -34,5 +34,12 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "src/*",
+      "dist/*",
+      ".cache/*"
+    ]
   }
 }

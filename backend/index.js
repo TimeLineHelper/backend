@@ -9,7 +9,7 @@ let superagent = require('superagent');
 const express = require('express');
 const app = express();
 
-app.use('/home', require('./routes/timelineRoutes.js'));
+// app.use('/home', require('./routes/timelineRoutes.js'));
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {
@@ -37,7 +37,7 @@ app.get('/callback', (req, res) => {
         res.cookie('X-Some Cookie', idTokenPayload);
         res.write('<h1>' + json.name + '</h1>');
         res.write('<h1>' + json.email + '</h1>');
-        res.write('<h1>' + json.picture + '</h1>');
+        res.write('<img src=' + json.picture + '>');
         res.end();
       })
 
