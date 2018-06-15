@@ -5,29 +5,28 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-
+ 
 import ReactDOM from 'react-dom';
+import './style/main.css';
 
 class MainPage extends Component {
   render() {
-   return <Fragment>
-    <h1>MainPage</h1>
-    <p>stuff and things</p>
-    <p><Link to="/create-timeline">Create-timeline</Link></p>
-    </Fragment>
+    return <Fragment>
+      <h1 id="mainTitle">Track It</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut posuere libero nulla, ac lobortis libero tincidunt non. Nulla magna nisi, vehicula vitae neque at, cursus varius massa. Pellentesque sollicitudin enim vitae sollicitudin pulvinar. Quisque a risus vel erat mollis aliquet.</p>
+      <h2>Begin tracking now!</h2>
+      <p><Link to="/create-timeline">Create-timeline</Link></p>
+    </Fragment>;
   }
 }
-
-
 
 class App extends Component {
   render(){
     return <BrowserRouter>
       <Fragment>
-      <h1>TimeLine App</h1>
-      <Route exact path="/" component={MainPage}/>
+        <Route exact path="/" component={MainPage}/>
       </Fragment>
-    </BrowserRouter>
+    </BrowserRouter>;
   }
 }
 

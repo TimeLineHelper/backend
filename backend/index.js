@@ -1,13 +1,14 @@
 'use strict';
-require('dotenv').config();
 
+const express = require('express');
+const app = express();
 let superagent = require('superagent');
-// let cookie = require('cookie');
+let cookie = require('cookie');
+
+require('dotenv').config();
 
 // const mongoose = require('mongoose');
 // mongoose.connect(process.env.MONGODB_URI);
-const express = require('express');
-const app = express();
 
 app.use('/home', require('./routes/timelineRoutes.js'));
 
@@ -41,27 +42,27 @@ app.get('/callback', (req, res) => {
         res.end();
       })
 
-      // .then(response => {
-      //   console.log('Response AFTER code is given', response.body);
-      //   return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
-      //     .set('Authorization', `Bearer ${response.body.access_token}`);
-      // })
-      // .then(response => {
-      //   console.log('::::OPEN ID - GOOGLE PLUS::::', response.body);
-      //   // handle oauth login
-      //   res.cookie('X-Some-Cookie', 'some token');
-      //   res.redirect(process.env.CLIENT_URL);
-      // })
+      .then(response => {
+        console.log('Response AFTER code is given', response.body);
+        return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
+          .set('Authorization', `Bearer ${response.body.access_token}`);
+      })
+      .then(response => {
+        console.log('::::OPEN ID - GOOGLE PLUS::::', response.body);
+        // handle oauth login
+        res.cookie('X-Some-Cookie', 'some token');
+        res.redirect(process.env.CLIENT_URL);
+      })
+
       .catch(response => {
         console.log('response', response);
       });
   }
 });
+
 // app.get('/', (req, res) => {
 //   res.sendFile('../public/src/index.html', { root: './' });
 // });
-
-
 
 const Bundler = require('parcel-bundler');
 const bundler = new Bundler('./public/index.html');
