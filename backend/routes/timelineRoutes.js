@@ -8,7 +8,7 @@ const readline = require('readline');
 const SCOPES = [
   'https://www.googleapis.com/auth/calendar'
 ];
-const TOKEN_PATH = './timeline.js';
+const TOKEN_PATH = './credentials.json';
 
 const calendarArr = [];
 
@@ -20,9 +20,9 @@ const calendarArr = [];
  * @return {function} if error in reading credentials.json asks for a new one.
  */
 
- 
 
-router.get('/getcaldata', (req,res) => {
+
+router.get('/getcaldata', (req, res) => {
   console.log('route was hit');
   try {
     const content = fs.readFileSync('client_secret.json');
@@ -37,7 +37,7 @@ function authorize(credentials, callback) {
   const { client_secret, client_id, redirect_uris } = credentials.installed;
   let token = {};
   const oAuth2Client = new google.auth.OAuth2(
-      client_id, client_secret, redirect_uris[0]);
+    client_id, client_secret, redirect_uris[0]);
 
   // Check if we have previously stored a token.
   try {
@@ -70,7 +70,7 @@ function getAccessToken(oAuth2Client, callback) {
     oAuth2Client.getToken(code, (err, token) => {
       if (err) return callback(err);
       oAuth2Client.setCredentials(token);
-          // Store the token to disk for later program executions
+      // Store the token to disk for later program executions
       try {
         fs.writeFileSync(TOKEN_PATH, JSON.stringify(token));
         console.log('Token stored to', TOKEN_PATH);
@@ -89,7 +89,7 @@ function getAccessToken(oAuth2Client, callback) {
 
 function listEvents(auth) {
   const calendar = google.calendar({ version: 'v3', auth });
- 
+
   calendar.events.list({
     calendarId: 'primary',
     timeMin: (new Date()).toISOString(),
@@ -101,12 +101,12 @@ function listEvents(auth) {
     const events = data.items;
     if (events.length) {
       console.log('Upcoming 10 events:');
-       
+
       events.map((event, i) => {
         const start = event.start.dateTime || event.start.date;
         console.log(`${start} - ${event.summary}`);
-        
-        
+
+
         // res.send(calendarJson);
       });
     } else {

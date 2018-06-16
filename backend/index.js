@@ -34,8 +34,8 @@ app.get('/callback', (req, res) => {
       .then(response => {
         console.log('35========== res.body', response.body);
         return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
-        .set('Authorization', `Bearer ${response.body.access_token}`);
-      }).then( response => { 
+          .set('Authorization', `Bearer ${response.body.access_token}`);
+      }).then(response => {
         console.log('open id google pluse', response.body);
       })
       .catch(response => {
@@ -43,6 +43,8 @@ app.get('/callback', (req, res) => {
       });
   }
 });
+
+
 
 
 
