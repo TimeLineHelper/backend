@@ -9,7 +9,7 @@ export default class MilestoneList extends Component {
     this.compileList = this.compileList.bind(this);
   }
 
-  compileList() {
+  compileList = () => {
     return this.props.milestones.map((milestone, index) => {
       return <MilestoneItem removeMilestone={this.props.removeMilestone}
         milestone={milestone} key={milestone.id} index={index} />;

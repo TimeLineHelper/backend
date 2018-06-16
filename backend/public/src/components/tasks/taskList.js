@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 
-import TaskItem from './tasks/taskItem';
+import TaskItem from './taskItem';
 
 export default class TaskList extends Component {
   constructor(props) {
     super(props);
 
-    this.compileList = this.compileList.bind(this);
+    // this.compileList = this.compileList.bind(this);
   }
 
-  compileList() {
-    return this.props.dailyTasks.map(task => {
-      return <TaskItem 
-        removeTask={this.props.removeTask}
-        addTask={this.props.addTask}
-        task={task} key={task.id} index={task.isEditing}>
-      </TaskItem>;
-    });
-  }
+  // compileList = () => {
+  //   console.log('props', this.props)
+  //   return this.props.tasks.map(task => {
+  //     return <TaskItem 
+  //       removeTask={this.props.removeTask}
+  //       addTask={this.props.addTask}
+  //       tasks={tasks} key={tasks.id} index={tasks.isEditing}>
+  //     </TaskItem>;
+  //   });
+  // }
 
   render() {
     return <div>
@@ -25,7 +26,7 @@ export default class TaskList extends Component {
         <h2>
           Task List:
         </h2>
-        {this.compileList()}
+        {/* {this.compileList()} */}
       </ul>
     </div>;
   }

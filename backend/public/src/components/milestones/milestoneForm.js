@@ -12,11 +12,11 @@ export default class MilestoneForm extends Component {
     this.handleSubmit = handleSubmit.bind(this);
   }
 
-  handleChange(ev) {
+  handleChange = (ev) => {
     this.setState({[ev.target.name] : ev.target.value});
   }
 
-  handleSubmit(ev) {
+  handleSubmit = (ev) => {
     ev.preventDefault();
     this.props.addMilestone(this.state);
   }

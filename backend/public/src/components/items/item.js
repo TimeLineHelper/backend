@@ -16,15 +16,15 @@ export default class Item extends Component {
     this.cancel = this.cancel.bind(this);
   }
 
-  toggleEdit() {
+  toggleEdit = () => {
     this.setState({isEditing: !this.state.isEditing});
   }
 
-  handleDelete() {
+  handleDelete = () => {
     this.props.deleteItem(this.props.id);
   }
 
-  cancel() {
+  cancel = () => {
     this.toggleEdit();
   }
   

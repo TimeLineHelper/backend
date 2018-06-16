@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import Item from './items/item';
+import Item from './item';
 
 export default class ItemList extends Component {
   constructor(props) {
@@ -10,11 +10,11 @@ export default class ItemList extends Component {
     this.displayAllItems = displayAllItems.bind(this);
   }
 
-  handleDelete(itemId) {
+  handleDelete = (itemId) => {
     this.props.itemDelete(itemId);
   }
 
-  displayAllItems() {
+  displayAllItems = () => {
     let filteredList = this.props.items.filter(item => {
       return item.taskId === this.props.taskId
     });
