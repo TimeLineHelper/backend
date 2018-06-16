@@ -16,7 +16,7 @@ export default class TaskList extends Component {
         addTask={this.props.addTask}
         task={task} key={task.id} index={task.isEditing}>
       </TaskItem>;
-    })
+    });
   }
 
   render() {

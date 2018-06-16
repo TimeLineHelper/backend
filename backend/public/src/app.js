@@ -6,25 +6,25 @@ import {
 } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 
-// import Timeline from './components/timeline';
+import Timeline from './components/timeline';
+import MainPage from './components/mainPage';
 
-class MainPage extends Component {
-  render() {
-    return <Fragment>
-      <h1>MainPage</h1>
-      <p>stuff and things</p>
-      <p><Link to="/create-timeline">Create-timeline</Link></p>
-    </Fragment>;
-  }
-}
-
-class App extends Component {
+export default class App extends Component {
   render(){
     return <BrowserRouter>
       <Fragment>
-        <h1>TimeLine App</h1>
-        <Route exact path="/" component={MainPage}/>
-        {/* <Timeline /> */}
+        <nav>
+          <h1>TimeLine App</h1>
+          <ul>
+            <li><Link to='/'>Main Page</Link></li>
+            <li><Link to='/create-timeline'>Timeline</Link></li>
+          </ul>
+        </nav>
+        <div>
+          <Route exact path="/" component={MainPage} />
+          <Route path="/create-timeline" component={Timeline} />
+          <Timeline />
+        </div>
       </Fragment>
     </BrowserRouter>;
   }

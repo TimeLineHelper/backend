@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
 import ItemForm from './itemForm';
 
@@ -6,6 +7,7 @@ export default class Item extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      item: this.props.item,
       isEditing: false,
     };
 

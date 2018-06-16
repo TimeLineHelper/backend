@@ -58,7 +58,7 @@ app.get('/callback', (req, res) => {
   }
 });
 // app.get('/', (req, res) => {
-//   res.sendFile('../public/src/index.html', { root: './' });
+//   res.send();
 // });
 
 const Bundler = require('parcel-bundler');
