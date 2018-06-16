@@ -2,8 +2,6 @@
 require('dotenv').config();
 let { google } = require('googleapis');
 let privatekey = require('./client_secret.json');
-// const quickstart = require('./quickStart').authorize;
-// const listEvents = require('./quickStart').listEvents;
 
 let superagent = require('superagent');
 // let cookie = require('cookie');
@@ -34,19 +32,11 @@ app.get('/callback', (req, res) => {
         redirect_uri: `${process.env.API_URL}/callback`
       })
       .then(response => {
-        console.log('Response AFTER code is given');
-        console.log('access token:', response.body.access_token);
-        console.log('id token:', response.body.id_token);
-        let idTokenPayload = response.body.id_token.split('.')[1];
-        let decoded = Buffer.from(idTokenPayload, 'base64').toString();
-        let json = JSON.parse(decoded);
-        console.log('decoded:', decoded);
-        // handle oauth login
-        res.cookie('X-Some Cookie', idTokenPayload);
-        res.write('<h1>' + json.name + '</h1>');
-        res.write('<h1>' + json.email + '</h1>');
-        res.write('<img src=' + json.picture + '>');
-
+        console.log('35========== res.body', response.body)
+        return superagent.get('https://www.googleapis.com/auth/plus/v1/people/me/openIdConnect')
+        .set('Authorization', `Bearer ${response.body.access_token}`)
+      }).then( response => { 
+        console.log('open id google pluse', response.body);
       })
       .catch(response => {
         console.log('response', response);

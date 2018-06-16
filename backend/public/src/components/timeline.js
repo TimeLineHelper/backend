@@ -2,6 +2,8 @@
  
 import React, {Component, Fragment} from 'react';
 
+import Token from '../../../credentials.json';
+
 export default class TIMLINE extends Component {
   
     
@@ -11,12 +13,33 @@ export default class TIMLINE extends Component {
   
   calanderButton = () => {
     console.log('button clicked');  
-    fetch('http://localhost:3000/getcaldata')
-      .then(res => res.json())
-      .then(json => {
-        console.log('25 results:json', json);
+    // fetch('http://localhost:3000/getcaldata')
+     
+    //   .then(() => {
+    //     console.log('25 results:Token', Token);
       
-      })
+    //   })
+
+      fetch('http://localhost:3000/getcaldata')
+      .then(
+        function(response) {
+          if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' +
+              response.status);
+            return;
+          }
+    
+          // Examine the text in the response
+          response.json().then(function(data) {
+            console.log(data);
+          res.write('<h1>' + data + '</h1>');
+    
+          });
+        }
+      )
+      .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
   }
 
   render() {
