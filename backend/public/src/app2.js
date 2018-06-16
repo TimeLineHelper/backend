@@ -14,10 +14,14 @@ import './style/timeLine.css';
 class MainPage extends Component {
   render() {
     return <Fragment>
-      <h1 id="mainTitle">Track It</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut posuere libero nulla, ac lobortis libero tincidunt non. Nulla magna nisi, vehicula vitae neque at, cursus varius massa. Pellentesque sollicitudin enim vitae sollicitudin pulvinar. Quisque a risus vel erat mollis aliquet.</p>
-      <h2>Begin tracking now!</h2>
-      <p><Link to="/create-timeline">Create-timeline</Link></p>
+      <div>
+        <h1 id="mainTitle">Marathon Timeline</h1>
+        <p>timeline goes here</p>
+      </div>
+      <div>
+        <h2>Highlights</h2>
+        <p>task info goes here</p>
+      </div>
     </Fragment>;
   }
 }

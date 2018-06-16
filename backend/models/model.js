@@ -2,11 +2,14 @@
 
 const mongoose = require('mongoose');
 
-const TimelineSchema = new mongoose.Schema({
-  originalId: Number,
-  duration: Number,
-  event: String,
-  info: String,
+const Timeline = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  startDate: '',
+  task: '',
+  endDate: '',
 });
 
-module.exports = mongoose.model('Timeline', TimelineSchema);
+module.exports = mongoose.model('Timeline', Timeline);

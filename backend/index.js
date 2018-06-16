@@ -1,22 +1,24 @@
 'use strict';
+
+const { google } = require('googleapis');
+const superagent = require('superagent');
+const cookie = require('cookie');
 require('dotenv').config();
-let { google } = require('googleapis');
-let privatekey = require('./client_secret.json');
 
 const express = require('express');
 const app = express();
-let superagent = require('superagent');
-let cookie = require('cookie');
 
-require('dotenv').config();
+const privatekey = require('./client_secret.json');
+// const seedTimeline = require('./lib/seedTimeline.js');
 
-// const mongoose = require('mongoose');
-// mongoose.connect(process.env.MONGODB_URI);
+
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_URI);
+// const MONGODB_URI = process.env.MONGODB_URI;
 
 app.use('/home', require('./routes/timelineRoutes.js'));
 
 //make a route that uses quickstart as middleware
-
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {
@@ -45,7 +47,6 @@ app.get('/callback', (req, res) => {
         res.write('<h1>' + json.name + '</h1>');
         res.write('<h1>' + json.email + '</h1>');
         res.write('<img src=' + json.picture + '>');
-
       })
       .catch(response => {
         console.log('response', response);
@@ -54,6 +55,29 @@ app.get('/callback', (req, res) => {
 });
 
 
+const server = module.exports = {};
+server.isOn = false;
+server.start = () => {
+  return new Promise((resolve, reject) => {
+    if(server.isOn) return reject(new Error('Server Error. Server already running.'));
+    server.http = app.listen(PORT, () => {
+      console.log(`Listening on ${PORT}`);
+      server.isOn = true;
+      mongoose.connect(MONGODB_URI);
+      return resolve(server);
+    });
+  });
+};
+server.stop = () => {
+  return new Promise((resolve, reject) => {
+    if(!server.isOn) return reject(new Error('Server Error. Server already stopped.'));
+    server.http.close(() => {
+      server.isOn = false;
+      mongoose.disconnect();
+      return resolve();
+    });
+  });
+};
 
 
 const Bundler = require('parcel-bundler');
