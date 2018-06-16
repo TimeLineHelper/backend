@@ -30,7 +30,7 @@ app.get('/callback', (req, res) => {
         grant_type: 'authorization_code',
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
-        redirect_uri: `${process.env.API_URL}/oauth-callback`
+        redirect_uri: `${process.env.API_URL}/callback`
       })
       .then(response => {
         console.log('Response AFTER code is given');

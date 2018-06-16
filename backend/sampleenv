@@ -4,23 +4,3 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 CLIENT_URL=
 API_URL=
-
-
-<body>
-        <h1>Google OAuth Login</h1>
-        <script>
-          let a = document.createElement('a');
-          let AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
-          let clientIDQuery = 'client_id=1085617298907-hi1l3l8nsm5pq415j27cbsk2rlp9c6nj.apps.googleusercontent.com'
-            ;
-          let responseTypeQuery = 'response_type=code';
-          let scopeQuery = 'scope=openid%20profile%20email';
-          let promptQuery = 'prompt=consent';
-          let redirectURIQuery = 'redirect_uri=http://localhost:3000/callback';
-          let formattedURL =
-      `${AUTH_URL}?${clientIDQuery}&${responseTypeQuery}&${scopeQuery}&${promptQuery}&${redirectURIQuery}`;
-    
-          // a.setAttribute('href', formattedURL);
-          // a.textContent = 'Login';
-          // console.log('the URL we built:', formattedURL);
-          // document.body.append(a);

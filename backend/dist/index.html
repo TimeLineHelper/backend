@@ -26,7 +26,7 @@
         <a href="/Home" target="_blank">Home</a>
       </li>
       <li>
-        <a href="https://accounts.google.com/o/oauth2/v2/auth" target="_blank">Login</a>
+        <a id="loginYall" target="_blank">Login</a>
       </li>
       <li>
         <a href="" target="_blank">Logout</a>
@@ -37,18 +37,25 @@
   <div id="root"></div>
   <script src="/app.990afd55.js"></script>
 
-  <!-- Google OAuth Login -->
-  <div id="googleAuth">
+  <body>
+    <h1>Google OAuth Login</h1>
     <script>
-      let a = document.createElement('a');
+      let loginYall = document.getElementById('loginYall');
       let AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
-      let clientIDQuery = 'client_id=1085617298907-hi1l3l8nsm5pq415j27cbsk2rlp9c6nj.apps.googleusercontent.com';
+      let clientIDQuery = 'client_id=1085617298907-hi1l3l8nsm5pq415j27cbsk2rlp9c6nj.apps.googleusercontent.com'
+        ;
       let responseTypeQuery = 'response_type=code';
       let scopeQuery = 'scope=openid%20profile%20email';
       let promptQuery = 'prompt=consent';
       let redirectURIQuery = 'redirect_uri=http://localhost:3000/callback';
       let formattedURL =
         `${AUTH_URL}?${clientIDQuery}&${responseTypeQuery}&${scopeQuery}&${promptQuery}&${redirectURIQuery}`;
+
+      loginYall.setAttribute('href', formattedURL);
+      // a.textContent = 'Login';
+      // console.log('the URL we built:', formattedURL);
+      // document.body.append(a);
+
       if (!document.cookie) {
         a.textContent = 'You are not logged in';
       } else {
@@ -60,7 +67,7 @@
         }
       }
     </script>
-  </div>
-</body>
+    
+  </body>
 
-</html>
+</body></html>
