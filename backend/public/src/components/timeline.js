@@ -7,12 +7,12 @@ export default class Timeline extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // begin: new Date(),
+      begin: new Date(),
       tasks: [{
         // dailyTasks: [{
         name: 'Food',
         items: ['bacon', 'eggs'],
-        }], 
+      }], 
         // weeklyTasks: [{
         //   name: '',
         //   items: [],
@@ -27,7 +27,7 @@ export default class Timeline extends Component {
         //   Alert: 'Congratulations!',
         // },
       // }],
-      // end: new Date(),
+      end: new Date(),
     };
 
     // this.addTask = this.addTask.bind(this);
@@ -57,7 +57,7 @@ export default class Timeline extends Component {
       <h1>Create Tasks to Reach Your Goal!</h1>
       {/* <TaskForm buttonText='create'></TaskForm> */}
       <TaskForm></TaskForm>
-      <TaskList></TaskList>
+      <TaskList tasks={this.state.tasks}></TaskList>
     </div>;
   }
 }

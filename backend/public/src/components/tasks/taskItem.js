@@ -34,11 +34,19 @@ export default class TaskItem extends Component {
   //   return this.props.removeTask(this.props.task.id);
   // }
 
+  renderList = () => {
+    return 
+  }
+
   render() {
     // if(this.state.isEditing === true) {
       return <div>
-        <TaskForm></TaskForm>
-        <h2>Task List</h2>
+        <li>
+          name: {this.props.task.name}
+          items: <ul>{this.props.task.items}</ul>
+        </li>
+        {/* <TaskForm></TaskForm> */}
+        {/* <h2>Task List</h2> */}
         {/* <TaskForm name="update"
           name={this.props.task}
           toggleEdit={this.toggleEdit}> */}

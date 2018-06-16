@@ -7,7 +7,7 @@ import {
 import ReactDOM from 'react-dom';
 
 import Timeline from './components/timeline';
-import MainPage from './components/mainPage';
+// import MainPage from './components/mainPage';
 
 export default class App extends Component {
   render(){
@@ -16,14 +16,13 @@ export default class App extends Component {
         <nav>
           <h1>TimeLine App</h1>
           <ul>
-            <li><Link to='/'>Main Page</Link></li>
+            {/* <li><Link to='/'>Main Page</Link></li> */}
             <li><Link to='/create-timeline'>Timeline</Link></li>
           </ul>
         </nav>
         <div>
-          <Route exact path="/" component={MainPage} />
+          {/* <Route exact path="/" component={MainPage} /> */}
           <Route path="/create-timeline" component={Timeline} />
-          <Timeline />
         </div>
       </Fragment>
     </BrowserRouter>;
