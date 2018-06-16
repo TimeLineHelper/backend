@@ -21,7 +21,7 @@ app.get('/callback', (req, res) => {
   if (!req.query.code) {
     res.redirect(process.env.CLIENT_URL);
   } else {
-    console.log('CODE:', req.query.code);
+    
     superagent.post('https://www.googleapis.com/oauth2/v4/token')
       .type('form')
       .send({
@@ -32,21 +32,23 @@ app.get('/callback', (req, res) => {
         redirect_uri: `${process.env.API_URL}/callback`
       })
       .then(response => {
-        console.log('35========== res.body', response.body);
+        
         return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
         .set('Authorization', `Bearer ${response.body.access_token}`);
-      }).then( response => { 
-        console.log('open id google pluse', response.body);
+      }).then(response =>{
+        return superagent.get('https://www.googleapis.com/auth/calendar/v3/me/openIdConnect')
+        .set('Authorization', `Bearer ${response.body.access_token}`);
+      }).then(response => {
+        console.log('43 RESPONSE TEST', response.body);
       })
       .catch(response => {
-        console.log('response', response.body);
+        console.log('response!!!!!!!!!!!!!!!!!!!!!!!!!!!!11', response.body);
+        //Initial request, not to be confused with the response we passed through 
+        res.cookie('cookie', cookieToken);
+        res.redirect(process.env.CLIENT_URL);
       });
   }
 });
-
-
-
-
 
 const Bundler = require('parcel-bundler');
 const bundler = new Bundler('./public/index.html');

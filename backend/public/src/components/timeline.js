@@ -13,14 +13,8 @@ export default class TIMLINE extends Component {
   
   calanderButton = () => {
     console.log('button clicked');  
-    // fetch('http://localhost:3000/getcaldata')
-     
-    //   .then(() => {
-    //     console.log('25 results:Token', Token);
-      
-    //   })
 
-      fetch('http://localhost:3000/getcaldata')
+      fetch('http://localhost:3000/callback')
       .then(
         function(response) {
           if (response.status !== 200) {
