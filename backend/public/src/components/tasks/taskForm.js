@@ -7,9 +7,8 @@ export default class TaskForm extends Component {
       timestamp: new Date(),
       name: '',
       items: [],
-      id: '',
-      isEditing: false,
-      completed: false,
+      // isEditing: false,
+      // completed: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,26 +23,35 @@ export default class TaskForm extends Component {
 
   handleSubmit(ev) {
     ev.preventDefault();
-    this.props.addTask(this.state);
+    if (this.props.buttonText === 'create') {
+      let name = ev.target.name.value;
+      let items = ev.target.items.value;
+      this.props.addTask({ name, items });
+    }
+    else {
+      let newValue = {};
+      Object.assign(newValue, this.props.dailyTasks, this.state);
+      console.log('new val', newValue);
+      this.props.toggleEdit();
+      this.props.addTask({...newValue});
+    }
   }
 
   render() { 
     return <form 
-      onSubmit={this.handleSubmit>
+      onSubmit={this.handleSubmit}>
       <input onChange={this.handleChange} 
-        name="name"
-        type="text"
-        placeholder="name"
-        value={this.state.name}
+        name='name'
+        type='text'
+        placeholder='name'
       />
-      <input onChange={this.handleChange} 
-        name="items"
-        type="text"
-        placeholder="items"
-        value={this.state.name}
+      <input onChange={this.handleChange}
+        name='items'
+        type='text'
+        placeholder='items'
       />
-      <button type="submit"
-        value="Add Task">New Task</button>
+      <button type='submit'>{this.props.buttonText === 'create' ? 'Submit' : 'Update'} 
+      </button>
     </form>;
   }
 }

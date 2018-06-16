@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 
-import Timeline from './components/timeline';
+// import Timeline from './components/timeline';
 
 class MainPage extends Component {
   render() {
@@ -24,7 +24,7 @@ class App extends Component {
       <Fragment>
         <h1>TimeLine App</h1>
         <Route exact path="/" component={MainPage}/>
-        <Timeline />
+        {/* <Timeline /> */}
       </Fragment>
     </BrowserRouter>;
   }

@@ -1,6 +1,6 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 
-import TaskForm from './tasks/taskForm';
+import ItemForm from './itemForm';
 
 export default class Item extends Component {
   constructor(props) {
@@ -28,21 +28,21 @@ export default class Item extends Component {
   
   render() {
     if(this.state.isEditing === true) {
-      return (
-        <div>
-          <TaskForm action='update'
-            itemId={this.this.props.id}
-            name={this.props.name}
-            toggleEdit={this.toggleEdit}
-            cancel={this.cancel}>
-          </TaskForm>
-        </div>
-      );
+      return <div>
+        <TaskForm action='update'
+          itemId={this.props.id}
+          name={this.props.name}
+          description={this.props.description}
+          toggleEdit={this.toggleEdit}
+          cancel={this.cancel}>
+        </TaskForm>
+      </div>;
     } else {
       return (
         <div>
           <li>
-            {this.props.item.name} : {this.props.item.length}
+            {this.props.name}
+            ${this.props.description}
           </li>
           <button onClick={this.handleDelete}>Delete</button>
           <button onClick={this.toggleEdit}>Cancel</button>
