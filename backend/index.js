@@ -12,7 +12,7 @@ require('dotenv').config();
 
 app.use('/home', require('./routes/timelineRoutes.js'));
 
-app.get('/callback', (req, res) => {
+app.get('/oauth-callback', (req, res) => {
   if (!req.query.code) {
     res.redirect(process.env.CLIENT_URL);
   } else {
@@ -24,7 +24,7 @@ app.get('/callback', (req, res) => {
         grant_type: 'authorization_code',
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
-        redirect_uri: `${process.env.API_URL}/callback`
+        redirect_uri: `${process.env.API_URL}/oauth-callback`
       })
       .then(response => {
         console.log('Response AFTER code is given');
@@ -41,7 +41,6 @@ app.get('/callback', (req, res) => {
         res.write('<h1>' + json.picture + '</h1>');
         res.end();
       })
-
       .then(response => {
         console.log('Response AFTER code is given', response.body);
         return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
