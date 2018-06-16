@@ -32,14 +32,14 @@ app.get('/callback', (req, res) => {
         redirect_uri: `${process.env.API_URL}/callback`
       })
       .then(response => {
-        console.log('35========== res.body', response.body)
-        return superagent.get('https://www.googleapis.com/auth/plus/v1/people/me/openIdConnect')
-        .set('Authorization', `Bearer ${response.body.access_token}`)
+        console.log('35========== res.body', response.body);
+        return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
+        .set('Authorization', `Bearer ${response.body.access_token}`);
       }).then( response => { 
         console.log('open id google pluse', response.body);
       })
       .catch(response => {
-        console.log('response', response);
+        console.log('response', response.body);
       });
   }
 });

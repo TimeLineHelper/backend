@@ -27,13 +27,13 @@
 
 <body>
   <h1>Google OAuth Login</h1>
-  <!-- <script>
+  <script>
     let a = document.createElement('a');
     let AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
-    let clientIDQuery = 'client_id=1085617298907-hi1l3l8nsm5pq415j27cbsk2rlp9c6nj.apps.googleusercontent.com'
-      ;
+    let clientIDQuery = 'client_id=585611876041-kl1eoh1f9hestka4lv2cmtulo045ttoa.apps.googleusercontent.com';
     let responseTypeQuery = 'response_type=code';
     let scopeQuery = 'scope=openid%20profile%20email';
+    //change for calander//
     let promptQuery = 'prompt=consent';
     let redirectURIQuery = 'redirect_uri=http://localhost:3000/callback';
     let formattedURL =
@@ -43,6 +43,7 @@
     a.textContent = 'login with google';
     console.log('the URL we built:', formattedURL);
     document.body.append(a);
+    //pass some of this data in as prompts for react//
 
     if (!document.cookie) {
       a.textContent = 'You are not logged in';
@@ -54,7 +55,7 @@
         a.textContent = `Welcome, ${userName}!`;
       }
     }
-  </script> -->
+  </script>
   <h1>We love calendars!</h1>
   <div id="root"></div>
   <script src="/app.8eb014a1.js"></script>
