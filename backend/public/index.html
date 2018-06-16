@@ -27,8 +27,8 @@
         <a href="/Home" target="_blank">Home</a>
       </li>
       <li>
-          <a href="https://accounts.google.com/o/oauth2/v2/auth" target="_blank">Login</a>
-        </li>
+        <a href="https://accounts.google.com/o/oauth2/v2/auth" target="_blank">Login</a>
+      </li>
       <li>
         <a href="" target="_blank">Logout</a>
       </li>
@@ -47,15 +47,9 @@
       let responseTypeQuery = 'response_type=code';
       let scopeQuery = 'scope=openid%20profile%20email';
       let promptQuery = 'prompt=consent';
-      let redirectURIQuery = 'redirect_uri=http://localhost:3000/oauth-callback';
+      let redirectURIQuery = 'redirect_uri=http://localhost:3000/callback';
       let formattedURL =
         `${AUTH_URL}?${clientIDQuery}&${responseTypeQuery}&${scopeQuery}&${promptQuery}&${redirectURIQuery}`;
-
-      // a.setAttribute('href', formattedURL);
-      // a.textContent = 'Login';
-      // console.log('the URL we built:', formattedURL);
-      // document.body.append(a);
-
       if (!document.cookie) {
         a.textContent = 'You are not logged in';
       } else {
