@@ -11,12 +11,11 @@ const app = express();
 const privatekey = require('./client_secret.json');
 // const seedTimeline = require('./lib/seedTimeline.js');
 
-
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI);
 // const MONGODB_URI = process.env.MONGODB_URI;
 
-app.use('/home', require('./routes/timelineRoutes.js'));
+app.use('/home', require('./routes/timelineRouter.js'));
 
 //make a route that uses quickstart as middleware
 
@@ -47,13 +46,13 @@ app.get('/callback', (req, res) => {
         res.write('<h1>' + json.name + '</h1>');
         res.write('<h1>' + json.email + '</h1>');
         res.write('<img src=' + json.picture + '>');
+        res.end();
       })
       .catch(response => {
         console.log('response', response);
       });
   }
 });
-
 
 const server = module.exports = {};
 server.isOn = false;
@@ -79,6 +78,9 @@ server.stop = () => {
   });
 };
 
+// app.get('/', (req, res) => {
+//   res.send();
+// });
 
 const Bundler = require('parcel-bundler');
 const bundler = new Bundler('./public/index.html');

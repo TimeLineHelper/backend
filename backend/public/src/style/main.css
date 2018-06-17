@@ -12,6 +12,10 @@
   border: 1px, solid, black;
 }
 
+/* div {
+    border: 1px solid red;
+} */
+
 a:-webkit-any-link {
   text-decoration: underline;
   text-align: center;
@@ -60,7 +64,7 @@ body {
     max-width: 100%;
     box-shadow: none;
     background-color: #adf6a9;
-    position: relative;
+    position: fixed;
     /* overflow: hidden; */
     z-index: 10;
 }
