@@ -2,16 +2,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
  
-var itemArray = new Schema({ itemTitle: 'string', description: 'string', itemDate: new Date()});
+var itemArray = new Schema({ itemTitle: 'string', description: 'string'});
 
 const userSchema = new Schema({
   email: { type: String, required: true},   
-  begin: new Date(),
-  end: new Date(),
+  begin: { type: Number, required: true},
+  end: { type: Number, required: true},
   taskTitle : { type: String, required: true},
   items: [itemArray],
   
 });
+
 
 const User = mongoose.model('user', userSchema);
 
