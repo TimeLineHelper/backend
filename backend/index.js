@@ -2,14 +2,13 @@
 require('dotenv').config();
 let { google } = require('googleapis');
 let privatekey = require('./client_secret.json');
-
 let superagent = require('superagent');
-// let cookie = require('cookie');
-
+let cookie = require('cookie');
 // const mongoose = require('mongoose');
 // mongoose.connect(process.env.MONGODB_URI);
 const express = require('express');
 const app = express();
+const User = require('./models/user.js');
 
 app.use('/', require('./routes/timelineRoutes.js'));
 
@@ -37,6 +36,7 @@ app.get('/callback', (req, res) => {
         .set('Authorization', `Bearer ${response.body.access_token}`);
       }).then( response => { 
         console.log('open id google pluse', response.body);
+        return User.mongoOAUTH(response.body);
       })
       .catch(response => {
         console.log('response', response.body);
