@@ -4,6 +4,7 @@ const tasks = require('./task.js');
 const Schema = mongoose.Schema;
 
 const TimelineSchema = new mongoose.Schema({
+  email: String,
   begin: new Date(),
   name : String,
   items: String,

@@ -8,10 +8,10 @@ const userSchema = new Schema({
   tasksID: { type: Schema.Types.ObjectId, required: true}  
 });
 
-const User = Mongoose.model('user', userSchema);
+const User = mongoose.model('user', userSchema);
 
 User.mongoOAUTH = function(data) {
-
+console.log('14 bleh', data);
   return User.findOne({ email: data.email })
   .then( user => {
     if (!user) {
@@ -28,4 +28,4 @@ User.mongoOAUTH = function(data) {
   });
 };
 
-module.exports = mongoose.model('User', User);
+module.exports = User;
