@@ -5,10 +5,10 @@ import Timeline from '../timeline';
 export default class TaskForm extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   isEditing: false,
-    //   completed: false,
-    // };
+    this.state = {
+      isEditing: false,
+      completed: false,
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,8 +28,8 @@ export default class TaskForm extends Component {
         id: uuidv4(),
         name: ev.target.name.value,
         items: [ev.target.items.value],
-        // isEditing: false,
-        // completed: false,
+        isEditing: false,
+        completed: false,
       }
       this.props.addTask(createdTask); //post request to db
     }
@@ -37,7 +37,7 @@ export default class TaskForm extends Component {
       let newValue = {};
       Object.assign(newValue, this.props.tasks, this.state);
       console.log('new val', newValue);
-      // this.props.toggleEdit();
+      this.props.toggleEdit();
       this.props.addTask({...newValue}); //put request to db
     }
   }

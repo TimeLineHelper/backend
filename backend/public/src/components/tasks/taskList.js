@@ -15,10 +15,10 @@ export default class TaskList extends Component {
     return <ul>
         {this.props.tasks.map(task => (
           <TaskItem 
-          removeTask={this.props.removeTask}
-          // updateTask={this.props.updateTask}
-          // tasks={tasks} key={tasks.id} index={tasks.isEditing}
-            task={task} />
+            removeTask={this.props.removeTask}
+            updateTask={this.props.updateTask}
+            task={task} key={task.id} index={task.isEditing}
+          />
       ))}
     </ul>
   }
