@@ -14,7 +14,7 @@ export default class TaskItem extends Component {
       isEditing: false,
     };
     
-    // this.handleRemove = this.handleRemove.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
     // this.toggleEdit = this.toggleEdit.bind(this);
     // this.toggleOffEdit = this.toggleOffEdit.bind(this);
   }
@@ -29,21 +29,25 @@ export default class TaskItem extends Component {
   //   this.props.addTask({isEditing: false, id: this.props.task.id});
   // }
 
-  // handleRemove = (ev) => {
-  //   ev.preventDefault();
-  //   return this.props.removeTask(this.props.task.id);
-  // }
+  handleRemove = (ev) => {
+    ev.preventDefault();
+    return this.props.removeTask(this.props.task.id);
+  }
 
   renderList = () => {
-    return 
+    console.log('tasks.items', this.props);
+    let items = this.props.task.items.map((item, i) => {
+      return <li key={i}>{item}</li>
+    })
+    return items
   }
 
   render() {
     // if(this.state.isEditing === true) {
       return <div>
         <li>
-          name: {this.props.task.name}
-          items: <ul>{this.props.task.items}</ul>
+          <p>Name: {this.props.task.name}</p>
+          Items: <ol>{this.renderList()}</ol>
         </li>
         {/* <TaskForm></TaskForm> */}
         {/* <h2>Task List</h2> */}
@@ -51,7 +55,7 @@ export default class TaskItem extends Component {
           name={this.props.task}
           toggleEdit={this.toggleEdit}> */}
         {/* </TaskForm> */}
-        </div>;
+        </div>
     // }
       // return
         // <li key={this.props.task.id} id={this.props.taskid}>
@@ -62,8 +66,8 @@ export default class TaskItem extends Component {
         //   Update
         // </button>
         // <h3>Add Task</h3>
-        {/* <ItemForm taskId={this.props.task.id} buttonText='create' />
-        <ItemList taskId={this.props.task.id} /> */}
+        // <ItemForm taskId={this.props.task.id} buttonText='create' />
+        // <ItemList taskId={this.props.task.id} />
         // </li>
     }
   }

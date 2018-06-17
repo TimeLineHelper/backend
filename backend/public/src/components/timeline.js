@@ -30,34 +30,31 @@ export default class Timeline extends Component {
       end: new Date(),
     };
 
-    // this.addTask = this.addTask.bind(this);
-    // this.removeTask = this.removeTask.bind(this);
+    this.addTask = this.addTask.bind(this);
+    this.removeTask = this.removeTask.bind(this);
   }
 
-  // addTask = (task) => {
-  //   let newTask = {
-  //     id: task.id,
-  //     isEditing: false,
-  //     completed: false,
-  //     name: task.name,
-  //   };
-  //   this.state.tasks.push(newTask);
-  //   this.setState({tasks: this.state.tasks});
-  // }
+  addTask = (task) => {
+    console.log('task', task);
+    let newTask = {};
+    Object.assign(newTask, this.state);
+    newTask.tasks.push(task);
+    console.log('new Task', newTask);
+    this.setState({newTask});
+  }
 
-  // removeTask = (id) => {
-  //   let remainder = this.state.tasks.filter(task => {
-  //     return task.id !== id;
-  //   });
-  //   this.setState({tasks: remainder});
-  // }
+  removeTask = (id) => {
+    let remainder = this.state.tasks.filter(task => {
+      return task.id !== id;
+    });
+    this.setState({tasks: remainder});
+  }
 
   render() {
     return <div>
       <h1>Create Tasks to Reach Your Goal!</h1>
-      {/* <TaskForm buttonText='create'></TaskForm> */}
-      <TaskForm></TaskForm>
-      <TaskList tasks={this.state.tasks}></TaskList>
+      <TaskForm addTask={this.addTask} buttonText='create'></TaskForm>
+      <TaskList tasks={this.state.tasks} removeTask={this.removeTask}></TaskList>
     </div>;
   }
 }

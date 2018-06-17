@@ -189,7 +189,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 	return to;
 };
-},{}],62:[function(require,module,exports) {
+},{}],63:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -298,7 +298,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],63:[function(require,module,exports) {
+},{}],62:[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -435,7 +435,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 }
 
 module.exports = checkPropTypes;
-},{"fbjs/lib/invariant":62,"fbjs/lib/warning":63,"./lib/ReactPropTypesSecret":60}],7:[function(require,module,exports) {
+},{"fbjs/lib/invariant":63,"fbjs/lib/warning":62,"./lib/ReactPropTypesSecret":60}],7:[function(require,module,exports) {
 /** @license React v16.4.0
  * react.development.js
  *
@@ -1904,7 +1904,7 @@ if (undefined !== "production") {
     module.exports = react;
   })();
 }
-},{"object-assign":64,"fbjs/lib/invariant":62,"fbjs/lib/emptyObject":65,"fbjs/lib/warning":63,"fbjs/lib/emptyFunction":61,"prop-types/checkPropTypes":59}],4:[function(require,module,exports) {
+},{"object-assign":64,"fbjs/lib/invariant":63,"fbjs/lib/emptyObject":65,"fbjs/lib/warning":62,"fbjs/lib/emptyFunction":61,"prop-types/checkPropTypes":59}],4:[function(require,module,exports) {
 'use strict';
 
 if (undefined === 'production') {
@@ -2490,7 +2490,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 
   return ReactPropTypes;
 };
-},{"fbjs/lib/emptyFunction":61,"fbjs/lib/invariant":62,"fbjs/lib/warning":63,"object-assign":64,"./lib/ReactPropTypesSecret":60,"./checkPropTypes":59}],37:[function(require,module,exports) {
+},{"fbjs/lib/emptyFunction":61,"fbjs/lib/invariant":63,"fbjs/lib/warning":62,"object-assign":64,"./lib/ReactPropTypesSecret":60,"./checkPropTypes":59}],37:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -23889,7 +23889,7 @@ if (undefined !== "production") {
     module.exports = reactDom;
   })();
 }
-},{"fbjs/lib/invariant":62,"react":4,"fbjs/lib/warning":63,"fbjs/lib/ExecutionEnvironment":66,"object-assign":64,"fbjs/lib/emptyFunction":61,"prop-types/checkPropTypes":59,"fbjs/lib/getActiveElement":67,"fbjs/lib/shallowEqual":68,"fbjs/lib/containsNode":69,"fbjs/lib/emptyObject":65,"fbjs/lib/hyphenateStyleName":70,"fbjs/lib/camelizeStyleName":71}],6:[function(require,module,exports) {
+},{"fbjs/lib/invariant":63,"react":4,"fbjs/lib/warning":62,"fbjs/lib/ExecutionEnvironment":66,"object-assign":64,"fbjs/lib/emptyFunction":61,"prop-types/checkPropTypes":59,"fbjs/lib/getActiveElement":67,"fbjs/lib/shallowEqual":68,"fbjs/lib/containsNode":69,"fbjs/lib/emptyObject":65,"fbjs/lib/hyphenateStyleName":70,"fbjs/lib/camelizeStyleName":71}],6:[function(require,module,exports) {
 'use strict';
 
 function checkDCE() {
@@ -24241,17 +24241,22 @@ var TaskForm = function (_Component) {
 
     _this.handleSubmit = function (ev) {
       ev.preventDefault();
+      console.log('created task');
       if (_this.props.buttonText === 'create') {
-        var id = (0, _uuidv2.default)();
-        var name = ev.target.name.value;
-        var items = ev.target.items.value;
-        _this.props.addTask({ id: id, name: name, items: items });
+        var createdTask = {
+          id: (0, _uuidv2.default)(),
+          name: ev.target.name.value,
+          items: [ev.target.items.value]
+          // isEditing: false,
+          // completed: false,
+        };
+        _this.props.addTask(createdTask); //post request to db
       } else {
         var newValue = {};
         Object.assign(newValue, _this.props.tasks, _this.state);
         console.log('new val', newValue);
-        _this.props.toggleEdit();
-        _this.props.addTask(_extends({}, newValue));
+        // this.props.toggleEdit();
+        _this.props.addTask(_extends({}, newValue)); //put request to db
       }
     };
 
@@ -24332,8 +24337,21 @@ var TaskItem = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (TaskItem.__proto__ || Object.getPrototypeOf(TaskItem)).call(this, props));
 
+    _this.handleRemove = function (ev) {
+      ev.preventDefault();
+      return _this.props.removeTask(_this.props.task.id);
+    };
+
     _this.renderList = function () {
-      return;
+      console.log('tasks.items', _this.props);
+      var items = _this.props.task.items.map(function (item, i) {
+        return _react2.default.createElement(
+          'li',
+          { key: i },
+          item
+        );
+      });
+      return items;
     };
 
     _this.state = {
@@ -24341,7 +24359,7 @@ var TaskItem = function (_Component) {
       isEditing: false
     };
 
-    // this.handleRemove = this.handleRemove.bind(this);
+    _this.handleRemove = _this.handleRemove.bind(_this);
     // this.toggleEdit = this.toggleEdit.bind(this);
     // this.toggleOffEdit = this.toggleOffEdit.bind(this);
     return _this;
@@ -24357,11 +24375,6 @@ var TaskItem = function (_Component) {
   //   this.props.addTask({isEditing: false, id: this.props.task.id});
   // }
 
-  // handleRemove = (ev) => {
-  //   ev.preventDefault();
-  //   return this.props.removeTask(this.props.task.id);
-  // }
-
   _createClass(TaskItem, [{
     key: 'render',
     value: function render() {
@@ -24372,13 +24385,17 @@ var TaskItem = function (_Component) {
         _react2.default.createElement(
           'li',
           null,
-          'name: ',
-          this.props.task.name,
-          'items: ',
           _react2.default.createElement(
-            'ul',
+            'p',
             null,
-            this.props.task.items
+            'Name: ',
+            this.props.task.name
+          ),
+          'Items: ',
+          _react2.default.createElement(
+            'ol',
+            null,
+            this.renderList()
           )
         )
       );
@@ -24392,8 +24409,8 @@ var TaskItem = function (_Component) {
       //   Update
       // </button>
       // <h3>Add Task</h3>
-      {} /* <ItemForm taskId={this.props.task.id} buttonText='create' />
-         <ItemList taskId={this.props.task.id} /> */
+      // <ItemForm taskId={this.props.task.id} buttonText='create' />
+      // <ItemList taskId={this.props.task.id} />
       // </li>
     }
   }]);
@@ -24445,13 +24462,12 @@ var TaskList = function (_Component) {
         'ul',
         null,
         _this.props.tasks.map(function (task) {
-          return _react2.default.createElement(_taskItem2.default
-          // removeTask={this.props.removeTask}
-          // addTask={this.props.addTask}
-          // tasks={tasks} key={tasks.id} index={tasks.isEditing}
-          , { task: task });
-        }),
-        ';'
+          return _react2.default.createElement(_taskItem2.default, {
+            removeTask: _this.props.removeTask
+            // updateTask={this.props.updateTask}
+            // tasks={tasks} key={tasks.id} index={tasks.isEditing}
+            , task: task });
+        })
       );
     };
 
@@ -24520,6 +24536,22 @@ var Timeline = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Timeline.__proto__ || Object.getPrototypeOf(Timeline)).call(this, props));
 
+    _this.addTask = function (task) {
+      console.log('task', task);
+      var newTask = {};
+      Object.assign(newTask, _this.state);
+      newTask.tasks.push(task);
+      console.log('new Task', newTask);
+      _this.setState({ newTask: newTask });
+    };
+
+    _this.removeTask = function (id) {
+      var remainder = _this.state.tasks.filter(function (task) {
+        return task.id !== id;
+      });
+      _this.setState({ tasks: remainder });
+    };
+
     _this.state = {
       begin: new Date(),
       tasks: [{
@@ -24544,28 +24576,10 @@ var Timeline = function (_Component) {
       end: new Date()
     };
 
-    // this.addTask = this.addTask.bind(this);
-    // this.removeTask = this.removeTask.bind(this);
+    _this.addTask = _this.addTask.bind(_this);
+    _this.removeTask = _this.removeTask.bind(_this);
     return _this;
   }
-
-  // addTask = (task) => {
-  //   let newTask = {
-  //     id: task.id,
-  //     isEditing: false,
-  //     completed: false,
-  //     name: task.name,
-  //   };
-  //   this.state.tasks.push(newTask);
-  //   this.setState({tasks: this.state.tasks});
-  // }
-
-  // removeTask = (id) => {
-  //   let remainder = this.state.tasks.filter(task => {
-  //     return task.id !== id;
-  //   });
-  //   this.setState({tasks: remainder});
-  // }
 
   _createClass(Timeline, [{
     key: 'render',
@@ -24578,8 +24592,8 @@ var Timeline = function (_Component) {
           null,
           'Create Tasks to Reach Your Goal!'
         ),
-        _react2.default.createElement(_taskForm2.default, null),
-        _react2.default.createElement(_taskList2.default, { tasks: this.state.tasks })
+        _react2.default.createElement(_taskForm2.default, { addTask: this.addTask, buttonText: 'create' }),
+        _react2.default.createElement(_taskList2.default, { tasks: this.state.tasks, removeTask: this.removeTask })
       );
     }
   }]);
@@ -24708,7 +24722,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '61763' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '63176' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 

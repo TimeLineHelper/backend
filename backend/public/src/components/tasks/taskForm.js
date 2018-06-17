@@ -22,18 +22,23 @@ export default class TaskForm extends Component {
 
   handleSubmit = (ev) => {
     ev.preventDefault();
+    console.log('created task');
     if (this.props.buttonText === 'create') {
-      let id = uuidv4();
-      let name = ev.target.name.value;
-      let items = ev.target.items.value;
-      this.props.addTask({ id, name, items });
+      let createdTask = {
+        id: uuidv4(),
+        name: ev.target.name.value,
+        items: [ev.target.items.value],
+        // isEditing: false,
+        // completed: false,
+      }
+      this.props.addTask(createdTask); //post request to db
     }
     else {
       let newValue = {};
       Object.assign(newValue, this.props.tasks, this.state);
       console.log('new val', newValue);
-      this.props.toggleEdit();
-      this.props.addTask({...newValue});
+      // this.props.toggleEdit();
+      this.props.addTask({...newValue}); //put request to db
     }
   }
 
