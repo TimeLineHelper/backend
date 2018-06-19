@@ -47,7 +47,7 @@ export default class TaskItem extends Component {
   }
 
   renderList = () => {
-    console.log('tasks.items', this.props);
+    console.log('this.props', this.props);
     let items = this.props.task.items.map((item, i) => {
       return <li key={i}>{item.name}{item.description}</li>
     })
