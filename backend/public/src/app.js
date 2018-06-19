@@ -7,6 +7,7 @@ import {
   Link
 } from 'react-router-dom';
 import ReactDOM from 'react-dom';
+import TIMLINE from './components/timeline.js';
 
 import './style/main.css';
 import './style/timeLine.css';

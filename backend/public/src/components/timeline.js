@@ -11,7 +11,9 @@ export default class Timeline extends Component {
       tasks: [{
         // dailyTasks: [{
         name: 'Food',
-        items: ['bacon', 'eggs'],
+        items: [
+          {name: 'run', description: 'meet Andy at Greenlake'}
+        ],
       }], 
         // weeklyTasks: [{
         //   name: '',
@@ -29,9 +31,6 @@ export default class Timeline extends Component {
       // }],
       end: new Date(),
     };
-
-    this.addTask = this.addTask.bind(this);
-    this.removeTask = this.removeTask.bind(this);
   }
 
   addTask = (task) => {
@@ -53,8 +52,12 @@ export default class Timeline extends Component {
   render() {
     return <div>
       <h1>Create Tasks to Reach Your Goal!</h1>
-      <TaskForm addTask={this.addTask} buttonText='create'></TaskForm>
-      <TaskList tasks={this.state.tasks} removeTask={this.removeTask}></TaskList>
+      <TaskForm addTask={this.addTask} 
+        buttonText='create'>
+      </TaskForm>
+      <TaskList tasks={this.state.tasks} 
+        removeTask={this.removeTask}>
+      </TaskList>
     </div>;
   }
 }

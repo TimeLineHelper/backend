@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/css?family=Caveat|Dosis|Neucha|Open+Sans+Condensed:300|Shadows+Into+Light+Two|Sunflower:300"
     rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <title>Time Line Helper App</title>
 </head>
 
@@ -36,59 +36,82 @@
     </ul>
   </div>
 
-<!-- Test Timeline -->
-<section class="timeline">
-  <h1>{Insert Name} Timeline</h1>
+  <!-- Test Timeline -->
+  <section class="timeline">
+    <h1>{Insert Name} Timeline</h1>
     <ul>
       <li>
         <div>
           <time>Eat</time>
-          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium At vero eos et accusamus et iusto odio
+          dignissimos ducimus qui blanditiis praesentium
           <!-- <button class="btn"><i class="fa fa-close"></i></button> -->
-          <button class="edit-btn"><i class="fa fa-pencil"></i></button>
-          <button class="trash-btn"><i class="fa fa-trash"></i></button>
+          <button class="edit-btn">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="trash-btn">
+            <i class="fa fa-trash"></i>
+          </button>
         </div>
       </li>
       <li>
-          <div>
-            <time>Run</time>
-            Proin quam velit, efficitur vel neque vitae, rhoncus commodo mi. Suspendisse finibus mauris et bibendum molestie. Aenean ex augue, varius et pulvinar in, pretium non nisi.
-            <button class="edit-btn"><i class="fa fa-pencil"></i></button>
-            <button class="trash-btn"><i class="fa fa-close"></i></button>
-          </div>
-        </li>
-        <li>
-            <div>
-              <time>Bike</time>
-              In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat mattis. Vestibulum id magna est.
-              <button class="edit-btn"><i class="fa fa-pencil"></i></button>
-              <button class="trash-btn"><i class="fa fa-close"></i></button>
-            </div>
-          </li>
-       
+        <div>
+          <time>Run</time>
+          Proin quam velit, efficitur vel neque vitae, rhoncus commodo mi. Suspendisse finibus mauris et bibendum molestie. Aenean
+          ex augue, varius et pulvinar in, pretium non nisi.
+          <button class="edit-btn">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="trash-btn">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+      </li>
+      <li>
+        <div>
+          <time>Bike</time>
+          In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat mattis. Vestibulum id magna est.
+          <button class="edit-btn">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="trash-btn">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+      </li>
+
       <!-- more list items here -->
     </ul>
   </section>
 
-<!-- End Test Timeline -->
+  <!-- End Test Timeline -->
 
-  <div id="root"></div>
-  <script src="./src/app.js"></script>
-  <!-- <script src="./src/app2.js"></script> -->
-  <button class="add-btn"><i class="fa fa-plus-circle">Add Milestone</i></button>
-  </body>
-
+  <body>
+    <div id="root"></div>
+    <script src="./src/app.js"></script>
+    <!-- <script src="./src/app2.js"></script> -->
+    <button class="add-btn">
+      <i class="fa fa-plus-circle">Add Milestone</i>
+    </button>
     <script>
-      let loginYall = document.getElementById('loginYall');
+
+      let a = document.createElement('a');
       let AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
-      let clientIDQuery = 'client_id=1085617298907-hi1l3l8nsm5pq415j27cbsk2rlp9c6nj.apps.googleusercontent.com'
-        ;
+      let clientIDQuery = 'client_id=1085617298907-35lrja0a9k91oq9g8s7g8p03biq2816a.apps.googleusercontent.com';
       let responseTypeQuery = 'response_type=code';
       let scopeQuery = 'scope=openid%20profile%20email';
+      //change for calander//
       let promptQuery = 'prompt=consent';
       let redirectURIQuery = 'redirect_uri=http://localhost:3000/callback';
       let formattedURL =
         `${AUTH_URL}?${clientIDQuery}&${responseTypeQuery}&${scopeQuery}&${promptQuery}&${redirectURIQuery}`;
+
+      a.setAttribute('href', formattedURL);
+      a.textContent = 'login with google';
+      console.log('******************************the URL we built:', formattedURL);
+
+      document.body.append(a);
+      //pass some of this data in as prompts for react//
 
       loginYall.setAttribute('href', formattedURL);
       // a.textContent = 'Login';
