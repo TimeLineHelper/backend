@@ -6,18 +6,16 @@ import Timeline from '../timeline';
 export default class TaskList extends Component {
   constructor(props) {
     super(props);
-
-    this.compileList = this.compileList.bind(this);
   }
 
   compileList = () => {
     console.log('props', this.props.tasks)
     return <ul>
-        {this.props.tasks.map(task => (
+        {this.props.tasks.map((task, i) => (
           <TaskItem 
             removeTask={this.props.removeTask}
             updateTask={this.props.updateTask}
-            task={task} key={task.id} index={task.isEditing}
+            task={task} key={i} index={task.isEditing}
           />
       ))}
     </ul>

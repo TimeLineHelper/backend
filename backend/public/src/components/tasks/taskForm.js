@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import uuidv4 from 'uuidv4';
-import Timeline from '../timeline';
 
 export default class TaskForm extends Component {
   constructor(props) {
@@ -9,9 +8,6 @@ export default class TaskForm extends Component {
       isEditing: false,
       completed: false,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange = (ev) => {

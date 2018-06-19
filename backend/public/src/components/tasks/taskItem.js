@@ -2,21 +2,18 @@ import React, {Component, Fragment} from 'react';
 import { Link } from 'react-router-dom';
 
 import TaskForm from './taskForm';
-// import Item from '../items/item';
-// import ItemList from '../items/itemList';
-
+// import ElementForm from '../elements/elementForm';
+import ElementList from '../elements/elementList';
+console.log('element list', ElementList)
 
 export default class TaskItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       task: this.props.task,
+      elements: [], // props
       isEditing: false,
     };
-    
-    this.handleRemove = this.handleRemove.bind(this);
-    this.toggleEdit = this.toggleEdit.bind(this);
-    this.toggleOffEdit = this.toggleOffEdit.bind(this);
   }
 
   toggleEdit = (ev) => {
@@ -34,10 +31,25 @@ export default class TaskItem extends Component {
     return this.props.removeTask(this.props.task.id);
   }
 
+  addElement = (element) => {
+    console.log('element', element);
+    let newElements = [...this.state.elements];
+    newElements.push(element);
+    console.log('new Task', newElement);
+    this.setState({elements: newElements});
+  }
+
+  removeElement = (id) => {
+    let remainder = this.state.elements.filter(element => {
+      return element.id !== id;
+    });
+    this.setState({elements: remainder});
+  }
+
   renderList = () => {
     console.log('tasks.items', this.props);
     let items = this.props.task.items.map((item, i) => {
-      return <li key={i}>{item}</li>
+      return <li key={i}>{item.name}{item.description}</li>
     })
     return items
   }
@@ -56,16 +68,17 @@ export default class TaskItem extends Component {
         </div>
     }
       return <li 
-          key={this.props.task.id} id={this.props.taskid}>
+          key={this.props.task.id} id={this.props.taskId}>
           {this.props.task.name}: <ul>{this.renderList()}</ul>
         <button 
           id={this.props.task.id}
           onClick={this.toggleEdit}>
           Update
         </button>
-        {/* <h3>Add Task</h3> */}
-        {/* <ItemForm taskId={this.props.task.id} buttonText='create' />
-        <ItemList taskId={this.props.task.id} /> */}
+        <h3>Add Task</h3>
+        {/* <ElementForm addElement={this.state.addElement} buttonText='create' /> */}
+        <ElementList elements={this.state.elements} 
+          removeElement={this.state.removeElement}/>
         </li>
     }
   }
