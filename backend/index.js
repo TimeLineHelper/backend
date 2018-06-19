@@ -38,7 +38,7 @@ app.get('/callback', (req, res) => {
           .set('Authorization', `Bearer ${response.body.access_token}`);
       })
       .then(response => {
-        console.log('43 RESPONSE TEST', response.body);
+        User.mongoOAUTH(response.body);
       })
       .catch(response => {
         console.log('response!!!!!!!!!!!!!!!!!!!!!!!!!!!!11  index.js line 43', response.body);

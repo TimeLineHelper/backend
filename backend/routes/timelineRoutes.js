@@ -19,14 +19,14 @@ router.post('/api/user', jsonParser, function (req, res, next) {
   console.log('in timelines route b4 new user adding req', req.body);
   new User(req.body).save()
     .then(data => {
-      console.log('data line 22', data);
       res.json(data);
     })
     .catch(next);
 });
 
 router.get('/api/user', function (req, res, next) {
-  User.find({})
+
+  User.findOne({ email: 'hskrwres@gmail.com' })
     .then(user => {
       console.log('data line 22', user);
       res.json(user);

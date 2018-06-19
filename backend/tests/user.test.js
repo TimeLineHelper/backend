@@ -7,10 +7,10 @@ const PORT = process.env.PORT || 3000;
 require('jest');
 const url = `http://localhost:${PORT}`;
 
-let itemArray = { itemTitle: 'uuuuugggggg', description: 'striuuuuuggggggng' };
+let itemArray = { itemTitle: 'uuuuugggggg', description: 'striuuuuuggggggng', id: 123456789, timeStamp: 656 };
 
 const exampleData = {
-  email: 'bleh@bleh',
+  email: 'hskrwres@gmail.com',
   begin: 12,
   end: 48,
   id: 123456789,
@@ -31,7 +31,7 @@ describe('Info Routes', function () {
       .send(exampleData)
       .then(data => {
         temp = data;
-        console.log('temp', temp);
+        console.log('temp', temp.body);
         done();
       })
       .catch(done => {
@@ -42,6 +42,7 @@ describe('Info Routes', function () {
 
       superagent.get(`${url}/api/user`)
         .then((err, res) => {
+          console.log('this is the response', res);
           if (err) return done(err);
           expect(res.status).toEqual(200);
           expect(res.body.email).toEqual('bleh@bleh');
