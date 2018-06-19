@@ -5,7 +5,6 @@ import {
   Link
 } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import TIMLINE from './components/timeline.js';
 
 import Timeline from './components/timeline';
 // import MainPage from './components/mainPage';

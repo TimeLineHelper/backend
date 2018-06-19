@@ -14,7 +14,7 @@ const readline = require('readline');
 const SCOPES = [
   'https://www.googleapis.com/auth/calendar'
 ];
-const TOKEN_PATH = './timeline.js';
+const TOKEN_PATH = '../credentials2.json';
 
 router.post('/api/user', jsonParser, function (req, res, next) {
   console.log('in timelines route b4 new user adding req', req.body);

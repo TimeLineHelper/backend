@@ -10,7 +10,7 @@ const express = require('express');
 const app = express();
 const User = require('./models/user.js');
 
-app.use('/', require('./routes/timelineRoutes.js'));
+app.use('/', require('./routes/timelineRouter'));
 
 //make a route that uses quickstart as middleware
 
