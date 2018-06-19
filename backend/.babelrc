@@ -1,4 +1,13 @@
 {
-  "presets": ["es2015", "env", "react", "stage-0"],
-  "plugins": ["transform-class-properties", "autobind-class-methods", "transform-object-rest-spread"]
+  "presets": [
+    "es2015",
+    "env",
+    "react",
+    "stage-0"
+  ],
+  "plugins": [
+    "transform-class-properties",
+    "autobind-class-methods",
+    "transform-object-rest-spread"
+  ]
 }

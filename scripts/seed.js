@@ -1,4 +1,4 @@
-let USERS = `
+let USERS =`
 bleh@bleh.com,Adoree,MacGillespie
 997,Nisse,Grellis
 998,Todd,Vedeniktov
@@ -21,7 +21,7 @@ const User = require('../models/userModel.js');
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI);
 
-USERS.forEach(user => {
+USERS.forEach(user =>{
   User.create(user);
 });
 

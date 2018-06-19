@@ -3,15 +3,30 @@ const superagent = require('superagent');
 const User = require('../model/user.js');
 const fs = require('fs');
 const express = require('express');
+const jsonParser = require('body-parser').json();
 const router = express.Router();
 let { google } = require('googleapis');
+<<<<<<< HEAD
 const Timeline = require('../model/model.js');
+=======
+const User = require('../models/User.js');
+
+>>>>>>> a24d94993d8fc528307124467e3e05ef40e4037d
 const readline = require('readline');
 
 const SCOPES = [
   'https://www.googleapis.com/auth/calendar'
 ];
 const TOKEN_PATH = './timeline.js';
+
+router.post('/api/user', jsonParser, function (req, res, next){
+  new User(req.body).save()
+  .then( data => {
+    res.json(data);
+  })
+  .catch(next);
+});
+
 
 
 
