@@ -12,7 +12,11 @@ const User = require('./models/user.js');
 
 app.use('/', require('./routes/timelineRouter'));
 
-//make a route that uses quickstart as middleware
+// const mongoose = require('mongoose');
+// mongoose.connect(process.env.MONGODB_URI);
+
+
+// app.use('/home', require('./routes/timelineRouter.js'));
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {
