@@ -4,8 +4,8 @@ let { google } = require('googleapis');
 let privatekey = require('./client_secret.json');
 let superagent = require('superagent');
 let cookie = require('cookie');
-// const mongoose = require('mongoose');
-// mongoose.connect(process.env.MONGODB_URI);
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_URI);
 const express = require('express');
 const app = express();
 const User = require('./models/user.js');
@@ -33,8 +33,8 @@ app.get('/callback', (req, res) => {
       .then(response => {
         console.log('35========== res.body', response.body);
         return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
-        .set('Authorization', `Bearer ${response.body.access_token}`);
-      }).then( response => { 
+          .set('Authorization', `Bearer ${response.body.access_token}`);
+      }).then(response => {
         console.log('open id google pluse', response.body);
         return User.mongoOAUTH(response.body);
       })
