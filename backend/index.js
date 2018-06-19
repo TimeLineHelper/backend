@@ -5,7 +5,7 @@ let privatekey = require('./client_secret.json');
 let superagent = require('superagent');
 let cookie = require('cookie');
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect('mongodb://localhost/timelinehelper');
 const express = require('express');
 const app = express();
 const User = require('./models/user.js');
@@ -18,7 +18,9 @@ app.use('/', require('./routes/timelineRoutes.js'));
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {
+    console.log('inside get line 21');
     res.redirect(process.env.CLIENT_URL);
+
   } else {
 
     superagent.post('https://www.googleapis.com/oauth2/v4/token')
@@ -34,14 +36,12 @@ app.get('/callback', (req, res) => {
 
         return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
           .set('Authorization', `Bearer ${response.body.access_token}`);
-      }).then(response => {
-        return superagent.get('https://www.googleapis.com/auth/calendar/v3/me/openIdConnect')
-          .set('Authorization', `Bearer ${response.body.access_token}`);
-      }).then(response => {
+      })
+      .then(response => {
         console.log('43 RESPONSE TEST', response.body);
       })
       .catch(response => {
-        console.log('response!!!!!!!!!!!!!!!!!!!!!!!!!!!!11', response.body);
+        console.log('response!!!!!!!!!!!!!!!!!!!!!!!!!!!!11  index.js line 43', response.body);
         //Initial request, not to be confused with the response we passed through 
         res.cookie('cookie', cookieToken);
         res.redirect(process.env.CLIENT_URL);

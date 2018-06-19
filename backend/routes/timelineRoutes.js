@@ -1,17 +1,13 @@
 'use strict';
 const superagent = require('superagent');
-const User = require('../model/user.js');
+const User = require('../models/user.js');
 const fs = require('fs');
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const router = express.Router();
 let { google } = require('googleapis');
-<<<<<<< HEAD
-const Timeline = require('../model/model.js');
-=======
-const User = require('../models/User.js');
 
->>>>>>> a24d94993d8fc528307124467e3e05ef40e4037d
+
 const readline = require('readline');
 
 const SCOPES = [
@@ -19,13 +15,25 @@ const SCOPES = [
 ];
 const TOKEN_PATH = './timeline.js';
 
-router.post('/api/user', jsonParser, function (req, res, next){
+router.post('/api/user', jsonParser, function (req, res, next) {
+  console.log('in timelines route b4 new user adding req', req.body);
   new User(req.body).save()
-  .then( data => {
-    res.json(data);
-  })
-  .catch(next);
+    .then(data => {
+      console.log('data line 22', data);
+      res.json(data);
+    })
+    .catch(next);
 });
+
+router.get('/api/user', function (req, res, next) {
+  User.find({})
+    .then(user => {
+      console.log('data line 22', user);
+      res.json(user);
+    })
+    .catch(next);
+});
+
 
 
 
