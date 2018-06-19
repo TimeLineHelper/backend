@@ -7,13 +7,9 @@ import {
   Link
 } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import TIMLINE from './components/timeline.js';
 
 import './style/main.css';
 import './style/timeLine.css';
-
-// import Timeline from './components/timeline';
-// import MainPage from './components/mainPage';
 
 // Timeline Funcionality
 function isElementInViewport(el) {
@@ -41,13 +37,18 @@ window.addEventListener('load', callbackFunc);
 window.addEventListener('scroll', callbackFunc);
 // End Timeline Functionality
 
+
 class MainPage extends Component {
   render() {
     return <Fragment>
-      <h1 id="mainTitle">Track It</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut posuere libero nulla, ac lobortis libero tincidunt non. Nulla magna nisi, vehicula vitae neque at, cursus varius massa. Pellentesque sollicitudin enim vitae sollicitudin pulvinar. Quisque a risus vel erat mollis aliquet.</p>
-      <h2>Begin tracking now!</h2>
-      <p><Link to="/create-timeline">Create-timeline</Link></p>
+      <div>
+        <h1 id="mainTitle">Marathon Timeline</h1>
+        <p>timeline goes here</p>
+      </div>
+      <div>
+        <h2>Highlights</h2>
+        <p>task info goes here</p>
+      </div>
     </Fragment>;
   }
 }
@@ -61,26 +62,6 @@ class App extends Component {
     </BrowserRouter>;
   }
 }
-
-// class App extends Component {
-//   render(){
-//     return <BrowserRouter>
-//       <Fragment>
-//         <nav>
-//           <h1>TimeLine App</h1>
-//           <ul>
-//             {/* <li><Link to='/'>Main Page</Link></li> */}
-//             <li><Link to='/create-timeline'>Timeline</Link></li>
-//           </ul>
-//         </nav>
-//         <div>
-//           {/* <Route exact path="/" component={MainPage} /> */}
-//           <Route path="/create-timeline" component={Timeline} />
-//         </div>
-//       </Fragment>
-//     </BrowserRouter>;
-//   }
-// }
 
 let root = document.getElementById('root');
 ReactDOM.render(<App/>, root);
