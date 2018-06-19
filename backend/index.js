@@ -12,9 +12,7 @@ const User = require('./models/user.js');
 
 app.use('/', require('./routes/timelineRoutes.js'));
 
-
 //make a route that uses quickstart as middleware
-
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {

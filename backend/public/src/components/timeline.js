@@ -1,47 +1,63 @@
-'use strict';
- 
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 
-import Token from '../../../credentials.json';
+import TaskList from './tasks/taskList';
+import TaskForm from './tasks/taskForm';
 
-export default class TIMLINE extends Component {
-  
-    
-    state = {
-      
-    }
-  
-  calanderButton = () => {
-    console.log('button clicked');  
+export default class Timeline extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      begin: new Date(),
+      tasks: [{
+        // dailyTasks: [{
+        name: 'Food',
+        items: [
+          {name: 'run', description: 'meet Andy at Greenlake'}
+        ],
+      }], 
+        // weeklyTasks: [{
+        //   name: '',
+        //   items: [],
+        // }],
+        // monthlyTasks: [{
+        //   name: '',
+        //   items: [],
+        // }],
+        // milestones: {
+        //   date: Date(),
+        //   // Image: Image(),
+        //   Alert: 'Congratulations!',
+        // },
+      // }],
+      end: new Date(),
+    };
+  }
 
-      fetch('http://localhost:3000/callback')
-      .then(
-        function(response) {
-          if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-              response.status);
-            return;
-          }
-    
-          // Examine the text in the response
-          response.json().then(function(data) {
-            console.log(data);
-          res.write('<h1>' + data + '</h1>');
-    
-          });
-        }
-      )
-      .catch(function(err) {
-        console.log('Fetch Error :-S', err);
-      });
+  addTask = (task) => {
+    console.log('task', task);
+    let newTask = {};
+    Object.assign(newTask, this.state);
+    newTask.tasks.push(task);
+    console.log('new Task', newTask);
+    this.setState({newTask});
+  }
+
+  removeTask = (id) => {
+    let remainder = this.state.tasks.filter(task => {
+      return task.id !== id;
+    });
+    this.setState({tasks: remainder});
   }
 
   render() {
-   return <Fragment>
-    <h1>Users</h1>
-    <p>put state stuff here </p>
-    <button onClick={this.calanderButton}>Button</button>
-    <p>{this.state.test} </p>
-    </Fragment>
+    return <div>
+      <h1>Create Tasks to Reach Your Goal!</h1>
+      <TaskForm addTask={this.addTask} 
+        buttonText='create'>
+      </TaskForm>
+      <TaskList tasks={this.state.tasks} 
+        removeTask={this.removeTask}>
+      </TaskList>
+    </div>;
   }
 }

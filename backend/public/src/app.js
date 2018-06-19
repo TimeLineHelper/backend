@@ -1,35 +1,32 @@
-'use strict';
 import React, {Component, Fragment} from 'react';
 import {
   BrowserRouter,
   Route,
   Link
 } from 'react-router-dom';
-
 import ReactDOM from 'react-dom';
 import TIMLINE from './components/timeline.js';
 
-class MainPage extends Component {
-  render() {
-   return <Fragment>
-    <h1>MainPage</h1>
-    <p>stuff and things</p>
-    <p><Link to="/create-timeline">Create-timeline</Link></p>
-    </Fragment>
-  }
-}
+import Timeline from './components/timeline';
+// import MainPage from './components/mainPage';
 
-
-
-class App extends Component {
+export default class App extends Component {
   render(){
     return <BrowserRouter>
       <Fragment>
-      <h1>TimeLine App</h1>
-      <Route exact path="/" component={MainPage}/>
-      <Route exact path="/timeline" component={TIMLINE}/>
+        <nav>
+          <h1>TimeLine App</h1>
+          <ul>
+            {/* <li><Link to='/'>Main Page</Link></li> */}
+            <li><Link to='/create-timeline'>Timeline</Link></li>
+          </ul>
+        </nav>
+        <div>
+          {/* <Route exact path="/" component={MainPage} /> */}
+          <Route path="/create-timeline" component={Timeline} />
+        </div>
       </Fragment>
-    </BrowserRouter>
+    </BrowserRouter>;
   }
 }
 

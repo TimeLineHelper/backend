@@ -34,9 +34,17 @@
     "react-dom": "^16.4.0",
     "react-google-calendar-api": "^1.0.7",
     "react-router-dom": "^4.3.1",
-    "superagent": "^3.8.3"
+    "superagent": "^3.8.3",
+    "uuidv4": "^1.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "src/*",
+      "dist/*",
+      ".cache/*"
+    ]
   }
 }
