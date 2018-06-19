@@ -9,31 +9,15 @@
 </head>
 
 <body>
-  <h1>We love calendars!</h1>
-  <div id="root"></div>
-  <script src="/app.990afd55.js"></script>
-</body>
-
-</html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Timeline Helper App</title>
-</head>
-
-<body>
   <h1>Google OAuth Login</h1>
   <script>
+
     let a = document.createElement('a');
     let AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
-    let clientIDQuery = 'client_id=1085617298907-hi1l3l8nsm5pq415j27cbsk2rlp9c6nj.apps.googleusercontent.com'
-      ;
+    let clientIDQuery = 'client_id=1085617298907-35lrja0a9k91oq9g8s7g8p03biq2816a.apps.googleusercontent.com';
     let responseTypeQuery = 'response_type=code';
     let scopeQuery = 'scope=openid%20profile%20email';
+    //change for calander//
     let promptQuery = 'prompt=consent';
     let redirectURIQuery = 'redirect_uri=http://localhost:3000/callback';
     let formattedURL =
@@ -41,8 +25,10 @@
 
     a.setAttribute('href', formattedURL);
     a.textContent = 'login with google';
-    console.log('the URL we built:', formattedURL);
+    console.log('******************************the URL we built:', formattedURL);
+
     document.body.append(a);
+    //pass some of this data in as prompts for react//
 
     if (!document.cookie) {
       a.textContent = 'You are not logged in';
@@ -57,7 +43,7 @@
   </script>
   <h1>We love calendars!</h1>
   <div id="root"></div>
-  <script src="/app.990afd55.js"></script>
+  <script src="/app.01e82979.js"></script>
 </body>
 
 </html>

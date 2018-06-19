@@ -98,7 +98,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({22:[function(require,module,exports) {
+})({63:[function(require,module,exports) {
 /*
 object-assign
 (c) Sindre Sorhus
@@ -189,7 +189,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 	return to;
 };
-},{}],23:[function(require,module,exports) {
+},{}],66:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -243,7 +243,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-},{}],24:[function(require,module,exports) {
+},{}],68:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -261,7 +261,7 @@ if (undefined !== 'production') {
 }
 
 module.exports = emptyObject;
-},{}],26:[function(require,module,exports) {
+},{}],64:[function(require,module,exports) {
 "use strict";
 
 /**
@@ -298,7 +298,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],25:[function(require,module,exports) {
+},{}],65:[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -361,7 +361,7 @@ if (undefined !== 'production') {
 }
 
 module.exports = warning;
-},{"./emptyFunction":26}],49:[function(require,module,exports) {
+},{"./emptyFunction":64}],62:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -375,7 +375,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],27:[function(require,module,exports) {
+},{}],61:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -435,8 +435,8 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 }
 
 module.exports = checkPropTypes;
-},{"fbjs/lib/invariant":23,"fbjs/lib/warning":25,"./lib/ReactPropTypesSecret":49}],6:[function(require,module,exports) {
-/** @license React v16.4.0
+},{"fbjs/lib/invariant":66,"fbjs/lib/warning":65,"./lib/ReactPropTypesSecret":62}],6:[function(require,module,exports) {
+/** @license React v16.4.1
  * react.development.js
  *
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -460,7 +460,7 @@ if (undefined !== "production") {
 
     // TODO: this is special because it gets imported during build.
 
-    var ReactVersion = '16.4.0';
+    var ReactVersion = '16.4.1';
 
     // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
     // nor polyfill, then a plain number is used for performance.
@@ -522,9 +522,6 @@ if (undefined !== "production") {
 
 
     // Gather advanced timing metrics for Profiler subtrees.
-
-
-    // Fires getDerivedStateFromProps for state *or* props changes
 
 
     // Only used in www builds.
@@ -1322,7 +1319,7 @@ if (undefined !== "production") {
     /**
      * Iterates through children that are typically specified as `props.children`.
      *
-     * See https://reactjs.org/docs/react-api.html#react.children.foreach
+     * See https://reactjs.org/docs/react-api.html#reactchildrenforeach
      *
      * The provided forEachFunc(child, index) will be called for each
      * leaf child.
@@ -1373,7 +1370,7 @@ if (undefined !== "production") {
     /**
      * Maps children that are typically specified as `props.children`.
      *
-     * See https://reactjs.org/docs/react-api.html#react.children.map
+     * See https://reactjs.org/docs/react-api.html#reactchildrenmap
      *
      * The provided mapFunction(child, key, index) will be called for each
      * leaf child.
@@ -1396,7 +1393,7 @@ if (undefined !== "production") {
      * Count the number of children that are typically specified as
      * `props.children`.
      *
-     * See https://reactjs.org/docs/react-api.html#react.children.count
+     * See https://reactjs.org/docs/react-api.html#reactchildrencount
      *
      * @param {?*} children Children tree container.
      * @return {number} The number of children.
@@ -1409,7 +1406,7 @@ if (undefined !== "production") {
      * Flatten a children object (typically specified as `props.children`) and
      * return an array with appropriately re-keyed children.
      *
-     * See https://reactjs.org/docs/react-api.html#react.children.toarray
+     * See https://reactjs.org/docs/react-api.html#reactchildrentoarray
      */
     function toArray(children) {
       var result = [];
@@ -1421,7 +1418,7 @@ if (undefined !== "production") {
      * Returns the first child in a collection of children and verifies that there
      * is only one child in the collection.
      *
-     * See https://reactjs.org/docs/react-api.html#react.children.only
+     * See https://reactjs.org/docs/react-api.html#reactchildrenonly
      *
      * The current implementation of this function assumes that a single child gets
      * passed without a wrapper, but the purpose of this helper function is to
@@ -1564,10 +1561,16 @@ if (undefined !== "production") {
           return '#text';
         } else if (typeof element.type === 'string') {
           return element.type;
-        } else if (element.type === REACT_FRAGMENT_TYPE) {
+        }
+
+        var type = element.type;
+        if (type === REACT_FRAGMENT_TYPE) {
           return 'React.Fragment';
+        } else if (typeof type === 'object' && type !== null && type.$$typeof === REACT_FORWARD_REF_TYPE) {
+          var functionName = type.render.displayName || type.render.name || '';
+          return functionName !== '' ? 'ForwardRef(' + functionName + ')' : 'ForwardRef';
         } else {
-          return element.type.displayName || element.type.name || 'Unknown';
+          return type.displayName || type.name || 'Unknown';
         }
       };
 
@@ -1711,22 +1714,31 @@ if (undefined !== "production") {
      * @param {ReactElement} element
      */
     function validatePropTypes(element) {
-      var componentClass = element.type;
-      if (typeof componentClass !== 'function') {
+      var type = element.type;
+      var name = void 0,
+          propTypes = void 0;
+      if (typeof type === 'function') {
+        // Class or functional component
+        name = type.displayName || type.name;
+        propTypes = type.propTypes;
+      } else if (typeof type === 'object' && type !== null && type.$$typeof === REACT_FORWARD_REF_TYPE) {
+        // ForwardRef
+        var functionName = type.render.displayName || type.render.name || '';
+        name = functionName !== '' ? 'ForwardRef(' + functionName + ')' : 'ForwardRef';
+        propTypes = type.propTypes;
+      } else {
         return;
       }
-      var name = componentClass.displayName || componentClass.name;
-      var propTypes = componentClass.propTypes;
       if (propTypes) {
         currentlyValidatingElement = element;
         checkPropTypes(propTypes, element.props, 'prop', name, getStackAddendum);
         currentlyValidatingElement = null;
-      } else if (componentClass.PropTypes !== undefined && !propTypesMisspellWarningShown) {
+      } else if (type.PropTypes !== undefined && !propTypesMisspellWarningShown) {
         propTypesMisspellWarningShown = true;
         warning(false, 'Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?', name || 'Unknown');
       }
-      if (typeof componentClass.getDefaultProps === 'function') {
-        !componentClass.getDefaultProps.isReactClassApproved ? warning(false, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.') : void 0;
+      if (typeof type.getDefaultProps === 'function') {
+        !type.getDefaultProps.isReactClassApproved ? warning(false, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.') : void 0;
       }
     }
 
@@ -1904,7 +1916,7 @@ if (undefined !== "production") {
     module.exports = react;
   })();
 }
-},{"object-assign":22,"fbjs/lib/invariant":23,"fbjs/lib/emptyObject":24,"fbjs/lib/warning":25,"fbjs/lib/emptyFunction":26,"prop-types/checkPropTypes":27}],3:[function(require,module,exports) {
+},{"object-assign":63,"fbjs/lib/invariant":66,"fbjs/lib/emptyObject":68,"fbjs/lib/warning":65,"fbjs/lib/emptyFunction":64,"prop-types/checkPropTypes":61}],5:[function(require,module,exports) {
 'use strict';
 
 if (undefined === 'production') {
@@ -1912,7 +1924,7 @@ if (undefined === 'production') {
 } else {
   module.exports = require('./cjs/react.development.js');
 }
-},{"./cjs/react.development.js":6}],28:[function(require,module,exports) {
+},{"./cjs/react.development.js":6}],37:[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -1973,7 +1985,7 @@ if (__DEV__) {
 }
 
 module.exports = warning;
-},{}],48:[function(require,module,exports) {
+},{}],41:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2490,7 +2502,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 
   return ReactPropTypes;
 };
-},{"fbjs/lib/emptyFunction":26,"fbjs/lib/invariant":23,"fbjs/lib/warning":25,"object-assign":22,"./lib/ReactPropTypesSecret":49,"./checkPropTypes":27}],29:[function(require,module,exports) {
+},{"fbjs/lib/emptyFunction":64,"fbjs/lib/invariant":66,"fbjs/lib/warning":65,"object-assign":63,"./lib/ReactPropTypesSecret":62,"./checkPropTypes":61}],35:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2514,7 +2526,7 @@ if (undefined !== 'production') {
   // http://fb.me/prop-types-in-prod
   module.exports = require('./factoryWithThrowingShims')();
 }
-},{"./factoryWithTypeCheckers":48}],63:[function(require,module,exports) {
+},{"./factoryWithTypeCheckers":41}],58:[function(require,module,exports) {
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -2568,7 +2580,7 @@ if (undefined !== 'production') {
 }
 
 module.exports = warning;
-},{}],31:[function(require,module,exports) {
+},{}],38:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2615,7 +2627,7 @@ var invariant = function (condition, format, a, b, c, d, e, f) {
 };
 
 module.exports = invariant;
-},{}],64:[function(require,module,exports) {
+},{}],52:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2691,7 +2703,7 @@ function resolvePathname(to) {
 }
 
 exports.default = resolvePathname;
-},{}],65:[function(require,module,exports) {
+},{}],53:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2739,7 +2751,7 @@ function valueEqual(a, b) {
 }
 
 exports.default = valueEqual;
-},{}],54:[function(require,module,exports) {
+},{}],47:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2802,7 +2814,7 @@ var createPath = exports.createPath = function createPath(location) {
 
   return path;
 };
-},{}],53:[function(require,module,exports) {
+},{}],46:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2891,7 +2903,7 @@ var createLocation = exports.createLocation = function createLocation(path, stat
 var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a, b) {
   return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && (0, _valueEqual2.default)(a.state, b.state);
 };
-},{"resolve-pathname":64,"value-equal":65,"./PathUtils":54}],60:[function(require,module,exports) {
+},{"resolve-pathname":52,"value-equal":53,"./PathUtils":47}],57:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2979,7 +2991,7 @@ var createTransitionManager = function createTransitionManager() {
 };
 
 exports.default = createTransitionManager;
-},{"warning":63}],61:[function(require,module,exports) {
+},{"warning":58}],59:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3037,7 +3049,7 @@ var supportsGoWithoutReloadUsingHash = exports.supportsGoWithoutReloadUsingHash 
 var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
   return event.state === undefined && navigator.userAgent.indexOf('CriOS') === -1;
 };
-},{}],50:[function(require,module,exports) {
+},{}],43:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3356,7 +3368,7 @@ var createBrowserHistory = function createBrowserHistory() {
 };
 
 exports.default = createBrowserHistory;
-},{"warning":63,"invariant":31,"./LocationUtils":53,"./PathUtils":54,"./createTransitionManager":60,"./DOMUtils":61}],51:[function(require,module,exports) {
+},{"warning":58,"invariant":38,"./LocationUtils":46,"./PathUtils":47,"./createTransitionManager":57,"./DOMUtils":59}],44:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3690,7 +3702,7 @@ var createHashHistory = function createHashHistory() {
 };
 
 exports.default = createHashHistory;
-},{"warning":63,"invariant":31,"./LocationUtils":53,"./PathUtils":54,"./createTransitionManager":60,"./DOMUtils":61}],52:[function(require,module,exports) {
+},{"warning":58,"invariant":38,"./LocationUtils":46,"./PathUtils":47,"./createTransitionManager":57,"./DOMUtils":59}],45:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3874,7 +3886,7 @@ var createMemoryHistory = function createMemoryHistory() {
 };
 
 exports.default = createMemoryHistory;
-},{"warning":63,"./PathUtils":54,"./LocationUtils":53,"./createTransitionManager":60}],30:[function(require,module,exports) {
+},{"warning":58,"./PathUtils":47,"./LocationUtils":46,"./createTransitionManager":57}],36:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3929,7 +3941,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.createBrowserHistory = _createBrowserHistory3.default;
 exports.createHashHistory = _createHashHistory3.default;
 exports.createMemoryHistory = _createMemoryHistory3.default;
-},{"./createBrowserHistory":50,"./createHashHistory":51,"./createMemoryHistory":52,"./LocationUtils":53,"./PathUtils":54}],43:[function(require,module,exports) {
+},{"./createBrowserHistory":43,"./createHashHistory":44,"./createMemoryHistory":45,"./LocationUtils":46,"./PathUtils":47}],26:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4072,7 +4084,7 @@ Router.childContextTypes = {
 };
 
 exports.default = Router;
-},{"warning":28,"invariant":31,"react":3,"prop-types":29}],17:[function(require,module,exports) {
+},{"warning":37,"invariant":38,"react":5,"prop-types":35}],16:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4086,7 +4098,7 @@ var _Router2 = _interopRequireDefault(_Router);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Router2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Router":43}],8:[function(require,module,exports) {
+},{"react-router/es/Router":26}],7:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4170,7 +4182,7 @@ BrowserRouter.propTypes = {
 };
 
 exports.default = BrowserRouter;
-},{"warning":28,"react":3,"prop-types":29,"history":30,"./Router":17}],9:[function(require,module,exports) {
+},{"warning":37,"react":5,"prop-types":35,"history":36,"./Router":16}],9:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4253,7 +4265,7 @@ HashRouter.propTypes = {
 };
 
 exports.default = HashRouter;
-},{"warning":28,"react":3,"prop-types":29,"history":30,"./Router":17}],10:[function(require,module,exports) {
+},{"warning":37,"react":5,"prop-types":35,"history":36,"./Router":16}],10:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4397,7 +4409,7 @@ Link.contextTypes = {
 };
 
 exports.default = Link;
-},{"react":3,"prop-types":29,"invariant":31,"history":30}],32:[function(require,module,exports) {
+},{"react":5,"prop-types":35,"invariant":38,"history":36}],28:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4481,7 +4493,7 @@ MemoryRouter.propTypes = {
 };
 
 exports.default = MemoryRouter;
-},{"warning":28,"react":3,"prop-types":29,"history":30,"./Router":43}],11:[function(require,module,exports) {
+},{"warning":37,"react":5,"prop-types":35,"history":36,"./Router":26}],11:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4495,12 +4507,12 @@ var _MemoryRouter2 = _interopRequireDefault(_MemoryRouter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _MemoryRouter2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/MemoryRouter":32}],66:[function(require,module,exports) {
+},{"react-router/es/MemoryRouter":28}],54:[function(require,module,exports) {
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],58:[function(require,module,exports) {
+},{}],42:[function(require,module,exports) {
 var isarray = require('isarray')
 
 /**
@@ -4928,7 +4940,7 @@ function pathToRegexp (path, keys, options) {
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
 
-},{"isarray":66}],44:[function(require,module,exports) {
+},{"isarray":54}],29:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5010,7 +5022,7 @@ var matchPath = function matchPath(pathname) {
 };
 
 exports.default = matchPath;
-},{"path-to-regexp":58}],41:[function(require,module,exports) {
+},{"path-to-regexp":42}],32:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5191,7 +5203,7 @@ Route.childContextTypes = {
 };
 
 exports.default = Route;
-},{"warning":28,"invariant":31,"react":3,"prop-types":29,"./matchPath":44}],15:[function(require,module,exports) {
+},{"warning":37,"invariant":38,"react":5,"prop-types":35,"./matchPath":29}],15:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5205,7 +5217,7 @@ var _Route2 = _interopRequireDefault(_Route);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Route2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Route":41}],12:[function(require,module,exports) {
+},{"react-router/es/Route":32}],12:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5315,7 +5327,7 @@ NavLink.defaultProps = {
 };
 
 exports.default = NavLink;
-},{"react":3,"prop-types":29,"./Route":15,"./Link":10}],34:[function(require,module,exports) {
+},{"react":5,"prop-types":35,"./Route":15,"./Link":10}],25:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5422,7 +5434,7 @@ Prompt.contextTypes = {
 };
 
 exports.default = Prompt;
-},{"react":3,"prop-types":29,"invariant":31}],13:[function(require,module,exports) {
+},{"react":5,"prop-types":35,"invariant":38}],13:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5436,7 +5448,7 @@ var _Prompt2 = _interopRequireDefault(_Prompt);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Prompt2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Prompt":34}],46:[function(require,module,exports) {
+},{"react-router/es/Prompt":25}],30:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5484,7 +5496,7 @@ var generatePath = function generatePath() {
 };
 
 exports.default = generatePath;
-},{"path-to-regexp":58}],33:[function(require,module,exports) {
+},{"path-to-regexp":42}],33:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5640,7 +5652,7 @@ Redirect.contextTypes = {
 };
 
 exports.default = Redirect;
-},{"react":3,"prop-types":29,"warning":28,"invariant":31,"history":30,"./generatePath":46}],14:[function(require,module,exports) {
+},{"react":5,"prop-types":35,"warning":37,"invariant":38,"history":36,"./generatePath":30}],14:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5654,7 +5666,7 @@ var _Redirect2 = _interopRequireDefault(_Redirect);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Redirect2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Redirect":33}],42:[function(require,module,exports) {
+},{"react-router/es/Redirect":33}],31:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5851,7 +5863,7 @@ StaticRouter.childContextTypes = {
 };
 
 exports.default = StaticRouter;
-},{"warning":28,"invariant":31,"react":3,"prop-types":29,"history":30,"./Router":43}],16:[function(require,module,exports) {
+},{"warning":37,"invariant":38,"react":5,"prop-types":35,"history":36,"./Router":26}],17:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5865,7 +5877,7 @@ var _StaticRouter2 = _interopRequireDefault(_StaticRouter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _StaticRouter2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/StaticRouter":42}],45:[function(require,module,exports) {
+},{"react-router/es/StaticRouter":31}],27:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5976,7 +5988,7 @@ Switch.propTypes = {
 };
 
 exports.default = Switch;
-},{"react":3,"prop-types":29,"warning":28,"invariant":31,"./matchPath":44}],18:[function(require,module,exports) {
+},{"react":5,"prop-types":35,"warning":37,"invariant":38,"./matchPath":29}],18:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5990,7 +6002,7 @@ var _Switch2 = _interopRequireDefault(_Switch);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Switch2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Switch":45}],19:[function(require,module,exports) {
+},{"react-router/es/Switch":27}],19:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6004,7 +6016,7 @@ var _generatePath2 = _interopRequireDefault(_generatePath);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _generatePath2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/generatePath":46}],20:[function(require,module,exports) {
+},{"react-router/es/generatePath":30}],20:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6018,7 +6030,7 @@ var _matchPath2 = _interopRequireDefault(_matchPath);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _matchPath2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/matchPath":44}],59:[function(require,module,exports) {
+},{"react-router/es/matchPath":29}],48:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6088,7 +6100,7 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
 
 module.exports = hoistNonReactStatics;
 
-},{}],47:[function(require,module,exports) {
+},{}],34:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6156,7 +6168,7 @@ var withRouter = function withRouter(Component) {
 };
 
 exports.default = withRouter;
-},{"react":3,"prop-types":29,"hoist-non-react-statics":59,"./Route":41}],21:[function(require,module,exports) {
+},{"react":5,"prop-types":35,"hoist-non-react-statics":48,"./Route":32}],21:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6170,7 +6182,7 @@ var _withRouter2 = _interopRequireDefault(_withRouter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _withRouter2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/withRouter":47}],4:[function(require,module,exports) {
+},{"react-router/es/withRouter":34}],4:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6250,7 +6262,7 @@ exports.Switch = _Switch3.default;
 exports.generatePath = _generatePath3.default;
 exports.matchPath = _matchPath3.default;
 exports.withRouter = _withRouter3.default;
-},{"./BrowserRouter":8,"./HashRouter":9,"./Link":10,"./MemoryRouter":11,"./NavLink":12,"./Prompt":13,"./Redirect":14,"./Route":15,"./Router":17,"./StaticRouter":16,"./Switch":18,"./generatePath":19,"./matchPath":20,"./withRouter":21}],35:[function(require,module,exports) {
+},{"./BrowserRouter":7,"./HashRouter":9,"./Link":10,"./MemoryRouter":11,"./NavLink":12,"./Prompt":13,"./Redirect":14,"./Route":15,"./Router":16,"./StaticRouter":17,"./Switch":18,"./generatePath":19,"./matchPath":20,"./withRouter":21}],69:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -6284,7 +6296,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],36:[function(require,module,exports) {
+},{}],70:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6321,7 +6333,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-},{}],37:[function(require,module,exports) {
+},{}],71:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -6387,7 +6399,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-},{}],62:[function(require,module,exports) {
+},{}],78:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6410,7 +6422,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-},{}],55:[function(require,module,exports) {
+},{}],75:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6433,7 +6445,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":62}],38:[function(require,module,exports) {
+},{"./isNode":78}],72:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6471,7 +6483,7 @@ function containsNode(outerNode, innerNode) {
 }
 
 module.exports = containsNode;
-},{"./isTextNode":55}],56:[function(require,module,exports) {
+},{"./isTextNode":75}],76:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6502,7 +6514,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-},{}],39:[function(require,module,exports) {
+},{}],73:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -6539,7 +6551,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-},{"./hyphenate":56}],57:[function(require,module,exports) {
+},{"./hyphenate":76}],77:[function(require,module,exports) {
 "use strict";
 
 /**
@@ -6569,7 +6581,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],40:[function(require,module,exports) {
+},{}],74:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -6607,8 +6619,8 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-},{"./camelize":57}],7:[function(require,module,exports) {
-/** @license React v16.4.0
+},{"./camelize":77}],22:[function(require,module,exports) {
+/** @license React v16.4.1
  * react-dom.development.js
  *
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -8813,7 +8825,9 @@ if (undefined !== "production") {
      * @return {DOMEventTarget} Target node.
      */
     function getEventTarget(nativeEvent) {
-      var target = nativeEvent.target || window;
+      // Fallback to nativeEvent.srcElement for IE9
+      // https://github.com/facebook/react/issues/12506
+      var target = nativeEvent.target || nativeEvent.srcElement || window;
 
       // Normalize SVG <use> element events #4963
       if (target.correspondingUseElement) {
@@ -9709,20 +9723,28 @@ if (undefined !== "production") {
       }
     }
 
-    function postMountWrapper(element, props) {
+    function postMountWrapper(element, props, isHydrating) {
       var node = element;
 
       if (props.hasOwnProperty('value') || props.hasOwnProperty('defaultValue')) {
+        var _initialValue = '' + node._wrapperState.initialValue;
+        var currentValue = node.value;
+
         // Do not assign value if it is already set. This prevents user text input
         // from being lost during SSR hydration.
-        if (node.value === '') {
-          node.value = '' + node._wrapperState.initialValue;
+        if (!isHydrating) {
+          // Do not re-assign the value property if there is no change. This
+          // potentially avoids a DOM write and prevents Firefox (~60.0.1) from
+          // prematurely marking required inputs as invalid
+          if (_initialValue !== currentValue) {
+            node.value = _initialValue;
+          }
         }
 
         // value must be assigned before defaultValue. This fixes an issue where the
         // visually displayed value of date inputs disappears on mobile Safari and Chrome:
         // https://github.com/facebook/react/issues/7233
-        node.defaultValue = '' + node._wrapperState.initialValue;
+        node.defaultValue = _initialValue;
       }
 
       // Normally, we'd just do `node.checked = node.checked` upon initial mount, less this bug
@@ -9995,14 +10017,8 @@ if (undefined !== "production") {
       }
     }
 
-    function handleControlledInputBlur(inst, node) {
-      // TODO: In IE, inst is occasionally null. Why?
-      if (inst == null) {
-        return;
-      }
-
-      // Fiber and ReactDOM keep wrapper state in separate places
-      var state = inst._wrapperState || node._wrapperState;
+    function handleControlledInputBlur(node) {
+      var state = node._wrapperState;
 
       if (!state || !state.controlled || node.type !== 'number') {
         return;
@@ -10059,7 +10075,7 @@ if (undefined !== "production") {
 
         // When blurring, set the value attribute for number inputs
         if (topLevelType === TOP_BLUR) {
-          handleControlledInputBlur(targetInst, targetNode);
+          handleControlledInputBlur(targetNode);
         }
       }
     };
@@ -11549,9 +11565,14 @@ if (undefined !== "production") {
      * Input selection module for React.
      */
 
+    /**
+     * @hasSelectionCapabilities: we get the element types that support selection
+     * from https://html.spec.whatwg.org/#do-not-apply, looking at `selectionStart`
+     * and `selectionEnd` rows.
+     */
     function hasSelectionCapabilities(elem) {
       var nodeName = elem && elem.nodeName && elem.nodeName.toLowerCase();
-      return nodeName && (nodeName === 'input' && elem.type === 'text' || nodeName === 'textarea' || elem.contentEditable === 'true');
+      return nodeName && (nodeName === 'input' && (elem.type === 'text' || elem.type === 'search' || elem.type === 'tel' || elem.type === 'url' || elem.type === 'password') || nodeName === 'textarea' || elem.contentEditable === 'true');
     }
 
     function getSelectionInformation() {
@@ -11572,7 +11593,7 @@ if (undefined !== "production") {
       var priorFocusedElem = priorSelectionInformation.focusedElem;
       var priorSelectionRange = priorSelectionInformation.selectionRange;
       if (curFocusedElem !== priorFocusedElem && isInDocument(priorFocusedElem)) {
-        if (hasSelectionCapabilities(priorFocusedElem)) {
+        if (priorSelectionRange !== null && hasSelectionCapabilities(priorFocusedElem)) {
           setSelection(priorFocusedElem, priorSelectionRange);
         }
 
@@ -11589,7 +11610,9 @@ if (undefined !== "production") {
           }
         }
 
-        priorFocusedElem.focus();
+        if (typeof priorFocusedElem.focus === 'function') {
+          priorFocusedElem.focus();
+        }
 
         for (var i = 0; i < ancestors.length; i++) {
           var info = ancestors[i];
@@ -11811,11 +11834,11 @@ if (undefined !== "production") {
       BeforeInputEventPlugin: BeforeInputEventPlugin
     });
 
-    {
-      if (ExecutionEnvironment.canUseDOM && typeof requestAnimationFrame !== 'function') {
-        warning(false, 'React depends on requestAnimationFrame. Make sure that you load a ' + 'polyfill in older browsers. https://fb.me/react-polyfills');
-      }
-    }
+    // We capture a local reference to any global, in case it gets polyfilled after
+    // this module is initially evaluated.
+    // We want to be using a consistent implementation.
+
+    var localRequestAnimationFrame$1 = typeof requestAnimationFrame === 'function' ? requestAnimationFrame : undefined;
 
     /**
      * A scheduling library to allow scheduling work with more granular priority and
@@ -11838,32 +11861,42 @@ if (undefined !== "production") {
     // layout, paint and other browser work is counted against the available time.
     // The frame rate is dynamically adjusted.
 
+    // We capture a local reference to any global, in case it gets polyfilled after
+    // this module is initially evaluated.
+    // We want to be using a consistent implementation.
+    var localDate = Date;
+    var localSetTimeout = setTimeout;
+    var localClearTimeout = clearTimeout;
+
     var hasNativePerformanceNow = typeof performance === 'object' && typeof performance.now === 'function';
 
     var now$1 = void 0;
     if (hasNativePerformanceNow) {
+      var Performance = performance;
       now$1 = function () {
-        return performance.now();
+        return Performance.now();
       };
     } else {
       now$1 = function () {
-        return Date.now();
+        return localDate.now();
       };
     }
 
-    // TODO: There's no way to cancel, because Fiber doesn't atm.
     var scheduleWork = void 0;
     var cancelScheduledWork = void 0;
 
     if (!ExecutionEnvironment.canUseDOM) {
-      var callbackIdCounter = 0;
-      // Timeouts are objects in Node.
-      // For consistency, we'll use numbers in the public API anyway.
-      var timeoutIds = {};
+      var timeoutIds = new Map();
 
       scheduleWork = function (callback, options) {
-        var callbackId = callbackIdCounter++;
-        var timeoutId = setTimeout(function () {
+        // keeping return type consistent
+        var callbackConfig = {
+          scheduledCallback: callback,
+          timeoutTime: 0,
+          next: null,
+          prev: null
+        };
+        var timeoutId = localSetTimeout(function () {
           callback({
             timeRemaining: function () {
               return Infinity;
@@ -11872,33 +11905,28 @@ if (undefined !== "production") {
             didTimeout: false
           });
         });
-        timeoutIds[callbackId] = timeoutId;
-        return callbackId;
+        timeoutIds.set(callback, timeoutId);
+        return callbackConfig;
       };
       cancelScheduledWork = function (callbackId) {
-        var timeoutId = timeoutIds[callbackId];
-        delete timeoutIds[callbackId];
-        clearTimeout(timeoutId);
+        var callback = callbackId.scheduledCallback;
+        var timeoutId = timeoutIds.get(callback);
+        timeoutIds.delete(callbackId);
+        localClearTimeout(timeoutId);
       };
     } else {
-      // We keep callbacks in a queue.
-      // Calling scheduleWork will push in a new callback at the end of the queue.
-      // When we get idle time, callbacks are removed from the front of the queue
-      var pendingCallbacks = [];
+      {
+        if (typeof localRequestAnimationFrame$1 !== 'function') {
+          warning(false, 'React depends on requestAnimationFrame. Make sure that you load a ' + 'polyfill in older browsers. https://fb.me/react-polyfills');
+        }
+      }
 
-      var _callbackIdCounter = 0;
-      var getCallbackId = function () {
-        _callbackIdCounter++;
-        return _callbackIdCounter;
+      var localRequestAnimationFrame = typeof localRequestAnimationFrame$1 === 'function' ? localRequestAnimationFrame$1 : function (callback) {
+        invariant(false, 'React depends on requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://fb.me/react-polyfills');
       };
 
-      // When a callback is scheduled, we register it by adding it's id to this
-      // object.
-      // If the user calls 'cancelScheduledWork' with the id of that callback, it will be
-      // unregistered by removing the id from this object.
-      // Then we skip calling any callback which is not registered.
-      // This means cancelling is an O(1) time complexity instead of O(n).
-      var registeredCallbackIds = {};
+      var headOfPendingCallbacksLinkedList = null;
+      var tailOfPendingCallbacksLinkedList = null;
 
       // We track what the next soonest timeoutTime is, to be able to quickly tell
       // if none of the scheduled callbacks have timed out.
@@ -11922,17 +11950,27 @@ if (undefined !== "production") {
         }
       };
 
-      var safelyCallScheduledCallback = function (callback, callbackId) {
-        if (!registeredCallbackIds[callbackId]) {
-          // ignore cancelled callbacks
-          return;
-        }
+      /**
+       * Handles the case where a callback errors:
+       * - don't catch the error, because this changes debugging behavior
+       * - do start a new postMessage callback, to call any remaining callbacks,
+       * - but only if there is an error, so there is not extra overhead.
+       */
+      var callUnsafely = function (callbackConfig, arg) {
+        var callback = callbackConfig.scheduledCallback;
+        var finishedCalling = false;
         try {
-          callback(frameDeadlineObject);
-          // Avoid using 'catch' to keep errors easy to debug
+          callback(arg);
+          finishedCalling = true;
         } finally {
-          // always clean up the callbackId, even if the callback throws
-          delete registeredCallbackIds[callbackId];
+          // always remove it from linked list
+          cancelScheduledWork(callbackConfig);
+
+          if (!finishedCalling) {
+            // an error must have been thrown
+            isIdleScheduled = true;
+            window.postMessage(messageKey, '*');
+          }
         }
       };
 
@@ -11942,7 +11980,7 @@ if (undefined !== "production") {
        * Keeps doing this until there are none which have currently timed out.
        */
       var callTimedOutCallbacks = function () {
-        if (pendingCallbacks.length === 0) {
+        if (headOfPendingCallbacksLinkedList === null) {
           return;
         }
 
@@ -11959,24 +11997,38 @@ if (undefined !== "production") {
           // We know that none of them have timed out yet.
           return;
         }
-        nextSoonestTimeoutTime = -1; // we will reset it below
+        // NOTE: we intentionally wait to update the nextSoonestTimeoutTime until
+        // after successfully calling any timed out callbacks.
+        // If a timed out callback throws an error, we could get stuck in a state
+        // where the nextSoonestTimeoutTime was set wrong.
+        var updatedNextSoonestTimeoutTime = -1; // we will update nextSoonestTimeoutTime below
+        var timedOutCallbacks = [];
 
-        // keep checking until we don't find any more timed out callbacks
-        frameDeadlineObject.didTimeout = true;
-        for (var i = 0, len = pendingCallbacks.length; i < len; i++) {
-          var currentCallbackConfig = pendingCallbacks[i];
+        // iterate once to find timed out callbacks and find nextSoonestTimeoutTime
+        var currentCallbackConfig = headOfPendingCallbacksLinkedList;
+        while (currentCallbackConfig !== null) {
           var _timeoutTime = currentCallbackConfig.timeoutTime;
           if (_timeoutTime !== -1 && _timeoutTime <= currentTime) {
             // it has timed out!
-            // call it
-            var _callback = currentCallbackConfig.scheduledCallback;
-            safelyCallScheduledCallback(_callback, currentCallbackConfig.callbackId);
+            timedOutCallbacks.push(currentCallbackConfig);
           } else {
-            if (_timeoutTime !== -1 && (nextSoonestTimeoutTime === -1 || _timeoutTime < nextSoonestTimeoutTime)) {
-              nextSoonestTimeoutTime = _timeoutTime;
+            if (_timeoutTime !== -1 && (updatedNextSoonestTimeoutTime === -1 || _timeoutTime < updatedNextSoonestTimeoutTime)) {
+              updatedNextSoonestTimeoutTime = _timeoutTime;
             }
           }
+          currentCallbackConfig = currentCallbackConfig.next;
         }
+
+        if (timedOutCallbacks.length > 0) {
+          frameDeadlineObject.didTimeout = true;
+          for (var i = 0, len = timedOutCallbacks.length; i < len; i++) {
+            callUnsafely(timedOutCallbacks[i], frameDeadlineObject);
+          }
+        }
+
+        // NOTE: we intentionally wait to update the nextSoonestTimeoutTime until
+        // after successfully calling any timed out callbacks.
+        nextSoonestTimeoutTime = updatedNextSoonestTimeoutTime;
       };
 
       // We use the postMessage trick to defer idle work until after the repaint.
@@ -11987,7 +12039,7 @@ if (undefined !== "production") {
         }
         isIdleScheduled = false;
 
-        if (pendingCallbacks.length === 0) {
+        if (headOfPendingCallbacksLinkedList === null) {
           return;
         }
 
@@ -11996,19 +12048,18 @@ if (undefined !== "production") {
 
         var currentTime = now$1();
         // Next, as long as we have idle time, try calling more callbacks.
-        while (frameDeadline - currentTime > 0 && pendingCallbacks.length > 0) {
-          var latestCallbackConfig = pendingCallbacks.shift();
+        while (frameDeadline - currentTime > 0 && headOfPendingCallbacksLinkedList !== null) {
+          var latestCallbackConfig = headOfPendingCallbacksLinkedList;
           frameDeadlineObject.didTimeout = false;
-          var latestCallback = latestCallbackConfig.scheduledCallback;
-          var newCallbackId = latestCallbackConfig.callbackId;
-          safelyCallScheduledCallback(latestCallback, newCallbackId);
+          // callUnsafely will remove it from the head of the linked list
+          callUnsafely(latestCallbackConfig, frameDeadlineObject);
           currentTime = now$1();
         }
-        if (pendingCallbacks.length > 0) {
+        if (headOfPendingCallbacksLinkedList !== null) {
           if (!isAnimationFrameScheduled) {
             // Schedule another animation callback so we retry later.
             isAnimationFrameScheduled = true;
-            requestAnimationFrame(animationTick);
+            localRequestAnimationFrame(animationTick);
           }
         }
       };
@@ -12043,7 +12094,7 @@ if (undefined !== "production") {
         }
       };
 
-      scheduleWork = function (callback, options) {
+      scheduleWork = function (callback, options) /* CallbackConfigType */{
         var timeoutTime = -1;
         if (options != null && typeof options.timeout === 'number') {
           timeoutTime = now$1() + options.timeout;
@@ -12052,28 +12103,100 @@ if (undefined !== "production") {
           nextSoonestTimeoutTime = timeoutTime;
         }
 
-        var newCallbackId = getCallbackId();
         var scheduledCallbackConfig = {
           scheduledCallback: callback,
-          callbackId: newCallbackId,
-          timeoutTime: timeoutTime
+          timeoutTime: timeoutTime,
+          prev: null,
+          next: null
         };
-        pendingCallbacks.push(scheduledCallbackConfig);
+        if (headOfPendingCallbacksLinkedList === null) {
+          // Make this callback the head and tail of our list
+          headOfPendingCallbacksLinkedList = scheduledCallbackConfig;
+          tailOfPendingCallbacksLinkedList = scheduledCallbackConfig;
+        } else {
+          // Add latest callback as the new tail of the list
+          scheduledCallbackConfig.prev = tailOfPendingCallbacksLinkedList;
+          // renaming for clarity
+          var oldTailOfPendingCallbacksLinkedList = tailOfPendingCallbacksLinkedList;
+          if (oldTailOfPendingCallbacksLinkedList !== null) {
+            oldTailOfPendingCallbacksLinkedList.next = scheduledCallbackConfig;
+          }
+          tailOfPendingCallbacksLinkedList = scheduledCallbackConfig;
+        }
 
-        registeredCallbackIds[newCallbackId] = true;
         if (!isAnimationFrameScheduled) {
           // If rAF didn't already schedule one, we need to schedule a frame.
           // TODO: If this rAF doesn't materialize because the browser throttles, we
           // might want to still have setTimeout trigger scheduleWork as a backup to ensure
           // that we keep performing work.
           isAnimationFrameScheduled = true;
-          requestAnimationFrame(animationTick);
+          localRequestAnimationFrame(animationTick);
         }
-        return newCallbackId;
+        return scheduledCallbackConfig;
       };
 
-      cancelScheduledWork = function (callbackId) {
-        delete registeredCallbackIds[callbackId];
+      cancelScheduledWork = function (callbackConfig /* CallbackConfigType */
+      ) {
+        if (callbackConfig.prev === null && headOfPendingCallbacksLinkedList !== callbackConfig) {
+          // this callbackConfig has already been cancelled.
+          // cancelScheduledWork should be idempotent, a no-op after first call.
+          return;
+        }
+
+        /**
+         * There are four possible cases:
+         * - Head/nodeToRemove/Tail -> null
+         *   In this case we set Head and Tail to null.
+         * - Head -> ... middle nodes... -> Tail/nodeToRemove
+         *   In this case we point the middle.next to null and put middle as the new
+         *   Tail.
+         * - Head/nodeToRemove -> ...middle nodes... -> Tail
+         *   In this case we point the middle.prev at null and move the Head to
+         *   middle.
+         * - Head -> ... ?some nodes ... -> nodeToRemove -> ... ?some nodes ... -> Tail
+         *   In this case we point the Head.next to the Tail and the Tail.prev to
+         *   the Head.
+         */
+        var next = callbackConfig.next;
+        var prev = callbackConfig.prev;
+        callbackConfig.next = null;
+        callbackConfig.prev = null;
+        if (next !== null) {
+          // we have a next
+
+          if (prev !== null) {
+            // we have a prev
+
+            // callbackConfig is somewhere in the middle of a list of 3 or more nodes.
+            prev.next = next;
+            next.prev = prev;
+            return;
+          } else {
+            // there is a next but not a previous one;
+            // callbackConfig is the head of a list of 2 or more other nodes.
+            next.prev = null;
+            headOfPendingCallbacksLinkedList = next;
+            return;
+          }
+        } else {
+          // there is no next callback config; this must the tail of the list
+
+          if (prev !== null) {
+            // we have a prev
+
+            // callbackConfig is the tail of a list of 2 or more other nodes.
+            prev.next = null;
+            tailOfPendingCallbacksLinkedList = prev;
+            return;
+          } else {
+            // there is no previous callback config;
+            // callbackConfig is the only thing in the linked list,
+            // so both head and tail point to it.
+            headOfPendingCallbacksLinkedList = null;
+            tailOfPendingCallbacksLinkedList = null;
+            return;
+          }
+        }
       };
     }
 
@@ -14001,7 +14124,7 @@ if (undefined !== "production") {
           // TODO: Make sure we check if this is still unmounted or do any clean
           // up necessary since we never stop tracking anymore.
           track(domElement);
-          postMountWrapper(domElement, rawProps);
+          postMountWrapper(domElement, rawProps, false);
           break;
         case 'textarea':
           // TODO: Make sure we check if this is still unmounted or do any clean
@@ -14456,7 +14579,7 @@ if (undefined !== "production") {
           // TODO: Make sure we check if this is still unmounted or do any clean
           // up necessary since we never stop tracking anymore.
           track(domElement);
-          postMountWrapper(domElement, rawProps);
+          postMountWrapper(domElement, rawProps, true);
           break;
         case 'textarea':
           // TODO: Make sure we check if this is still unmounted or do any clean
@@ -15261,9 +15384,6 @@ if (undefined !== "production") {
     // Gather advanced timing metrics for Profiler subtrees.
     var enableProfilerTimer = true;
 
-    // Fires getDerivedStateFromProps for state *or* props changes
-    var fireGetDerivedStateFromPropsOnStateUpdates = true;
-
     // Only used in www builds.
 
     // Prefix measurements so that it's possible to filter them.
@@ -16065,6 +16185,8 @@ if (undefined !== "production") {
       this.alternate = null;
 
       if (enableProfilerTimer) {
+        this.actualDuration = 0;
+        this.actualStartTime = 0;
         this.selfBaseTime = 0;
         this.treeBaseTime = 0;
       }
@@ -16135,6 +16257,15 @@ if (undefined !== "production") {
         workInProgress.nextEffect = null;
         workInProgress.firstEffect = null;
         workInProgress.lastEffect = null;
+
+        if (enableProfilerTimer) {
+          // We intentionally reset, rather than copy, actualDuration & actualStartTime.
+          // This prevents time from endlessly accumulating in new commits.
+          // This has the downside of resetting values for different priority renders,
+          // But works for yielding (the common case) and should support resuming.
+          workInProgress.actualDuration = 0;
+          workInProgress.actualStartTime = 0;
+        }
       }
 
       workInProgress.expirationTime = expirationTime;
@@ -16260,13 +16391,6 @@ if (undefined !== "production") {
       var fiber = createFiber(Profiler, pendingProps, key, mode | ProfileMode);
       fiber.type = REACT_PROFILER_TYPE;
       fiber.expirationTime = expirationTime;
-      if (enableProfilerTimer) {
-        fiber.stateNode = {
-          elapsedPauseTimeAtStart: 0,
-          duration: 0,
-          startTime: 0
-        };
-      }
 
       return fiber;
     }
@@ -16330,6 +16454,8 @@ if (undefined !== "production") {
       target.expirationTime = source.expirationTime;
       target.alternate = source.alternate;
       if (enableProfilerTimer) {
+        target.actualDuration = source.actualDuration;
+        target.actualStartTime = source.actualStartTime;
         target.selfBaseTime = source.selfBaseTime;
         target.treeBaseTime = source.treeBaseTime;
       }
@@ -17599,9 +17725,9 @@ if (undefined !== "production") {
       {
         fiberStack$1.push(fiber);
       }
-      var stateNode = fiber.stateNode;
-      stateNode.elapsedPauseTimeAtStart = totalElapsedPauseTime;
-      stateNode.startTime = now();
+
+      fiber.actualDuration = now() - fiber.actualDuration - totalElapsedPauseTime;
+      fiber.actualStartTime = now();
     }
 
     function pauseActualRenderTimerIfRunning() {
@@ -17618,10 +17744,10 @@ if (undefined !== "production") {
         return;
       }
       {
-        !(fiber === fiberStack$1.pop()) ? warning(false, 'Unexpected Fiber popped.') : void 0;
+        !(fiber === fiberStack$1.pop()) ? warning(false, 'Unexpected Fiber (%s) popped.', getComponentName(fiber)) : void 0;
       }
-      var stateNode = fiber.stateNode;
-      stateNode.duration += now() - (totalElapsedPauseTime - stateNode.elapsedPauseTimeAtStart) - stateNode.startTime;
+
+      fiber.actualDuration = now() - totalElapsedPauseTime - fiber.actualDuration;
     }
 
     function resetActualRenderTimer() {
@@ -18228,10 +18354,8 @@ if (undefined !== "production") {
       }
 
       if (typeof getDerivedStateFromProps === 'function') {
-        if (fireGetDerivedStateFromPropsOnStateUpdates || oldProps !== newProps) {
-          applyDerivedStateFromProps(workInProgress, getDerivedStateFromProps, newProps);
-          newState = workInProgress.memoizedState;
-        }
+        applyDerivedStateFromProps(workInProgress, getDerivedStateFromProps, newProps);
+        newState = workInProgress.memoizedState;
       }
 
       var shouldUpdate = checkHasForceUpdateAfterProcessing() || checkShouldComponentUpdate(workInProgress, oldProps, newProps, oldState, newState, newContext);
@@ -19112,7 +19236,8 @@ if (undefined !== "production") {
         // Handle top level unkeyed fragments as if they were arrays.
         // This leads to an ambiguity between <>{[...]}</> and <>...</>.
         // We treat the ambiguous cases above the same.
-        if (typeof newChild === 'object' && newChild !== null && newChild.type === REACT_FRAGMENT_TYPE && newChild.key === null) {
+        var isUnkeyedTopLevelFragment = typeof newChild === 'object' && newChild !== null && newChild.type === REACT_FRAGMENT_TYPE && newChild.key === null;
+        if (isUnkeyedTopLevelFragment) {
           newChild = newChild.props.children;
         }
 
@@ -19149,7 +19274,7 @@ if (undefined !== "production") {
             warnOnFunctionType();
           }
         }
-        if (typeof newChild === 'undefined') {
+        if (typeof newChild === 'undefined' && !isUnkeyedTopLevelFragment) {
           // If the new child is undefined, and the return fiber is a composite
           // component, throw an error. If Fiber return types are disabled,
           // we already threw above.
@@ -19560,11 +19685,6 @@ if (undefined !== "production") {
     function updateProfiler(current, workInProgress) {
       var nextProps = workInProgress.pendingProps;
       if (enableProfilerTimer) {
-        // Start render timer here and push start time onto queue
-        markActualRenderTimeStarted(workInProgress);
-
-        // Let the "complete" phase know to stop the timer,
-        // And the scheduler to record the measured time.
         workInProgress.effectTag |= Update;
       }
       if (workInProgress.memoizedProps === nextProps) {
@@ -20272,11 +20392,6 @@ if (undefined !== "production") {
         case ContextProvider:
           pushProvider(workInProgress);
           break;
-        case Profiler:
-          if (enableProfilerTimer) {
-            markActualRenderTimeStarted(workInProgress);
-          }
-          break;
       }
       // TODO: What if this is currently in progress?
       // How can that happen? How is this not being cloned?
@@ -20295,6 +20410,12 @@ if (undefined !== "production") {
     }
 
     function beginWork(current, workInProgress, renderExpirationTime) {
+      if (enableProfilerTimer) {
+        if (workInProgress.mode & ProfileMode) {
+          markActualRenderTimeStarted(workInProgress);
+        }
+      }
+
       if (workInProgress.expirationTime === NoWork || workInProgress.expirationTime > renderExpirationTime) {
         return bailoutOnLowPriority(current, workInProgress);
       }
@@ -20499,6 +20620,13 @@ if (undefined !== "production") {
 
     function completeWork(current, workInProgress, renderExpirationTime) {
       var newProps = workInProgress.pendingProps;
+
+      if (enableProfilerTimer) {
+        if (workInProgress.mode & ProfileMode) {
+          recordElapsedActualRenderTime(workInProgress);
+        }
+      }
+
       switch (workInProgress.tag) {
         case FunctionalComponent:
           return null;
@@ -20631,9 +20759,6 @@ if (undefined !== "production") {
         case Mode:
           return null;
         case Profiler:
-          if (enableProfilerTimer) {
-            recordElapsedActualRenderTime(workInProgress);
-          }
           return null;
         case HostPortal:
           popHostContainer(workInProgress);
@@ -21361,11 +21486,7 @@ if (undefined !== "production") {
           {
             if (enableProfilerTimer) {
               var onRender = finishedWork.memoizedProps.onRender;
-              onRender(finishedWork.memoizedProps.id, current === null ? 'mount' : 'update', finishedWork.stateNode.duration, finishedWork.treeBaseTime, finishedWork.stateNode.startTime, getCommitTime());
-
-              // Reset actualTime after successful commit.
-              // By default, we append to this time to account for errors and pauses.
-              finishedWork.stateNode.duration = 0;
+              onRender(finishedWork.memoizedProps.id, current === null ? 'mount' : 'update', finishedWork.actualDuration, finishedWork.treeBaseTime, finishedWork.actualStartTime, getCommitTime());
             }
             return;
           }
@@ -21572,6 +21693,12 @@ if (undefined !== "production") {
     }
 
     function unwindWork(workInProgress, renderIsExpired, renderExpirationTime) {
+      if (enableProfilerTimer) {
+        if (workInProgress.mode & ProfileMode) {
+          recordElapsedActualRenderTime(workInProgress);
+        }
+      }
+
       switch (workInProgress.tag) {
         case ClassComponent:
           {
@@ -21620,6 +21747,14 @@ if (undefined !== "production") {
     }
 
     function unwindInterruptedWork(interruptedWork) {
+      if (enableProfilerTimer) {
+        if (interruptedWork.mode & ProfileMode) {
+          // Resume in case we're picking up on work that was paused.
+          resumeActualRenderTimerIfPaused();
+          recordElapsedActualRenderTime(interruptedWork);
+        }
+      }
+
       switch (interruptedWork.tag) {
         case ClassComponent:
           {
@@ -21642,13 +21777,6 @@ if (undefined !== "production") {
           break;
         case ContextProvider:
           popProvider(interruptedWork);
-          break;
-        case Profiler:
-          if (enableProfilerTimer) {
-            // Resume in case we're picking up on work that was paused.
-            resumeActualRenderTimerIfPaused();
-            recordElapsedActualRenderTime(interruptedWork);
-          }
           break;
         default:
           break;
@@ -21788,6 +21916,10 @@ if (undefined !== "production") {
           clearCaughtError();
 
           if (enableProfilerTimer) {
+            if (failedUnitOfWork.mode & ProfileMode) {
+              recordElapsedActualRenderTime(failedUnitOfWork);
+            }
+
             // Stop "base" render timer again (after the re-thrown error).
             stopBaseRenderTimerIfRunning();
           }
@@ -22021,6 +22153,8 @@ if (undefined !== "production") {
       stopCommitSnapshotEffectsTimer();
 
       if (enableProfilerTimer) {
+        // Mark the current commit time to be shared by all Profilers in this batch.
+        // This enables them to be grouped later.
         recordCommitTime();
       }
 
@@ -22549,7 +22683,7 @@ if (undefined !== "production") {
     function computeAsyncExpiration(currentTime) {
       // Given the current clock time, returns an expiration time. We use rounding
       // to batch like updates together.
-      // Should complete within ~1000ms. 1200ms max.
+      // Should complete within ~5000ms. 5250ms max.
       var expirationMs = 5000;
       var bucketSizeMs = 250;
       return computeExpirationBucket(currentTime, expirationMs, bucketSizeMs);
@@ -22736,7 +22870,7 @@ if (undefined !== "production") {
     var lastScheduledRoot = null;
 
     var callbackExpirationTime = NoWork;
-    var callbackID = -1;
+    var callbackID = void 0;
     var isRendering = false;
     var nextFlushedRoot = null;
     var nextFlushedExpirationTime = NoWork;
@@ -22765,9 +22899,11 @@ if (undefined !== "production") {
           // Existing callback has sufficient timeout. Exit.
           return;
         } else {
-          // Existing callback has insufficient timeout. Cancel and schedule a
-          // new one.
-          cancelDeferredCallback(callbackID);
+          if (callbackID !== null) {
+            // Existing callback has insufficient timeout. Cancel and schedule a
+            // new one.
+            cancelDeferredCallback(callbackID);
+          }
         }
         // The request callback timer is already running. Don't start a new one.
       } else {
@@ -22956,7 +23092,7 @@ if (undefined !== "production") {
       // If we're inside a callback, set this to false since we just completed it.
       if (deadline !== null) {
         callbackExpirationTime = NoWork;
-        callbackID = -1;
+        callbackID = null;
       }
       // If there's work left over, schedule a new callback.
       if (nextFlushedExpirationTime !== NoWork) {
@@ -23023,7 +23159,6 @@ if (undefined !== "production") {
           // This root is already complete. We can commit it.
           completeRoot(root, finishedWork, expirationTime);
         } else {
-          root.finishedWork = null;
           finishedWork = renderRoot(root, expirationTime, false);
           if (finishedWork !== null) {
             // We've completed the root. Commit it.
@@ -23037,7 +23172,6 @@ if (undefined !== "production") {
           // This root is already complete. We can commit it.
           completeRoot(root, _finishedWork, expirationTime);
         } else {
-          root.finishedWork = null;
           _finishedWork = renderRoot(root, expirationTime, true);
           if (_finishedWork !== null) {
             // We've completed the root. Check the deadline one more time
@@ -23391,7 +23525,7 @@ if (undefined !== "production") {
 
     // TODO: this is special because it gets imported during build.
 
-    var ReactVersion = '16.4.0';
+    var ReactVersion = '16.4.1';
 
     // TODO: This type is shared between the reconciler and ReactDOM, but will
     // eventually be lifted out to the renderer.
@@ -23835,6 +23969,8 @@ if (undefined !== "production") {
 
       unstable_deferredUpdates: deferredUpdates,
 
+      unstable_interactiveUpdates: interactiveUpdates$1,
+
       flushSync: flushSync,
 
       unstable_flushControlled: flushControlled,
@@ -23889,7 +24025,7 @@ if (undefined !== "production") {
     module.exports = reactDom;
   })();
 }
-},{"fbjs/lib/invariant":23,"react":3,"fbjs/lib/warning":25,"fbjs/lib/ExecutionEnvironment":35,"object-assign":22,"fbjs/lib/emptyFunction":26,"prop-types/checkPropTypes":27,"fbjs/lib/getActiveElement":36,"fbjs/lib/shallowEqual":37,"fbjs/lib/containsNode":38,"fbjs/lib/emptyObject":24,"fbjs/lib/hyphenateStyleName":39,"fbjs/lib/camelizeStyleName":40}],5:[function(require,module,exports) {
+},{"fbjs/lib/invariant":66,"react":5,"fbjs/lib/warning":65,"fbjs/lib/ExecutionEnvironment":69,"object-assign":63,"fbjs/lib/emptyFunction":64,"prop-types/checkPropTypes":61,"fbjs/lib/getActiveElement":70,"fbjs/lib/shallowEqual":71,"fbjs/lib/containsNode":72,"fbjs/lib/emptyObject":68,"fbjs/lib/hyphenateStyleName":73,"fbjs/lib/camelizeStyleName":74}],8:[function(require,module,exports) {
 'use strict';
 
 function checkDCE() {
@@ -23925,8 +24061,981 @@ if (undefined === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":7}],2:[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":22}],49:[function(require,module,exports) {
+var define;
+(function(){
+    var root = this;
+
+    //消息填充位，补足长度。
+    function fillString(str){
+        var blockAmount = ((str.length + 8) >> 6) + 1,
+            blocks = [],
+            i;
+
+        for(i = 0; i < blockAmount * 16; i++){
+            blocks[i] = 0;
+        }
+        for(i = 0; i < str.length; i++){
+            blocks[i >> 2] |= str.charCodeAt(i) << (24 - (i & 3) * 8);
+        }
+        blocks[i >> 2] |= 0x80 << (24 - (i & 3) * 8);
+        blocks[blockAmount * 16 - 1] = str.length * 8;
+
+        return blocks;
+    }
+
+    //将输入的二进制数组转化为十六进制的字符串。
+    function binToHex(binArray){
+        var hexString = "0123456789abcdef",
+            str = "",
+            i;
+
+        for(i = 0; i < binArray.length * 4; i++){
+            str += hexString.charAt((binArray[i >> 2] >> ((3 - i % 4) * 8 + 4)) & 0xF) +
+                    hexString.charAt((binArray[i >> 2] >> ((3 - i % 4) * 8  )) & 0xF);
+        }
+
+        return str;
+    }
+
+    //核心函数，输出为长度为5的number数组，对应160位的消息摘要。
+    function coreFunction(blockArray){
+        var w = [],
+            a = 0x67452301,
+            b = 0xEFCDAB89,
+            c = 0x98BADCFE,
+            d = 0x10325476,
+            e = 0xC3D2E1F0,
+            olda,
+            oldb,
+            oldc,
+            oldd,
+            olde,
+            t,
+            i,
+            j;
+
+        for(i = 0; i < blockArray.length; i += 16){  //每次处理512位 16*32
+            olda = a;
+            oldb = b;
+            oldc = c;
+            oldd = d;
+            olde = e;
+
+            for(j = 0; j < 80; j++){  //对每个512位进行80步操作
+                if(j < 16){
+                    w[j] = blockArray[i + j];
+                }else{
+                    w[j] = cyclicShift(w[j-3] ^ w[j-8] ^ w[j-14] ^ w[j-16], 1);
+                }
+                t = modPlus(modPlus(cyclicShift(a, 5), ft(j, b, c, d)), modPlus(modPlus(e, w[j]), kt(j)));
+                e = d;
+                d = c;
+                c = cyclicShift(b, 30);
+                b = a;
+                a = t;
+            }
+
+            a = modPlus(a, olda);
+            b = modPlus(b, oldb);
+            c = modPlus(c, oldc);
+            d = modPlus(d, oldd);
+            e = modPlus(e, olde);
+        }
+
+        return [a, b, c, d, e];
+    }
+
+    //根据t值返回相应得压缩函数中用到的f函数。
+    function ft(t, b, c, d){
+        if(t < 20){
+            return (b & c) | ((~b) & d);
+        }else if(t < 40){
+            return b ^ c ^ d;
+        }else if(t < 60){
+            return (b & c) | (b & d) | (c & d);
+        }else{
+            return b ^ c ^ d;
+        }
+    }
+
+    //根据t值返回相应得压缩函数中用到的K值。
+    function kt(t){
+        return (t < 20) ?  0x5A827999 :
+                (t < 40) ? 0x6ED9EBA1 :
+                (t < 60) ? 0x8F1BBCDC : 0xCA62C1D6;
+    }
+
+    //模2的32次方加法，因为JavaScript的number是双精度浮点数表示，所以将32位数拆成高16位和低16位分别进行相加
+    function modPlus(x, y){
+        var low = (x & 0xFFFF) + (y & 0xFFFF),
+            high = (x >> 16) + (y >> 16) + (low >> 16);
+
+        return (high << 16) | (low & 0xFFFF);
+    }
+
+    //对输入的32位的num二进制数进行循环左移 ,因为JavaScript的number是双精度浮点数表示，所以移位需需要注意
+    function cyclicShift(num, k){
+        return (num << k) | (num >>> (32 - k));
+    }
+
+    //主函数根据输入的消息字符串计算消息摘要，返回十六进制表示的消息摘要
+    function sha1(s){
+        return binToHex(coreFunction(fillString(s)));
+    }
+
+    // support AMD and Node
+    if(typeof define === "function" && typeof define.amd){
+        define(function(){
+            return sha1;
+        });
+    }else if(typeof exports !== 'undefined') {
+        if(typeof module !== 'undefined' && module.exports) {
+          exports = module.exports = sha1;
+        }
+        exports.sha1 = sha1;
+    } else {
+        root.sha1 = sha1;
+    }
+
+}).call(this);
+},{}],55:[function(require,module,exports) {
+// Unique ID creation requires a high quality random # generator.  In the
+// browser this is a little complicated due to unknown quality of Math.random()
+// and inconsistent support for the `crypto` API.  We do the best we can via
+// feature-detection
+
+// getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
+var getRandomValues = (typeof(crypto) != 'undefined' && crypto.getRandomValues.bind(crypto)) ||
+                      (typeof(msCrypto) != 'undefined' && msCrypto.getRandomValues.bind(msCrypto));
+if (getRandomValues) {
+  // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
+  var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
+
+  module.exports = function whatwgRNG() {
+    getRandomValues(rnds8);
+    return rnds8;
+  };
+} else {
+  // Math.random()-based (RNG)
+  //
+  // If all else fails, use Math.random().  It's fast, but is of unspecified
+  // quality.
+  var rnds = new Array(16);
+
+  module.exports = function mathRNG() {
+    for (var i = 0, r; i < 16; i++) {
+      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
+      rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+    }
+
+    return rnds;
+  };
+}
+
+},{}],56:[function(require,module,exports) {
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+var byteToHex = [];
+for (var i = 0; i < 256; ++i) {
+  byteToHex[i] = (i + 0x100).toString(16).substr(1);
+}
+
+function bytesToUuid(buf, offset) {
+  var i = offset || 0;
+  var bth = byteToHex;
+  return bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]];
+}
+
+module.exports = bytesToUuid;
+
+},{}],51:[function(require,module,exports) {
+var rng = require('./lib/rng');
+var bytesToUuid = require('./lib/bytesToUuid');
+
+function v4(options, buf, offset) {
+  var i = buf && offset || 0;
+
+  if (typeof(options) == 'string') {
+    buf = options === 'binary' ? new Array(16) : null;
+    options = null;
+  }
+  options = options || {};
+
+  var rnds = options.random || (options.rng || rng)();
+
+  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+
+  // Copy bytes to buffer, if provided
+  if (buf) {
+    for (var ii = 0; ii < 16; ++ii) {
+      buf[i + ii] = rnds[ii];
+    }
+  }
+
+  return buf || bytesToUuid(rnds);
+}
+
+module.exports = v4;
+
+},{"./lib/rng":55,"./lib/bytesToUuid":56}],40:[function(require,module,exports) {
 'use strict';
+
+var sha1 = require('sha-1'),
+    uuid = require('uuid/v4');
+
+var uuidv4 = function uuidv4() {
+  return uuid();
+};
+
+uuidv4.regex = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}$/;
+
+uuidv4.is = function (value) {
+  if (!value) {
+    throw new Error('Value is missing.');
+  }
+
+  return uuidv4.regex.test(value);
+};
+
+uuidv4.empty = function () {
+  return '00000000-0000-0000-0000-000000000000';
+};
+
+uuidv4.fromString = function (text) {
+  if (!text) {
+    throw new Error('Text is missing.');
+  }
+
+  var hash = sha1(text),
+      uuidFromString = hash.substring(0, 8) + '-' + hash.substring(8, 12) + '-4' + hash.substring(13, 16) + '-8' + hash.substring(17, 20) + '-' + hash.substring(20, 32);
+
+  return uuidFromString;
+};
+
+module.exports = uuidv4;
+},{"sha-1":49,"uuid/v4":51}],23:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _uuidv = require('uuidv4');
+
+var _uuidv2 = _interopRequireDefault(_uuidv);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TaskForm = function (_Component) {
+  _inherits(TaskForm, _Component);
+
+  function TaskForm(props) {
+    _classCallCheck(this, TaskForm);
+
+    var _this = _possibleConstructorReturn(this, (TaskForm.__proto__ || Object.getPrototypeOf(TaskForm)).call(this, props));
+
+    _this.handleChange = function (ev) {
+      _this.setState(_defineProperty({}, ev.target.name, ev.target.value));
+    };
+
+    _this.handleSubmit = function (ev) {
+      ev.preventDefault();
+      console.log('created task');
+      if (_this.props.buttonText === 'create') {
+        var createdTask = {
+          id: (0, _uuidv2.default)(),
+          name: ev.target.name.value,
+          items: [ev.target.items.value],
+          isEditing: false,
+          completed: false
+        };
+        _this.props.addTask(createdTask); //post request to db
+      } else {
+        var newValue = {};
+        Object.assign(newValue, _this.props.tasks, _this.state);
+        console.log('new val', newValue);
+        _this.props.toggleEdit();
+        _this.props.addTask(_extends({}, newValue)); //put request to db
+      }
+    };
+
+    _this.state = {
+      isEditing: false,
+      completed: false
+    };
+    return _this;
+  }
+
+  _createClass(TaskForm, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'form',
+        {
+          onSubmit: this.handleSubmit },
+        _react2.default.createElement('input', {
+          onChange: this.handleChange,
+          name: 'name',
+          type: 'text',
+          placeholder: 'name'
+        }),
+        _react2.default.createElement('input', {
+          onChange: this.handleChange,
+          name: 'items',
+          type: 'text',
+          placeholder: 'items'
+        }),
+        _react2.default.createElement(
+          'button',
+          { type: 'submit' },
+          this.props.buttonText === 'create' ? 'Submit' : 'Update',
+          ' '
+        )
+      );
+    }
+  }]);
+
+  return TaskForm;
+}(_react.Component);
+
+exports.default = TaskForm;
+},{"react":5,"uuidv4":40}],67:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ElementForm = function (_Component) {
+  _inherits(ElementForm, _Component);
+
+  function ElementForm(props) {
+    _classCallCheck(this, ElementForm);
+
+    var _this = _possibleConstructorReturn(this, (ElementForm.__proto__ || Object.getPrototypeOf(ElementForm)).call(this, props));
+
+    _this.handleChange = function (ev) {
+      _this.setState(_defineProperty({}, ev.target.name, ev.target.value));
+    };
+
+    _this.handleSubmit = function (ev) {
+      ev.preventDefault();
+      var createdElement = {
+        timestamp: new Date(),
+        name: '',
+        description: '',
+        taskId: uuidv4(),
+        isEditing: false
+      };
+      _this.props.addElement(createdElement);
+    };
+
+    _this.state = {
+      // timestamp: new Date(),
+      // name: '',
+      // description: '',
+      // taskId: this.props.taskId,
+      isEditing: false
+    };
+    return _this;
+  }
+
+  _createClass(ElementForm, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'form',
+        {
+          onSubmit: this.handleSubmit },
+        _react2.default.createElement('input', {
+          onChange: this.handleChange,
+          name: 'name',
+          type: 'text',
+          placeholder: 'name',
+          value: this.state.name
+        }),
+        _react2.default.createElement('input', {
+          onChange: this.handleChange,
+          name: 'description',
+          type: 'text',
+          placeholder: 'description',
+          value: this.state.description
+        }),
+        _react2.default.createElement(
+          'button',
+          {
+            onClick: this.props.cancel },
+          'cancel'
+        ),
+        _react2.default.createElement(
+          'button',
+          {
+            type: 'submit' },
+          this.props.buttonText === 'create' ? 'Add Item' : 'Update Item'
+        )
+      );
+    }
+  }]);
+
+  return ElementForm;
+}(_react.Component);
+
+exports.default = ElementForm;
+},{"react":5}],60:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = require('react-router-dom');
+
+var _elementForm = require('./elementForm');
+
+var _elementForm2 = _interopRequireDefault(_elementForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Item = function (_Component) {
+  _inherits(Item, _Component);
+
+  function Item(props) {
+    _classCallCheck(this, Item);
+
+    var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
+
+    _this.toggleEdit = function () {
+      return _this.setState({ isEditing: !_this.state.isEditing });
+    };
+
+    _this.handleDelete = function () {
+      return _this.props.removeElement(_this.props.element.id);
+    };
+
+    _this.cancel = function () {
+      return _this.toggleEdit();
+    };
+
+    _this.state = {
+      isEditing: false
+    };
+    return _this;
+  }
+
+  _createClass(Item, [{
+    key: 'render',
+    value: function render() {
+      if (this.state.isEditing === true) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_elementForm2.default, { action: 'update',
+            element: this.props.element,
+            toggleEdit: this.toggleEdit,
+            cancel: this.cancel })
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'li',
+            null,
+            this.props.name,
+            this.props.description
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.handleDelete },
+            'Delete'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.toggleEdit },
+            'Cancel'
+          )
+        );
+      }
+    }
+  }]);
+
+  return Item;
+}(_react.Component);
+
+exports.default = Item;
+},{"react":5,"react-router-dom":4,"./elementForm":67}],50:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _element = require('./element');
+
+var _element2 = _interopRequireDefault(_element);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ElementList = function (_Component) {
+  _inherits(ElementList, _Component);
+
+  function ElementList(props) {
+    _classCallCheck(this, ElementList);
+
+    var _this = _possibleConstructorReturn(this, (ElementList.__proto__ || Object.getPrototypeOf(ElementList)).call(this, props));
+
+    _this.displayAllElements = function () {
+      console.log('props', _this.props.elements);
+      return _this.props.elements.map(function (element) {
+        return _react2.default.createElement(_element2.default, {
+          taskId: _this.props.taskId,
+          key: element.id,
+          id: element.id,
+          element: element,
+          removeElement: _this.props.removeElement,
+          addElement: _this.props.addElement,
+          toggleEdit: item.toggleEdit
+        });
+      });
+    };
+
+    return _this;
+  }
+
+  _createClass(ElementList, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'ul',
+          null,
+          this.displayAllElements()
+        )
+      );
+    }
+  }]);
+
+  return ElementList;
+}(_react.Component);
+
+exports.default = ElementList;
+},{"react":5,"./element":60}],39:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = require('react-router-dom');
+
+var _taskForm = require('./taskForm');
+
+var _taskForm2 = _interopRequireDefault(_taskForm);
+
+var _elementList = require('../elements/elementList');
+
+var _elementList2 = _interopRequireDefault(_elementList);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import ElementForm from '../elements/elementForm';
+
+
+console.log('element list', _elementList2.default);
+
+var TaskItem = function (_Component) {
+  _inherits(TaskItem, _Component);
+
+  function TaskItem(props) {
+    _classCallCheck(this, TaskItem);
+
+    var _this = _possibleConstructorReturn(this, (TaskItem.__proto__ || Object.getPrototypeOf(TaskItem)).call(this, props));
+
+    _this.toggleEdit = function (ev) {
+      ev.preventDefault();
+      return _this.setState({ isEditing: !_this.state.isEditing });
+    };
+
+    _this.toggleOffEdit = function (ev) {
+      ev.preventDefault();
+      return _this.props.addTask({ isEditing: false, id: _this.props.task.id });
+    };
+
+    _this.handleRemove = function (ev) {
+      ev.preventDefault();
+      return _this.props.removeTask(_this.props.task.id);
+    };
+
+    _this.addElement = function (element) {
+      console.log('element', element);
+      var newElements = [].concat(_toConsumableArray(_this.state.elements));
+      newElements.push(element);
+      console.log('new Task', newElement);
+      _this.setState({ elements: newElements });
+    };
+
+    _this.removeElement = function (id) {
+      var remainder = _this.state.elements.filter(function (element) {
+        return element.id !== id;
+      });
+      _this.setState({ elements: remainder });
+    };
+
+    _this.renderList = function () {
+      console.log('this.props', _this.props);
+      var items = _this.props.task.items.map(function (item, i) {
+        return _react2.default.createElement(
+          'li',
+          { key: i },
+          item.name,
+          item.description
+        );
+      });
+      return items;
+    };
+
+    _this.state = {
+      task: _this.props.task,
+      elements: [], // props
+      isEditing: false
+    };
+    return _this;
+  }
+
+  _createClass(TaskItem, [{
+    key: 'render',
+    value: function render() {
+      if (this.state.isEditing === true) {
+        var _React$createElement;
+
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              'p',
+              null,
+              'Name: ',
+              this.props.task.name
+            ),
+            'Items: ',
+            _react2.default.createElement(
+              'ol',
+              null,
+              this.renderList()
+            )
+          ),
+          _react2.default.createElement(_taskForm2.default, (_React$createElement = { name: 'update'
+          }, _defineProperty(_React$createElement, 'name', this.props.task), _defineProperty(_React$createElement, 'toggleEdit', this.toggleEdit), _React$createElement))
+        );
+      }
+      return _react2.default.createElement(
+        'li',
+        {
+          key: this.props.task.id, id: this.props.taskId },
+        this.props.task.name,
+        ': ',
+        _react2.default.createElement(
+          'ul',
+          null,
+          this.renderList()
+        ),
+        _react2.default.createElement(
+          'button',
+          {
+            id: this.props.task.id,
+            onClick: this.toggleEdit },
+          'Update'
+        ),
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Add Task'
+        ),
+        _react2.default.createElement(_elementList2.default, { elements: this.state.elements,
+          removeElement: this.state.removeElement })
+      );
+    }
+  }]);
+
+  return TaskItem;
+}(_react.Component);
+
+exports.default = TaskItem;
+},{"react":5,"react-router-dom":4,"./taskForm":23,"../elements/elementList":50}],24:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _taskItem = require('./taskItem');
+
+var _taskItem2 = _interopRequireDefault(_taskItem);
+
+var _timeline = require('../timeline');
+
+var _timeline2 = _interopRequireDefault(_timeline);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TaskList = function (_Component) {
+  _inherits(TaskList, _Component);
+
+  function TaskList(props) {
+    _classCallCheck(this, TaskList);
+
+    var _this = _possibleConstructorReturn(this, (TaskList.__proto__ || Object.getPrototypeOf(TaskList)).call(this, props));
+
+    _this.compileList = function () {
+      console.log('props', _this.props.tasks);
+      return _react2.default.createElement(
+        'ul',
+        null,
+        _this.props.tasks.map(function (task, i) {
+          return _react2.default.createElement(_taskItem2.default, {
+            removeTask: _this.props.removeTask,
+            updateTask: _this.props.updateTask,
+            task: task, key: i, index: task.isEditing
+          });
+        })
+      );
+    };
+
+    return _this;
+  }
+
+  _createClass(TaskList, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'ul',
+          null,
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Task List:'
+          ),
+          this.compileList()
+        )
+      );
+    }
+  }]);
+
+  return TaskList;
+}(_react.Component);
+
+exports.default = TaskList;
+},{"react":5,"./taskItem":39,"../timeline":3}],3:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _taskList = require('./tasks/taskList');
+
+var _taskList2 = _interopRequireDefault(_taskList);
+
+var _taskForm = require('./tasks/taskForm');
+
+var _taskForm2 = _interopRequireDefault(_taskForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Timeline = function (_Component) {
+  _inherits(Timeline, _Component);
+
+  function Timeline(props) {
+    _classCallCheck(this, Timeline);
+
+    var _this = _possibleConstructorReturn(this, (Timeline.__proto__ || Object.getPrototypeOf(Timeline)).call(this, props));
+
+    _this.addTask = function (task) {
+      console.log('task', task);
+      var newTask = {};
+      Object.assign(newTask, _this.state);
+      newTask.tasks.push(task);
+      console.log('new Task', newTask);
+      _this.setState({ newTask: newTask });
+    };
+
+    _this.removeTask = function (id) {
+      var remainder = _this.state.tasks.filter(function (task) {
+        return task.id !== id;
+      });
+      _this.setState({ tasks: remainder });
+    };
+
+    _this.state = {
+      begin: new Date(),
+      tasks: [{
+        // dailyTasks: [{
+        name: 'Food',
+        items: [{ name: 'run', description: 'meet Andy at Greenlake' }]
+      }],
+      // weeklyTasks: [{
+      //   name: '',
+      //   items: [],
+      // }],
+      // monthlyTasks: [{
+      //   name: '',
+      //   items: [],
+      // }],
+      // milestones: {
+      //   date: Date(),
+      //   // Image: Image(),
+      //   Alert: 'Congratulations!',
+      // },
+      // }],
+      end: new Date()
+    };
+    return _this;
+  }
+
+  _createClass(Timeline, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h1',
+          null,
+          'Create Tasks to Reach Your Goal!'
+        ),
+        _react2.default.createElement(_taskForm2.default, { addTask: this.addTask,
+          buttonText: 'create' }),
+        _react2.default.createElement(_taskList2.default, { tasks: this.state.tasks,
+          removeTask: this.removeTask })
+      );
+    }
+  }]);
+
+  return Timeline;
+}(_react.Component);
+
+exports.default = Timeline;
+},{"react":5,"./tasks/taskList":24,"./tasks/taskForm":23}],2:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -23940,6 +25049,10 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _timeline = require('./components/timeline');
+
+var _timeline2 = _interopRequireDefault(_timeline);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23948,49 +25061,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var MainPage = function (_Component) {
-  _inherits(MainPage, _Component);
+// import MainPage from './components/mainPage';
 
-  function MainPage() {
-    _classCallCheck(this, MainPage);
-
-    return _possibleConstructorReturn(this, (MainPage.__proto__ || Object.getPrototypeOf(MainPage)).apply(this, arguments));
-  }
-
-  _createClass(MainPage, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        _react.Fragment,
-        null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'MainPage'
-        ),
-        _react2.default.createElement(
-          'p',
-          null,
-          'stuff and things'
-        ),
-        _react2.default.createElement(
-          'p',
-          null,
-          _react2.default.createElement(
-            _reactRouterDom.Link,
-            { to: '/create-timeline' },
-            'Create-timeline'
-          )
-        )
-      );
-    }
-  }]);
-
-  return MainPage;
-}(_react.Component);
-
-var App = function (_Component2) {
-  _inherits(App, _Component2);
+var App = function (_Component) {
+  _inherits(App, _Component);
 
   function App() {
     _classCallCheck(this, App);
@@ -24008,11 +25082,32 @@ var App = function (_Component2) {
           _react.Fragment,
           null,
           _react2.default.createElement(
-            'h1',
+            'nav',
             null,
-            'TimeLine App'
+            _react2.default.createElement(
+              'h1',
+              null,
+              'TimeLine App'
+            ),
+            _react2.default.createElement(
+              'ul',
+              null,
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  _reactRouterDom.Link,
+                  { to: '/create-timeline' },
+                  'Timeline'
+                )
+              )
+            )
           ),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: MainPage })
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/create-timeline', component: _timeline2.default })
+          )
         )
       );
     }
@@ -24021,9 +25116,12 @@ var App = function (_Component2) {
   return App;
 }(_react.Component);
 
+exports.default = App;
+
+
 var root = document.getElementById('root');
 _reactDom2.default.render(_react2.default.createElement(App, null), root);
-},{"react":3,"react-router-dom":4,"react-dom":5}],67:[function(require,module,exports) {
+},{"react":5,"react-router-dom":4,"react-dom":8,"./components/timeline":3}],79:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -24052,7 +25150,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '49920' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '55358' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -24193,5 +25291,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[67,2], null)
-//# sourceMappingURL=/app.990afd55.map
+},{}]},{},[79,2], null)
+//# sourceMappingURL=/app.01e82979.map
