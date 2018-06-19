@@ -1,5 +1,7 @@
 'use strict';
 require('dotenv').config();
+let { google } = require('googleapis');
+let privatekey = require('./client_secret.json');
 
 let superagent = require('superagent');
 // let cookie = require('cookie');
@@ -10,6 +12,9 @@ const express = require('express');
 const app = express();
 
 // app.use('/home', require('./routes/timelineRoutes.js'));
+
+//make a route that uses quickstart as middleware
+
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {
@@ -38,28 +43,13 @@ app.get('/callback', (req, res) => {
         res.write('<h1>' + json.name + '</h1>');
         res.write('<h1>' + json.email + '</h1>');
         res.write('<img src=' + json.picture + '>');
-        res.end();
-      })
 
-      // .then(response => {
-      //   console.log('Response AFTER code is given', response.body);
-      //   return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
-      //     .set('Authorization', `Bearer ${response.body.access_token}`);
-      // })
-      // .then(response => {
-      //   console.log('::::OPEN ID - GOOGLE PLUS::::', response.body);
-      //   // handle oauth login
-      //   res.cookie('X-Some-Cookie', 'some token');
-      //   res.redirect(process.env.CLIENT_URL);
-      // })
+      })
       .catch(response => {
         console.log('response', response);
       });
   }
 });
-// app.get('/', (req, res) => {
-//   res.send();
-// });
 
 const Bundler = require('parcel-bundler');
 const bundler = new Bundler('./public/index.html');
