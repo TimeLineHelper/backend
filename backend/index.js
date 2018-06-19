@@ -2,25 +2,25 @@
 require('dotenv').config();
 let { google } = require('googleapis');
 let privatekey = require('./client_secret.json');
-
 let superagent = require('superagent');
-// let cookie = require('cookie');
-
-// const mongoose = require('mongoose');
-// mongoose.connect(process.env.MONGODB_URI);
+let cookie = require('cookie');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/timelinehelper');
 const express = require('express');
 const app = express();
+const User = require('./models/user.js');
 
-// app.use('/home', require('./routes/timelineRoutes.js'));
+app.use('/', require('./routes/timelineRoutes.js'));
 
 //make a route that uses quickstart as middleware
 
-
 app.get('/callback', (req, res) => {
   if (!req.query.code) {
+    console.log('inside get line 21');
     res.redirect(process.env.CLIENT_URL);
+
   } else {
-    console.log('CODE:', req.query.code);
+
     superagent.post('https://www.googleapis.com/oauth2/v4/token')
       .type('form')
       .send({
@@ -31,22 +31,18 @@ app.get('/callback', (req, res) => {
         redirect_uri: `${process.env.API_URL}/callback`
       })
       .then(response => {
-        console.log('Response AFTER code is given');
-        console.log('access token:', response.body.access_token);
-        console.log('id token:', response.body.id_token);
-        let idTokenPayload = response.body.id_token.split('.')[1];
-        let decoded = Buffer.from(idTokenPayload, 'base64').toString();
-        let json = JSON.parse(decoded);
-        console.log('decoded:', decoded);
-        // handle oauth login
-        res.cookie('X-Some Cookie', idTokenPayload);
-        res.write('<h1>' + json.name + '</h1>');
-        res.write('<h1>' + json.email + '</h1>');
-        res.write('<img src=' + json.picture + '>');
 
+        return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
+          .set('Authorization', `Bearer ${response.body.access_token}`);
+      })
+      .then(response => {
+        User.mongoOAUTH(response.body);
       })
       .catch(response => {
-        console.log('response', response);
+        console.log('response!!!!!!!!!!!!!!!!!!!!!!!!!!!!11  index.js line 43', response.body);
+        //Initial request, not to be confused with the response we passed through 
+        res.cookie('cookie', cookieToken);
+        res.redirect(process.env.CLIENT_URL);
       });
   }
 });
