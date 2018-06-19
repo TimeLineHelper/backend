@@ -10,7 +10,7 @@ const url = `http://localhost:${PORT}`;
 let itemArray = { itemTitle: 'uuuuugggggg', description: 'striuuuuuggggggng', id: 123456789, timeStamp: 656 };
 
 const exampleData = {
-  email: 'hskrwres@gmail.com',
+  email: 'blah@blah.com',
   begin: 12,
   end: 48,
   id: 123456789,
@@ -22,37 +22,56 @@ const exampleData = {
 
 
 describe('Info Routes', function () {
-  describe('POST: /api/user', () => {
-    let temp = '';
+  // describe('POST: /api/user', () => {
+  //   let temp = '';
 
-    console.log('inside before each line 27');
-    superagent.post('http://localhost:3000/api/user')
+  //   console.log('inside before each line 27');
+  //   superagent.post('http://localhost:3000/api/user')
 
-      .send(exampleData)
-      .then(data => {
-        temp = data;
-        console.log('temp', temp.body);
+  //     .send(exampleData)
+  //     .then(data => {
+  //       temp = data;
+  //       console.log('temp', temp.body);
+  //       done();
+  //     })
+  //     .catch(done => {
+  //       done();
+  //     });
+
+  it('email should match', done => {
+
+    superagent.get(`${url}/api/user`)
+      .then((err, res) => {
+        console.log('this is the response', res);
+        if (err) return done(err);
+        expect(res.status).toEqual(200);
+        //hardcoded email replace with var later
+        expect(res.body.email).toEqual('blah@blah.com');
         done();
+
+
       })
-      .catch(done => {
-        done();
+      .catch(err => {
+        return done(err);
       });
+  });
 
-    it('exampleData length should equal one', done => {
+  it('email should delete a user by id', done => {
 
-      superagent.get(`${url}/api/user`)
-        .then((err, res) => {
-          console.log('this is the response', res);
-          if (err) return done(err);
-          expect(res.status).toEqual(200);
-          expect(res.body.email).toEqual('bleh@bleh');
-          done();
+    superagent.delete(`${url}/api/user/:5b286f0d96a91f4a550cac9c`)
+      .then((err, res) => {
+        console.log('this is the response', res);
+        if (err) return done(err);
+        expect(res.status).toEqual(204);
+        done();
 
 
-        })
-        .catch(err => {
-          return done(err);
-        });
-    });
+      })
+      .catch(err => {
+        return done(err);
+      });
   });
 });
+
+
+// });

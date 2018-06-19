@@ -6,17 +6,17 @@ var itemArray = new Schema(
   {
     itemTitle: 'string',
     description: 'string',
-    id: { type: Number, required: true },
-    timeStamp: { type: Number, required: true }
+    id: { type: Number },
+    timeStamp: { type: Number }
 
   });
 
 const userSchema = new Schema({
   email: { type: String, required: true },
-  begin: { type: Number, required: true },
-  end: { type: Number, required: true },
-  id: { type: Number, required: true },
-  taskTitle: { type: String, required: true },
+  begin: { type: Number },
+  end: { type: Number },
+  id: { type: Number },
+  taskTitle: { type: String },
   items: [itemArray],
 
 });
