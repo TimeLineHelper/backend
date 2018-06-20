@@ -17,12 +17,12 @@ export default class TaskItem extends Component {
   }
 
   toggleEdit = (ev) => {
-    ev.preventDefault();
+    // ev.preventDefault();
     return this.setState({isEditing: !this.state.isEditing});
   }
 
   toggleOffEdit = (ev) => {
-    ev.preventDefault();
+    // ev.preventDefault();
     return this.props.addTask({isEditing: false, id: this.props.task.id});
   }
 
@@ -70,6 +70,11 @@ export default class TaskItem extends Component {
       return <li 
           key={this.props.task.id} id={this.props.taskId}>
           {this.props.task.name}: <ul>{this.renderList()}</ul>
+        <button
+          id={this.props.task.id}
+          onClick={this.handleRemove}>
+          Delete
+        </button>
         <button 
           id={this.props.task.id}
           onClick={this.toggleEdit}>

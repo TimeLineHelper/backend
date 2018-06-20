@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import uuidv4 from 'uuidv4';
+// import '../styles/main.scss';
 
 export default class TaskForm extends Component {
   constructor(props) {

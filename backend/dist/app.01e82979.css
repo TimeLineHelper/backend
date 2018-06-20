@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+body {
+  width: 98%; }
+  body .oauth-container {
+    margin: 0; }
+  body .about-container {
+    margin: 0; }
+  body .create-timeline {
+    margin: auto; }
+    body .create-timeline #page-title {
+      text-align: center; }
+    body .create-timeline .primary-task-form {
+      text-align: center; }
+    body .create-timeline h1, body .create-timeline h2 {
+      font-family: 'Roboto', sans-serif; }
+    body .create-timeline form {
+      text-align: center; }
+      body .create-timeline form input {
+        margin: 2em 1em;
+        padding: 3em 5em;
+        box-sizing: border-box;
+        background-color: #045F94;
+        color: white; }
+      body .create-timeline form button {
+        background-color: #04548B;
+        border: none;
+        color: white;
+        padding: 3em 5em;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 2em; }
+      body .create-timeline form ul {
+        list-style-type: none; }
+        body .create-timeline form ul li {
+          padding-left: 10em;
+          padding-right: 10em;
+          margin: .7em;
+          border: 0.5em solid #04548B;
+          width: 90%;
+          border-radius: 1em; }

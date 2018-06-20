@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 import TaskList from './tasks/taskList';
 import TaskForm from './tasks/taskForm';
 
@@ -50,10 +49,12 @@ export default class Timeline extends Component {
   }
 
   render() {
-    return <div>
-      <h1>Create Tasks to Reach Your Goal!</h1>
-      <TaskForm addTask={this.addTask} 
-        buttonText='create'>
+    return <div className="create-timeline">
+      <h1 id="page-title">Create Tasks to Reach Your Goal!</h1>
+      <TaskForm 
+        formClassName='primary-task-form'
+        addTask={this.addTask} 
+        buttonText='Create'>
       </TaskForm>
       <TaskList tasks={this.state.tasks} 
         removeTask={this.removeTask}>
