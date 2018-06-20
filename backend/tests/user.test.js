@@ -56,7 +56,7 @@ describe('Info Routes', function () {
       });
   });
 
-  it('email should delete a user by id', done => {
+  it.skip('email should delete a user by id', done => {
 
     superagent.delete(`${url}/api/user/blah@blah.com`)
       .then((err, res) => {
@@ -76,5 +76,21 @@ describe('Info Routes', function () {
   });
 });
 
+describe('Update User information', () => {
+  it('User should be able to update information', (done) => {
+    superagent.put(`${url}/api/user/blah@blah.com`)
+      .send({
+        email: 'blah@blah.com',
+        newTaskTitle: 'monkeys go to hell',
+      })
+      .then((res) => {
+        expect(res.status).toBe(200);
+        done();
+      })
+      .catch(err => {
+        console.log(err.body, 'this is the error line 91');
+      });
+  });
+});
 
 // });

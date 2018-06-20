@@ -35,11 +35,39 @@ router.get('/api/user', function (req, res, next) {
     .catch(next);
 });
 
-// router.put('/api/user', function (req, res, next) {
-//   User.findOne
+// router.put('/api/user/:email', jsonParser, function (req, res, next) {
+//   User.findByOneAndUpdate(req.params.email, req.body, { new: true })
+//     .then(user => res.json(user))
+//     .catch(err => {
+//       console.log(err, 'err line 51');
+//     });
+
 
 
 // });
+
+router.put('/api/user/:email', jsonParser, (req, res) => {
+  console.log('we in here? line 50 routes');
+  console.log(req.body, 'this is req.body 52');
+  User.findOne({
+
+    email: req.body.email
+  })
+    .then((results) => {
+      console.log(req.body, 'this is req.body 54');
+      if (req.body.newTaskTitle) {
+        results.taskTitle = req.body.newTaskTitle;
+      }
+      results.save();
+    })
+    .then((results) => {
+      console.log('song updated');
+      res.status(204).send('Song updated successefully');
+    })
+    .catch((err) => {
+      res.status(400).send('unable to update');
+    });
+});
 
 // router.delete('/api/user/:id', function (req, res, next) {
 //   console.log(req.params.id, 'req params 44');
