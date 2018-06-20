@@ -6,29 +6,14 @@ export default class Timeline extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      begin: new Date(),
       tasks: [{
-        // dailyTasks: [{
         name: 'Food',
+        begin: new Date(),
+        end: new Date(),
         items: [
           {name: 'run', description: 'meet Andy at Greenlake'}
         ],
       }], 
-        // weeklyTasks: [{
-        //   name: '',
-        //   items: [],
-        // }],
-        // monthlyTasks: [{
-        //   name: '',
-        //   items: [],
-        // }],
-        // milestones: {
-        //   date: Date(),
-        //   // Image: Image(),
-        //   Alert: 'Congratulations!',
-        // },
-      // }],
-      end: new Date(),
     };
   }
 
@@ -39,6 +24,10 @@ export default class Timeline extends Component {
     newTask.tasks.push(task);
     console.log('new Task', newTask);
     this.setState({newTask});
+  }
+
+  updateTask = () => {
+    
   }
 
   removeTask = (id) => {
@@ -54,9 +43,10 @@ export default class Timeline extends Component {
       <TaskForm 
         formClassName='primary-task-form'
         addTask={this.addTask} 
-        buttonText='Create'>
+        buttonText='create'>
       </TaskForm>
-      <TaskList tasks={this.state.tasks} 
+      <TaskList tasks={this.state.tasks}
+        addTask={this.addTask} 
         removeTask={this.removeTask}>
       </TaskList>
     </div>;

@@ -7,7 +7,6 @@ export default class TaskForm extends Component {
     super(props);
     this.state = {
       isEditing: false,
-      completed: false,
     };
   }
 
@@ -24,18 +23,20 @@ export default class TaskForm extends Component {
       let createdTask = {
         id: uuidv4(),
         name: ev.target.name.value,
-        items: [ev.target.items.value],
+        items: [],
         isEditing: false,
-        completed: false,
       }
       this.props.addTask(createdTask); //post request to db
     }
     else {
       let newValue = {};
-      Object.assign(newValue, this.props.tasks, this.state);
+      Object.assign(newValue, this.props.task);
       console.log('new val', newValue);
+      console.log('this.props.task', this.props.task);
+      newValue.name = ev.target.name.value;
       this.props.toggleEdit();
-      this.props.addTask({...newValue}); //put request to db
+      console.log('this.props', this.props);
+      this.props.updateTask({...newValue}); //put request to db
     }
   }
 

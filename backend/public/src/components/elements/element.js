@@ -26,7 +26,7 @@ export default class Item extends Component {
   render() {
     if(this.state.isEditing === true) {
       return <div>
-        <ElementForm action='update'
+        <ElementForm buttonText='update'
           element={this.props.element}
           toggleEdit={this.toggleEdit}
           cancel={this.cancel}>

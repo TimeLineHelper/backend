@@ -14,7 +14,7 @@ export default class TaskList extends Component {
         {this.props.tasks.map((task, i) => (
           <TaskItem 
             removeTask={this.props.removeTask}
-            updateTask={this.props.updateTask}
+            addTask={this.props.addTask}
             task={task} key={i} index={task.isEditing}
           />
       ))}
