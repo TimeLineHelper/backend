@@ -38,7 +38,7 @@ describe('Info Routes', function () {
   //       done();
   //     });
 
-  it('email should match', done => {
+  it.skip('email should match', done => {
 
     superagent.get(`${url}/api/user`)
       .then((err, res) => {
@@ -58,8 +58,9 @@ describe('Info Routes', function () {
 
   it('email should delete a user by id', done => {
 
-    superagent.delete(`${url}/api/user/:5b286f0d96a91f4a550cac9c`)
+    superagent.delete(`${url}/api/user/blah@blah.com`)
       .then((err, res) => {
+        console.log(`${url}/api/user/blah@blah.com`);
         console.log('this is the response', res);
         if (err) return done(err);
         expect(res.status).toEqual(204);
@@ -68,6 +69,8 @@ describe('Info Routes', function () {
 
       })
       .catch(err => {
+        console.log(`${url}/api/user/blah@blah.com`);
+        console.log('in test catch line 71 ');
         return done(err);
       });
   });

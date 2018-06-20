@@ -41,12 +41,29 @@ router.get('/api/user', function (req, res, next) {
 
 // });
 
-router.delete('/api/user/:id', function (req, res, next) {
-  console.log(req.params, 'req params 44');
-  User.findByIdAndRemove(req.params)
-    .catch(next);
-});
+// router.delete('/api/user/:id', function (req, res, next) {
+//   console.log(req.params.id, 'req params 44');
+//   User.findOneAndRemove({ _id: req.params.id })
+//     .then(data => {
+//       console.log(data, 'data removed line 48');
+//     })
+//     .catch(err => {
+//       console.log(err, 'err line 51');
+//     });
+// });
 
+// yo actually make a var that holds the value for email from the users model pass it through the url so the db can identify it and remove it thanks - love past ix.... :3
+
+router.delete('/api/user/:email', function (req, res, next) {
+  console.log(req.params, 'req params 44');
+  User.findOneAndRemove({ email: req.params.email })
+    .then(data => {
+      console.log(data, 'data removed line 48');
+    })
+    .catch(err => {
+      console.log(err, 'err line 51');
+    });
+});
 
 
 
