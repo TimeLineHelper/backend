@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import TaskItem from './taskItem';
-import Timeline from '../timeline';
+import Timeline from '../displayTimelinePage.js';
 
 export default class TaskList extends Component {
   constructor(props) {

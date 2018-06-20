@@ -12,8 +12,6 @@
 </head>
 
 <body>
-  <h1>Google OAuth Login</h1>
-
   <div class="header">
     <h1 id="app-title">Track It</h1>
   </div>
@@ -26,7 +24,7 @@
   <div id="sidebarMenu">
     <ul class="sidebarMenuInner">
       <li>
-        <a href="/Home" target="_blank">Home</a>
+        <a href="/" target="_blank">Home</a>
       </li>
       <li>
         <a id="loginYall" target="_blank">Login</a>
@@ -35,92 +33,27 @@
         <a href="" target="_blank">Logout</a>
       </li>
     </ul>
-  </div> -->
-
-  <!-- Test Timeline -->
-  <section class="timeline">
-    <h1>{Insert Name} Timeline</h1>
-    <ul>
-      <li>
-        <div>
-          <time>Eat</time>
-          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium At vero eos et accusamus et iusto odio
-          dignissimos ducimus qui blanditiis praesentium
-          <button class="btn">
-            <i class="fa fa-close"></i>
-          </button>
-          <button class="edit-btn">
-            <i class="fa fa-pencil"></i>
-          </button>
-          <button class="trash-btn">
-            <i class="fa fa-trash"></i>
-          </button>
-        </div>
-      </li>
-      <li>
-        <div>
-          <time>Run</time>
-          Proin quam velit, efficitur vel neque vitae, rhoncus commodo mi. Suspendisse finibus mauris et bibendum molestie. Aenean
-          ex augue, varius et pulvinar in, pretium non nisi.
-          <button class="edit-btn">
-            <i class="fa fa-pencil"></i>
-          </button>
-          <button class="trash-btn">
-            <i class="fa fa-close"></i>
-          </button>
-        </div>
-      </li>
-      <li>
-        <div>
-          <time>Bike</time>
-          In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat mattis. Vestibulum id magna est.
-          <button class="edit-btn">
-            <i class="fa fa-pencil"></i>
-          </button>
-          <button class="trash-btn">
-            <i class="fa fa-close"></i>
-          </button>
-        </div>
-      </li> -->
-
-      <!-- more list items here -->
-    </ul>
-  </section>
-
-  <!-- End Test Timeline -->
+  </div>
 
   <body>
     <div id="root"></div>
     <script src="./src/app.js"></script>
     <!-- <script src="./src/app2.js"></script> -->
-    <!-- <button class="add-btn">
-      <i class="fa fa-plus-circle">Add Milestone</i>
-    </button> -->
-    <script>
 
-      let a = document.createElement('a');
+    <script>
+      let loginYall = document.getElementById('loginYall');
       let AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
       let clientIDQuery = 'client_id=1085617298907-35lrja0a9k91oq9g8s7g8p03biq2816a.apps.googleusercontent.com';
       let responseTypeQuery = 'response_type=code';
       let scopeQuery = 'scope=openid%20profile%20email';
-      //change for calander//
       let promptQuery = 'prompt=consent';
       let redirectURIQuery = 'redirect_uri=http://localhost:3000/callback';
       let formattedURL =
         `${AUTH_URL}?${clientIDQuery}&${responseTypeQuery}&${scopeQuery}&${promptQuery}&${redirectURIQuery}`;
-
-      a.setAttribute('href', formattedURL);
-      a.textContent = 'login with google';
-      console.log('******************************the URL we built:', formattedURL);
-
-      document.body.append(a);
-      //pass some of this data in as prompts for react//
-
       loginYall.setAttribute('href', formattedURL);
       // a.textContent = 'Login';
       // console.log('the URL we built:', formattedURL);
       // document.body.append(a);
-
       if (!document.cookie) {
         a.textContent = 'You are not logged in';
       } else {

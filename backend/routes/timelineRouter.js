@@ -1,4 +1,5 @@
 'use strict';
+
 const superagent = require('superagent');
 const User = require('../models/user.js');
 // const Timeline = require('../models/model.js');
@@ -46,12 +47,5 @@ router.delete('/api/user/:id', function (req, res, next) {
   User.findByIdAndRemove(req.params)
     .catch(next);
 });
-
-
-
-
-
-
-
 
 module.exports = router;

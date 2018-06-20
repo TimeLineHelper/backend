@@ -279,3 +279,51 @@ p {
 #googleAuth {
   margin: auto;
 }
+
+/* Forms */
+#createItem-intro {
+    margin-top: 4em;
+    font-size: 1.5em;
+    width: 9em;
+}
+
+#task-form {
+    display: -webkit-inline-box;
+    width: 13em;
+    margin-top: 1em;
+}
+
+/* Date Picker */
+[type="date"] {
+    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+  }
+  [type="date"]::-webkit-inner-spin-button {
+    display: none;
+  }
+  [type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+  
+  #form-name {
+      margin-bottom: 2em;
+  }
+
+  label {
+    padding-right: 9em;
+  }
+
+  input {
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 3px 5px;
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+    width: 190px;
+  }
+
+  #event-button {
+    background-color: #f96257;
+    font-size: .8em;
+    margin-top: 1.2em;
+    width: 8em;
+  }

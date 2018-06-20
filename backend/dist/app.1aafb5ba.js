@@ -98,7 +98,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({25:[function(require,module,exports) {
+})({33:[function(require,module,exports) {
 /*
 object-assign
 (c) Sindre Sorhus
@@ -189,7 +189,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 	return to;
 };
-},{}],26:[function(require,module,exports) {
+},{}],37:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -243,7 +243,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-},{}],27:[function(require,module,exports) {
+},{}],34:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -261,7 +261,7 @@ if (undefined !== 'production') {
 }
 
 module.exports = emptyObject;
-},{}],29:[function(require,module,exports) {
+},{}],36:[function(require,module,exports) {
 "use strict";
 
 /**
@@ -298,7 +298,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],28:[function(require,module,exports) {
+},{}],35:[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -361,7 +361,7 @@ if (undefined !== 'production') {
 }
 
 module.exports = warning;
-},{"./emptyFunction":29}],54:[function(require,module,exports) {
+},{"./emptyFunction":36}],64:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -375,7 +375,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],30:[function(require,module,exports) {
+},{}],44:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -435,8 +435,8 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 }
 
 module.exports = checkPropTypes;
-},{"fbjs/lib/invariant":26,"fbjs/lib/warning":28,"./lib/ReactPropTypesSecret":54}],7:[function(require,module,exports) {
-/** @license React v16.4.1
+},{"fbjs/lib/invariant":37,"fbjs/lib/warning":35,"./lib/ReactPropTypesSecret":64}],12:[function(require,module,exports) {
+/** @license React v16.4.0
  * react.development.js
  *
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -460,7 +460,7 @@ if (undefined !== "production") {
 
     // TODO: this is special because it gets imported during build.
 
-    var ReactVersion = '16.4.1';
+    var ReactVersion = '16.4.0';
 
     // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
     // nor polyfill, then a plain number is used for performance.
@@ -522,6 +522,9 @@ if (undefined !== "production") {
 
 
     // Gather advanced timing metrics for Profiler subtrees.
+
+
+    // Fires getDerivedStateFromProps for state *or* props changes
 
 
     // Only used in www builds.
@@ -1319,7 +1322,7 @@ if (undefined !== "production") {
     /**
      * Iterates through children that are typically specified as `props.children`.
      *
-     * See https://reactjs.org/docs/react-api.html#reactchildrenforeach
+     * See https://reactjs.org/docs/react-api.html#react.children.foreach
      *
      * The provided forEachFunc(child, index) will be called for each
      * leaf child.
@@ -1370,7 +1373,7 @@ if (undefined !== "production") {
     /**
      * Maps children that are typically specified as `props.children`.
      *
-     * See https://reactjs.org/docs/react-api.html#reactchildrenmap
+     * See https://reactjs.org/docs/react-api.html#react.children.map
      *
      * The provided mapFunction(child, key, index) will be called for each
      * leaf child.
@@ -1393,7 +1396,7 @@ if (undefined !== "production") {
      * Count the number of children that are typically specified as
      * `props.children`.
      *
-     * See https://reactjs.org/docs/react-api.html#reactchildrencount
+     * See https://reactjs.org/docs/react-api.html#react.children.count
      *
      * @param {?*} children Children tree container.
      * @return {number} The number of children.
@@ -1406,7 +1409,7 @@ if (undefined !== "production") {
      * Flatten a children object (typically specified as `props.children`) and
      * return an array with appropriately re-keyed children.
      *
-     * See https://reactjs.org/docs/react-api.html#reactchildrentoarray
+     * See https://reactjs.org/docs/react-api.html#react.children.toarray
      */
     function toArray(children) {
       var result = [];
@@ -1418,7 +1421,7 @@ if (undefined !== "production") {
      * Returns the first child in a collection of children and verifies that there
      * is only one child in the collection.
      *
-     * See https://reactjs.org/docs/react-api.html#reactchildrenonly
+     * See https://reactjs.org/docs/react-api.html#react.children.only
      *
      * The current implementation of this function assumes that a single child gets
      * passed without a wrapper, but the purpose of this helper function is to
@@ -1561,16 +1564,10 @@ if (undefined !== "production") {
           return '#text';
         } else if (typeof element.type === 'string') {
           return element.type;
-        }
-
-        var type = element.type;
-        if (type === REACT_FRAGMENT_TYPE) {
+        } else if (element.type === REACT_FRAGMENT_TYPE) {
           return 'React.Fragment';
-        } else if (typeof type === 'object' && type !== null && type.$$typeof === REACT_FORWARD_REF_TYPE) {
-          var functionName = type.render.displayName || type.render.name || '';
-          return functionName !== '' ? 'ForwardRef(' + functionName + ')' : 'ForwardRef';
         } else {
-          return type.displayName || type.name || 'Unknown';
+          return element.type.displayName || element.type.name || 'Unknown';
         }
       };
 
@@ -1714,31 +1711,22 @@ if (undefined !== "production") {
      * @param {ReactElement} element
      */
     function validatePropTypes(element) {
-      var type = element.type;
-      var name = void 0,
-          propTypes = void 0;
-      if (typeof type === 'function') {
-        // Class or functional component
-        name = type.displayName || type.name;
-        propTypes = type.propTypes;
-      } else if (typeof type === 'object' && type !== null && type.$$typeof === REACT_FORWARD_REF_TYPE) {
-        // ForwardRef
-        var functionName = type.render.displayName || type.render.name || '';
-        name = functionName !== '' ? 'ForwardRef(' + functionName + ')' : 'ForwardRef';
-        propTypes = type.propTypes;
-      } else {
+      var componentClass = element.type;
+      if (typeof componentClass !== 'function') {
         return;
       }
+      var name = componentClass.displayName || componentClass.name;
+      var propTypes = componentClass.propTypes;
       if (propTypes) {
         currentlyValidatingElement = element;
         checkPropTypes(propTypes, element.props, 'prop', name, getStackAddendum);
         currentlyValidatingElement = null;
-      } else if (type.PropTypes !== undefined && !propTypesMisspellWarningShown) {
+      } else if (componentClass.PropTypes !== undefined && !propTypesMisspellWarningShown) {
         propTypesMisspellWarningShown = true;
         warning(false, 'Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?', name || 'Unknown');
       }
-      if (typeof type.getDefaultProps === 'function') {
-        !type.getDefaultProps.isReactClassApproved ? warning(false, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.') : void 0;
+      if (typeof componentClass.getDefaultProps === 'function') {
+        !componentClass.getDefaultProps.isReactClassApproved ? warning(false, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.') : void 0;
       }
     }
 
@@ -1916,7 +1904,7 @@ if (undefined !== "production") {
     module.exports = react;
   })();
 }
-},{"object-assign":25,"fbjs/lib/invariant":26,"fbjs/lib/emptyObject":27,"fbjs/lib/warning":28,"fbjs/lib/emptyFunction":29,"prop-types/checkPropTypes":30}],4:[function(require,module,exports) {
+},{"object-assign":33,"fbjs/lib/invariant":37,"fbjs/lib/emptyObject":34,"fbjs/lib/warning":35,"fbjs/lib/emptyFunction":36,"prop-types/checkPropTypes":44}],9:[function(require,module,exports) {
 'use strict';
 
 if (undefined === 'production') {
@@ -1924,7 +1912,7 @@ if (undefined === 'production') {
 } else {
   module.exports = require('./cjs/react.development.js');
 }
-},{"./cjs/react.development.js":7}],31:[function(require,module,exports) {
+},{"./cjs/react.development.js":12}],47:[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -1985,7 +1973,7 @@ if (__DEV__) {
 }
 
 module.exports = warning;
-},{}],53:[function(require,module,exports) {
+},{}],65:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2502,7 +2490,7 @@ module.exports = function (isValidElement, throwOnDirectAccess) {
 
   return ReactPropTypes;
 };
-},{"fbjs/lib/emptyFunction":29,"fbjs/lib/invariant":26,"fbjs/lib/warning":28,"object-assign":25,"./lib/ReactPropTypesSecret":54,"./checkPropTypes":30}],32:[function(require,module,exports) {
+},{"fbjs/lib/emptyFunction":36,"fbjs/lib/invariant":37,"fbjs/lib/warning":35,"object-assign":33,"./lib/ReactPropTypesSecret":64,"./checkPropTypes":44}],48:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2526,7 +2514,7 @@ if (undefined !== 'production') {
   // http://fb.me/prop-types-in-prod
   module.exports = require('./factoryWithThrowingShims')();
 }
-},{"./factoryWithTypeCheckers":53}],71:[function(require,module,exports) {
+},{"./factoryWithTypeCheckers":65}],79:[function(require,module,exports) {
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -2580,7 +2568,7 @@ if (undefined !== 'production') {
 }
 
 module.exports = warning;
-},{}],34:[function(require,module,exports) {
+},{}],50:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2627,7 +2615,7 @@ var invariant = function (condition, format, a, b, c, d, e, f) {
 };
 
 module.exports = invariant;
-},{}],72:[function(require,module,exports) {
+},{}],83:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2703,7 +2691,7 @@ function resolvePathname(to) {
 }
 
 exports.default = resolvePathname;
-},{}],73:[function(require,module,exports) {
+},{}],82:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2751,7 +2739,7 @@ function valueEqual(a, b) {
 }
 
 exports.default = valueEqual;
-},{}],59:[function(require,module,exports) {
+},{}],70:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2814,7 +2802,7 @@ var createPath = exports.createPath = function createPath(location) {
 
   return path;
 };
-},{}],58:[function(require,module,exports) {
+},{}],69:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2903,7 +2891,7 @@ var createLocation = exports.createLocation = function createLocation(path, stat
 var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a, b) {
   return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && (0, _valueEqual2.default)(a.state, b.state);
 };
-},{"resolve-pathname":72,"value-equal":73,"./PathUtils":59}],68:[function(require,module,exports) {
+},{"resolve-pathname":83,"value-equal":82,"./PathUtils":70}],77:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2991,7 +2979,7 @@ var createTransitionManager = function createTransitionManager() {
 };
 
 exports.default = createTransitionManager;
-},{"warning":71}],69:[function(require,module,exports) {
+},{"warning":79}],78:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3049,7 +3037,7 @@ var supportsGoWithoutReloadUsingHash = exports.supportsGoWithoutReloadUsingHash 
 var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
   return event.state === undefined && navigator.userAgent.indexOf('CriOS') === -1;
 };
-},{}],55:[function(require,module,exports) {
+},{}],66:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3368,7 +3356,7 @@ var createBrowserHistory = function createBrowserHistory() {
 };
 
 exports.default = createBrowserHistory;
-},{"warning":71,"invariant":34,"./LocationUtils":58,"./PathUtils":59,"./createTransitionManager":68,"./DOMUtils":69}],56:[function(require,module,exports) {
+},{"warning":79,"invariant":50,"./LocationUtils":69,"./PathUtils":70,"./createTransitionManager":77,"./DOMUtils":78}],67:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3702,7 +3690,7 @@ var createHashHistory = function createHashHistory() {
 };
 
 exports.default = createHashHistory;
-},{"warning":71,"invariant":34,"./LocationUtils":58,"./PathUtils":59,"./createTransitionManager":68,"./DOMUtils":69}],57:[function(require,module,exports) {
+},{"warning":79,"invariant":50,"./LocationUtils":69,"./PathUtils":70,"./createTransitionManager":77,"./DOMUtils":78}],68:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3886,7 +3874,7 @@ var createMemoryHistory = function createMemoryHistory() {
 };
 
 exports.default = createMemoryHistory;
-},{"warning":71,"./PathUtils":59,"./LocationUtils":58,"./createTransitionManager":68}],33:[function(require,module,exports) {
+},{"warning":79,"./PathUtils":70,"./LocationUtils":69,"./createTransitionManager":77}],49:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3941,7 +3929,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.createBrowserHistory = _createBrowserHistory3.default;
 exports.createHashHistory = _createHashHistory3.default;
 exports.createMemoryHistory = _createMemoryHistory3.default;
-},{"./createBrowserHistory":55,"./createHashHistory":56,"./createMemoryHistory":57,"./LocationUtils":58,"./PathUtils":59}],45:[function(require,module,exports) {
+},{"./createBrowserHistory":66,"./createHashHistory":67,"./createMemoryHistory":68,"./LocationUtils":69,"./PathUtils":70}],55:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4084,7 +4072,7 @@ Router.childContextTypes = {
 };
 
 exports.default = Router;
-},{"warning":31,"invariant":34,"react":4,"prop-types":32}],17:[function(require,module,exports) {
+},{"warning":47,"invariant":50,"react":9,"prop-types":48}],26:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4098,7 +4086,7 @@ var _Router2 = _interopRequireDefault(_Router);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Router2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Router":45}],9:[function(require,module,exports) {
+},{"react-router/es/Router":55}],18:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4182,7 +4170,7 @@ BrowserRouter.propTypes = {
 };
 
 exports.default = BrowserRouter;
-},{"warning":31,"react":4,"prop-types":32,"history":33,"./Router":17}],10:[function(require,module,exports) {
+},{"warning":47,"react":9,"prop-types":48,"history":49,"./Router":26}],20:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4265,7 +4253,7 @@ HashRouter.propTypes = {
 };
 
 exports.default = HashRouter;
-},{"warning":31,"react":4,"prop-types":32,"history":33,"./Router":17}],11:[function(require,module,exports) {
+},{"warning":47,"react":9,"prop-types":48,"history":49,"./Router":26}],19:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4409,7 +4397,7 @@ Link.contextTypes = {
 };
 
 exports.default = Link;
-},{"react":4,"prop-types":32,"invariant":34,"history":33}],35:[function(require,module,exports) {
+},{"react":9,"prop-types":48,"invariant":50,"history":49}],51:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4493,7 +4481,7 @@ MemoryRouter.propTypes = {
 };
 
 exports.default = MemoryRouter;
-},{"warning":31,"react":4,"prop-types":32,"history":33,"./Router":45}],12:[function(require,module,exports) {
+},{"warning":47,"react":9,"prop-types":48,"history":49,"./Router":55}],21:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4507,12 +4495,12 @@ var _MemoryRouter2 = _interopRequireDefault(_MemoryRouter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _MemoryRouter2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/MemoryRouter":35}],74:[function(require,module,exports) {
+},{"react-router/es/MemoryRouter":51}],84:[function(require,module,exports) {
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],63:[function(require,module,exports) {
+},{}],73:[function(require,module,exports) {
 var isarray = require('isarray')
 
 /**
@@ -4940,7 +4928,7 @@ function pathToRegexp (path, keys, options) {
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
 
-},{"isarray":74}],50:[function(require,module,exports) {
+},{"isarray":84}],59:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5022,7 +5010,7 @@ var matchPath = function matchPath(pathname) {
 };
 
 exports.default = matchPath;
-},{"path-to-regexp":63}],38:[function(require,module,exports) {
+},{"path-to-regexp":73}],52:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5203,7 +5191,7 @@ Route.childContextTypes = {
 };
 
 exports.default = Route;
-},{"warning":31,"invariant":34,"react":4,"prop-types":32,"./matchPath":50}],16:[function(require,module,exports) {
+},{"warning":47,"invariant":50,"react":9,"prop-types":48,"./matchPath":59}],24:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5217,7 +5205,7 @@ var _Route2 = _interopRequireDefault(_Route);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Route2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Route":38}],13:[function(require,module,exports) {
+},{"react-router/es/Route":52}],22:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5327,7 +5315,7 @@ NavLink.defaultProps = {
 };
 
 exports.default = NavLink;
-},{"react":4,"prop-types":32,"./Route":16,"./Link":11}],36:[function(require,module,exports) {
+},{"react":9,"prop-types":48,"./Route":24,"./Link":19}],53:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5434,7 +5422,7 @@ Prompt.contextTypes = {
 };
 
 exports.default = Prompt;
-},{"react":4,"prop-types":32,"invariant":34}],14:[function(require,module,exports) {
+},{"react":9,"prop-types":48,"invariant":50}],23:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5448,7 +5436,7 @@ var _Prompt2 = _interopRequireDefault(_Prompt);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Prompt2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Prompt":36}],48:[function(require,module,exports) {
+},{"react-router/es/Prompt":53}],58:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5496,7 +5484,7 @@ var generatePath = function generatePath() {
 };
 
 exports.default = generatePath;
-},{"path-to-regexp":63}],37:[function(require,module,exports) {
+},{"path-to-regexp":73}],54:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5652,7 +5640,7 @@ Redirect.contextTypes = {
 };
 
 exports.default = Redirect;
-},{"react":4,"prop-types":32,"warning":31,"invariant":34,"history":33,"./generatePath":48}],15:[function(require,module,exports) {
+},{"react":9,"prop-types":48,"warning":47,"invariant":50,"history":49,"./generatePath":58}],25:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5666,7 +5654,7 @@ var _Redirect2 = _interopRequireDefault(_Redirect);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Redirect2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Redirect":37}],46:[function(require,module,exports) {
+},{"react-router/es/Redirect":54}],56:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5863,7 +5851,7 @@ StaticRouter.childContextTypes = {
 };
 
 exports.default = StaticRouter;
-},{"warning":31,"invariant":34,"react":4,"prop-types":32,"history":33,"./Router":45}],18:[function(require,module,exports) {
+},{"warning":47,"invariant":50,"react":9,"prop-types":48,"history":49,"./Router":55}],27:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5877,7 +5865,7 @@ var _StaticRouter2 = _interopRequireDefault(_StaticRouter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _StaticRouter2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/StaticRouter":46}],47:[function(require,module,exports) {
+},{"react-router/es/StaticRouter":56}],57:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5988,7 +5976,7 @@ Switch.propTypes = {
 };
 
 exports.default = Switch;
-},{"react":4,"prop-types":32,"warning":31,"invariant":34,"./matchPath":50}],19:[function(require,module,exports) {
+},{"react":9,"prop-types":48,"warning":47,"invariant":50,"./matchPath":59}],28:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6002,7 +5990,7 @@ var _Switch2 = _interopRequireDefault(_Switch);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _Switch2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/Switch":47}],20:[function(require,module,exports) {
+},{"react-router/es/Switch":57}],29:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6016,7 +6004,7 @@ var _generatePath2 = _interopRequireDefault(_generatePath);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _generatePath2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/generatePath":48}],21:[function(require,module,exports) {
+},{"react-router/es/generatePath":58}],30:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6030,7 +6018,7 @@ var _matchPath2 = _interopRequireDefault(_matchPath);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _matchPath2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/matchPath":50}],64:[function(require,module,exports) {
+},{"react-router/es/matchPath":59}],75:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6100,7 +6088,7 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
 
 module.exports = hoistNonReactStatics;
 
-},{}],49:[function(require,module,exports) {
+},{}],60:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6168,7 +6156,7 @@ var withRouter = function withRouter(Component) {
 };
 
 exports.default = withRouter;
-},{"react":4,"prop-types":32,"hoist-non-react-statics":64,"./Route":38}],22:[function(require,module,exports) {
+},{"react":9,"prop-types":48,"hoist-non-react-statics":75,"./Route":52}],31:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6182,7 +6170,7 @@ var _withRouter2 = _interopRequireDefault(_withRouter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _withRouter2.default; // Written in this round about way for babel-transform-imports
-},{"react-router/es/withRouter":49}],5:[function(require,module,exports) {
+},{"react-router/es/withRouter":60}],10:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6262,7 +6250,7 @@ exports.Switch = _Switch3.default;
 exports.generatePath = _generatePath3.default;
 exports.matchPath = _matchPath3.default;
 exports.withRouter = _withRouter3.default;
-},{"./BrowserRouter":9,"./HashRouter":10,"./Link":11,"./MemoryRouter":12,"./NavLink":13,"./Prompt":14,"./Redirect":15,"./Route":16,"./Router":17,"./StaticRouter":18,"./Switch":19,"./generatePath":20,"./matchPath":21,"./withRouter":22}],39:[function(require,module,exports) {
+},{"./BrowserRouter":18,"./HashRouter":20,"./Link":19,"./MemoryRouter":21,"./NavLink":22,"./Prompt":23,"./Redirect":25,"./Route":24,"./Router":26,"./StaticRouter":27,"./Switch":28,"./generatePath":29,"./matchPath":30,"./withRouter":31}],38:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -6296,7 +6284,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],40:[function(require,module,exports) {
+},{}],39:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6333,7 +6321,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-},{}],42:[function(require,module,exports) {
+},{}],40:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -6399,7 +6387,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-},{}],70:[function(require,module,exports) {
+},{}],76:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6422,7 +6410,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-},{}],60:[function(require,module,exports) {
+},{}],61:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6445,7 +6433,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":70}],41:[function(require,module,exports) {
+},{"./isNode":76}],41:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6483,7 +6471,7 @@ function containsNode(outerNode, innerNode) {
 }
 
 module.exports = containsNode;
-},{"./isTextNode":60}],61:[function(require,module,exports) {
+},{"./isTextNode":61}],63:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -6551,7 +6539,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-},{"./hyphenate":61}],62:[function(require,module,exports) {
+},{"./hyphenate":63}],62:[function(require,module,exports) {
 "use strict";
 
 /**
@@ -6581,7 +6569,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],44:[function(require,module,exports) {
+},{}],42:[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -6619,8 +6607,8 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-},{"./camelize":62}],8:[function(require,module,exports) {
-/** @license React v16.4.1
+},{"./camelize":62}],16:[function(require,module,exports) {
+/** @license React v16.4.0
  * react-dom.development.js
  *
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -8825,9 +8813,7 @@ if (undefined !== "production") {
      * @return {DOMEventTarget} Target node.
      */
     function getEventTarget(nativeEvent) {
-      // Fallback to nativeEvent.srcElement for IE9
-      // https://github.com/facebook/react/issues/12506
-      var target = nativeEvent.target || nativeEvent.srcElement || window;
+      var target = nativeEvent.target || window;
 
       // Normalize SVG <use> element events #4963
       if (target.correspondingUseElement) {
@@ -9723,28 +9709,20 @@ if (undefined !== "production") {
       }
     }
 
-    function postMountWrapper(element, props, isHydrating) {
+    function postMountWrapper(element, props) {
       var node = element;
 
       if (props.hasOwnProperty('value') || props.hasOwnProperty('defaultValue')) {
-        var _initialValue = '' + node._wrapperState.initialValue;
-        var currentValue = node.value;
-
         // Do not assign value if it is already set. This prevents user text input
         // from being lost during SSR hydration.
-        if (!isHydrating) {
-          // Do not re-assign the value property if there is no change. This
-          // potentially avoids a DOM write and prevents Firefox (~60.0.1) from
-          // prematurely marking required inputs as invalid
-          if (_initialValue !== currentValue) {
-            node.value = _initialValue;
-          }
+        if (node.value === '') {
+          node.value = '' + node._wrapperState.initialValue;
         }
 
         // value must be assigned before defaultValue. This fixes an issue where the
         // visually displayed value of date inputs disappears on mobile Safari and Chrome:
         // https://github.com/facebook/react/issues/7233
-        node.defaultValue = _initialValue;
+        node.defaultValue = '' + node._wrapperState.initialValue;
       }
 
       // Normally, we'd just do `node.checked = node.checked` upon initial mount, less this bug
@@ -10017,8 +9995,14 @@ if (undefined !== "production") {
       }
     }
 
-    function handleControlledInputBlur(node) {
-      var state = node._wrapperState;
+    function handleControlledInputBlur(inst, node) {
+      // TODO: In IE, inst is occasionally null. Why?
+      if (inst == null) {
+        return;
+      }
+
+      // Fiber and ReactDOM keep wrapper state in separate places
+      var state = inst._wrapperState || node._wrapperState;
 
       if (!state || !state.controlled || node.type !== 'number') {
         return;
@@ -10075,7 +10059,7 @@ if (undefined !== "production") {
 
         // When blurring, set the value attribute for number inputs
         if (topLevelType === TOP_BLUR) {
-          handleControlledInputBlur(targetNode);
+          handleControlledInputBlur(targetInst, targetNode);
         }
       }
     };
@@ -11565,14 +11549,9 @@ if (undefined !== "production") {
      * Input selection module for React.
      */
 
-    /**
-     * @hasSelectionCapabilities: we get the element types that support selection
-     * from https://html.spec.whatwg.org/#do-not-apply, looking at `selectionStart`
-     * and `selectionEnd` rows.
-     */
     function hasSelectionCapabilities(elem) {
       var nodeName = elem && elem.nodeName && elem.nodeName.toLowerCase();
-      return nodeName && (nodeName === 'input' && (elem.type === 'text' || elem.type === 'search' || elem.type === 'tel' || elem.type === 'url' || elem.type === 'password') || nodeName === 'textarea' || elem.contentEditable === 'true');
+      return nodeName && (nodeName === 'input' && elem.type === 'text' || nodeName === 'textarea' || elem.contentEditable === 'true');
     }
 
     function getSelectionInformation() {
@@ -11593,7 +11572,7 @@ if (undefined !== "production") {
       var priorFocusedElem = priorSelectionInformation.focusedElem;
       var priorSelectionRange = priorSelectionInformation.selectionRange;
       if (curFocusedElem !== priorFocusedElem && isInDocument(priorFocusedElem)) {
-        if (priorSelectionRange !== null && hasSelectionCapabilities(priorFocusedElem)) {
+        if (hasSelectionCapabilities(priorFocusedElem)) {
           setSelection(priorFocusedElem, priorSelectionRange);
         }
 
@@ -11610,9 +11589,7 @@ if (undefined !== "production") {
           }
         }
 
-        if (typeof priorFocusedElem.focus === 'function') {
-          priorFocusedElem.focus();
-        }
+        priorFocusedElem.focus();
 
         for (var i = 0; i < ancestors.length; i++) {
           var info = ancestors[i];
@@ -11834,11 +11811,11 @@ if (undefined !== "production") {
       BeforeInputEventPlugin: BeforeInputEventPlugin
     });
 
-    // We capture a local reference to any global, in case it gets polyfilled after
-    // this module is initially evaluated.
-    // We want to be using a consistent implementation.
-
-    var localRequestAnimationFrame$1 = typeof requestAnimationFrame === 'function' ? requestAnimationFrame : undefined;
+    {
+      if (ExecutionEnvironment.canUseDOM && typeof requestAnimationFrame !== 'function') {
+        warning(false, 'React depends on requestAnimationFrame. Make sure that you load a ' + 'polyfill in older browsers. https://fb.me/react-polyfills');
+      }
+    }
 
     /**
      * A scheduling library to allow scheduling work with more granular priority and
@@ -11861,42 +11838,32 @@ if (undefined !== "production") {
     // layout, paint and other browser work is counted against the available time.
     // The frame rate is dynamically adjusted.
 
-    // We capture a local reference to any global, in case it gets polyfilled after
-    // this module is initially evaluated.
-    // We want to be using a consistent implementation.
-    var localDate = Date;
-    var localSetTimeout = setTimeout;
-    var localClearTimeout = clearTimeout;
-
     var hasNativePerformanceNow = typeof performance === 'object' && typeof performance.now === 'function';
 
     var now$1 = void 0;
     if (hasNativePerformanceNow) {
-      var Performance = performance;
       now$1 = function () {
-        return Performance.now();
+        return performance.now();
       };
     } else {
       now$1 = function () {
-        return localDate.now();
+        return Date.now();
       };
     }
 
+    // TODO: There's no way to cancel, because Fiber doesn't atm.
     var scheduleWork = void 0;
     var cancelScheduledWork = void 0;
 
     if (!ExecutionEnvironment.canUseDOM) {
-      var timeoutIds = new Map();
+      var callbackIdCounter = 0;
+      // Timeouts are objects in Node.
+      // For consistency, we'll use numbers in the public API anyway.
+      var timeoutIds = {};
 
       scheduleWork = function (callback, options) {
-        // keeping return type consistent
-        var callbackConfig = {
-          scheduledCallback: callback,
-          timeoutTime: 0,
-          next: null,
-          prev: null
-        };
-        var timeoutId = localSetTimeout(function () {
+        var callbackId = callbackIdCounter++;
+        var timeoutId = setTimeout(function () {
           callback({
             timeRemaining: function () {
               return Infinity;
@@ -11905,28 +11872,33 @@ if (undefined !== "production") {
             didTimeout: false
           });
         });
-        timeoutIds.set(callback, timeoutId);
-        return callbackConfig;
+        timeoutIds[callbackId] = timeoutId;
+        return callbackId;
       };
       cancelScheduledWork = function (callbackId) {
-        var callback = callbackId.scheduledCallback;
-        var timeoutId = timeoutIds.get(callback);
-        timeoutIds.delete(callbackId);
-        localClearTimeout(timeoutId);
+        var timeoutId = timeoutIds[callbackId];
+        delete timeoutIds[callbackId];
+        clearTimeout(timeoutId);
       };
     } else {
-      {
-        if (typeof localRequestAnimationFrame$1 !== 'function') {
-          warning(false, 'React depends on requestAnimationFrame. Make sure that you load a ' + 'polyfill in older browsers. https://fb.me/react-polyfills');
-        }
-      }
+      // We keep callbacks in a queue.
+      // Calling scheduleWork will push in a new callback at the end of the queue.
+      // When we get idle time, callbacks are removed from the front of the queue
+      var pendingCallbacks = [];
 
-      var localRequestAnimationFrame = typeof localRequestAnimationFrame$1 === 'function' ? localRequestAnimationFrame$1 : function (callback) {
-        invariant(false, 'React depends on requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://fb.me/react-polyfills');
+      var _callbackIdCounter = 0;
+      var getCallbackId = function () {
+        _callbackIdCounter++;
+        return _callbackIdCounter;
       };
 
-      var headOfPendingCallbacksLinkedList = null;
-      var tailOfPendingCallbacksLinkedList = null;
+      // When a callback is scheduled, we register it by adding it's id to this
+      // object.
+      // If the user calls 'cancelScheduledWork' with the id of that callback, it will be
+      // unregistered by removing the id from this object.
+      // Then we skip calling any callback which is not registered.
+      // This means cancelling is an O(1) time complexity instead of O(n).
+      var registeredCallbackIds = {};
 
       // We track what the next soonest timeoutTime is, to be able to quickly tell
       // if none of the scheduled callbacks have timed out.
@@ -11950,27 +11922,17 @@ if (undefined !== "production") {
         }
       };
 
-      /**
-       * Handles the case where a callback errors:
-       * - don't catch the error, because this changes debugging behavior
-       * - do start a new postMessage callback, to call any remaining callbacks,
-       * - but only if there is an error, so there is not extra overhead.
-       */
-      var callUnsafely = function (callbackConfig, arg) {
-        var callback = callbackConfig.scheduledCallback;
-        var finishedCalling = false;
+      var safelyCallScheduledCallback = function (callback, callbackId) {
+        if (!registeredCallbackIds[callbackId]) {
+          // ignore cancelled callbacks
+          return;
+        }
         try {
-          callback(arg);
-          finishedCalling = true;
+          callback(frameDeadlineObject);
+          // Avoid using 'catch' to keep errors easy to debug
         } finally {
-          // always remove it from linked list
-          cancelScheduledWork(callbackConfig);
-
-          if (!finishedCalling) {
-            // an error must have been thrown
-            isIdleScheduled = true;
-            window.postMessage(messageKey, '*');
-          }
+          // always clean up the callbackId, even if the callback throws
+          delete registeredCallbackIds[callbackId];
         }
       };
 
@@ -11980,7 +11942,7 @@ if (undefined !== "production") {
        * Keeps doing this until there are none which have currently timed out.
        */
       var callTimedOutCallbacks = function () {
-        if (headOfPendingCallbacksLinkedList === null) {
+        if (pendingCallbacks.length === 0) {
           return;
         }
 
@@ -11997,38 +11959,24 @@ if (undefined !== "production") {
           // We know that none of them have timed out yet.
           return;
         }
-        // NOTE: we intentionally wait to update the nextSoonestTimeoutTime until
-        // after successfully calling any timed out callbacks.
-        // If a timed out callback throws an error, we could get stuck in a state
-        // where the nextSoonestTimeoutTime was set wrong.
-        var updatedNextSoonestTimeoutTime = -1; // we will update nextSoonestTimeoutTime below
-        var timedOutCallbacks = [];
+        nextSoonestTimeoutTime = -1; // we will reset it below
 
-        // iterate once to find timed out callbacks and find nextSoonestTimeoutTime
-        var currentCallbackConfig = headOfPendingCallbacksLinkedList;
-        while (currentCallbackConfig !== null) {
+        // keep checking until we don't find any more timed out callbacks
+        frameDeadlineObject.didTimeout = true;
+        for (var i = 0, len = pendingCallbacks.length; i < len; i++) {
+          var currentCallbackConfig = pendingCallbacks[i];
           var _timeoutTime = currentCallbackConfig.timeoutTime;
           if (_timeoutTime !== -1 && _timeoutTime <= currentTime) {
             // it has timed out!
-            timedOutCallbacks.push(currentCallbackConfig);
+            // call it
+            var _callback = currentCallbackConfig.scheduledCallback;
+            safelyCallScheduledCallback(_callback, currentCallbackConfig.callbackId);
           } else {
-            if (_timeoutTime !== -1 && (updatedNextSoonestTimeoutTime === -1 || _timeoutTime < updatedNextSoonestTimeoutTime)) {
-              updatedNextSoonestTimeoutTime = _timeoutTime;
+            if (_timeoutTime !== -1 && (nextSoonestTimeoutTime === -1 || _timeoutTime < nextSoonestTimeoutTime)) {
+              nextSoonestTimeoutTime = _timeoutTime;
             }
           }
-          currentCallbackConfig = currentCallbackConfig.next;
         }
-
-        if (timedOutCallbacks.length > 0) {
-          frameDeadlineObject.didTimeout = true;
-          for (var i = 0, len = timedOutCallbacks.length; i < len; i++) {
-            callUnsafely(timedOutCallbacks[i], frameDeadlineObject);
-          }
-        }
-
-        // NOTE: we intentionally wait to update the nextSoonestTimeoutTime until
-        // after successfully calling any timed out callbacks.
-        nextSoonestTimeoutTime = updatedNextSoonestTimeoutTime;
       };
 
       // We use the postMessage trick to defer idle work until after the repaint.
@@ -12039,7 +11987,7 @@ if (undefined !== "production") {
         }
         isIdleScheduled = false;
 
-        if (headOfPendingCallbacksLinkedList === null) {
+        if (pendingCallbacks.length === 0) {
           return;
         }
 
@@ -12048,18 +11996,19 @@ if (undefined !== "production") {
 
         var currentTime = now$1();
         // Next, as long as we have idle time, try calling more callbacks.
-        while (frameDeadline - currentTime > 0 && headOfPendingCallbacksLinkedList !== null) {
-          var latestCallbackConfig = headOfPendingCallbacksLinkedList;
+        while (frameDeadline - currentTime > 0 && pendingCallbacks.length > 0) {
+          var latestCallbackConfig = pendingCallbacks.shift();
           frameDeadlineObject.didTimeout = false;
-          // callUnsafely will remove it from the head of the linked list
-          callUnsafely(latestCallbackConfig, frameDeadlineObject);
+          var latestCallback = latestCallbackConfig.scheduledCallback;
+          var newCallbackId = latestCallbackConfig.callbackId;
+          safelyCallScheduledCallback(latestCallback, newCallbackId);
           currentTime = now$1();
         }
-        if (headOfPendingCallbacksLinkedList !== null) {
+        if (pendingCallbacks.length > 0) {
           if (!isAnimationFrameScheduled) {
             // Schedule another animation callback so we retry later.
             isAnimationFrameScheduled = true;
-            localRequestAnimationFrame(animationTick);
+            requestAnimationFrame(animationTick);
           }
         }
       };
@@ -12094,7 +12043,7 @@ if (undefined !== "production") {
         }
       };
 
-      scheduleWork = function (callback, options) /* CallbackConfigType */{
+      scheduleWork = function (callback, options) {
         var timeoutTime = -1;
         if (options != null && typeof options.timeout === 'number') {
           timeoutTime = now$1() + options.timeout;
@@ -12103,100 +12052,28 @@ if (undefined !== "production") {
           nextSoonestTimeoutTime = timeoutTime;
         }
 
+        var newCallbackId = getCallbackId();
         var scheduledCallbackConfig = {
           scheduledCallback: callback,
-          timeoutTime: timeoutTime,
-          prev: null,
-          next: null
+          callbackId: newCallbackId,
+          timeoutTime: timeoutTime
         };
-        if (headOfPendingCallbacksLinkedList === null) {
-          // Make this callback the head and tail of our list
-          headOfPendingCallbacksLinkedList = scheduledCallbackConfig;
-          tailOfPendingCallbacksLinkedList = scheduledCallbackConfig;
-        } else {
-          // Add latest callback as the new tail of the list
-          scheduledCallbackConfig.prev = tailOfPendingCallbacksLinkedList;
-          // renaming for clarity
-          var oldTailOfPendingCallbacksLinkedList = tailOfPendingCallbacksLinkedList;
-          if (oldTailOfPendingCallbacksLinkedList !== null) {
-            oldTailOfPendingCallbacksLinkedList.next = scheduledCallbackConfig;
-          }
-          tailOfPendingCallbacksLinkedList = scheduledCallbackConfig;
-        }
+        pendingCallbacks.push(scheduledCallbackConfig);
 
+        registeredCallbackIds[newCallbackId] = true;
         if (!isAnimationFrameScheduled) {
           // If rAF didn't already schedule one, we need to schedule a frame.
           // TODO: If this rAF doesn't materialize because the browser throttles, we
           // might want to still have setTimeout trigger scheduleWork as a backup to ensure
           // that we keep performing work.
           isAnimationFrameScheduled = true;
-          localRequestAnimationFrame(animationTick);
+          requestAnimationFrame(animationTick);
         }
-        return scheduledCallbackConfig;
+        return newCallbackId;
       };
 
-      cancelScheduledWork = function (callbackConfig /* CallbackConfigType */
-      ) {
-        if (callbackConfig.prev === null && headOfPendingCallbacksLinkedList !== callbackConfig) {
-          // this callbackConfig has already been cancelled.
-          // cancelScheduledWork should be idempotent, a no-op after first call.
-          return;
-        }
-
-        /**
-         * There are four possible cases:
-         * - Head/nodeToRemove/Tail -> null
-         *   In this case we set Head and Tail to null.
-         * - Head -> ... middle nodes... -> Tail/nodeToRemove
-         *   In this case we point the middle.next to null and put middle as the new
-         *   Tail.
-         * - Head/nodeToRemove -> ...middle nodes... -> Tail
-         *   In this case we point the middle.prev at null and move the Head to
-         *   middle.
-         * - Head -> ... ?some nodes ... -> nodeToRemove -> ... ?some nodes ... -> Tail
-         *   In this case we point the Head.next to the Tail and the Tail.prev to
-         *   the Head.
-         */
-        var next = callbackConfig.next;
-        var prev = callbackConfig.prev;
-        callbackConfig.next = null;
-        callbackConfig.prev = null;
-        if (next !== null) {
-          // we have a next
-
-          if (prev !== null) {
-            // we have a prev
-
-            // callbackConfig is somewhere in the middle of a list of 3 or more nodes.
-            prev.next = next;
-            next.prev = prev;
-            return;
-          } else {
-            // there is a next but not a previous one;
-            // callbackConfig is the head of a list of 2 or more other nodes.
-            next.prev = null;
-            headOfPendingCallbacksLinkedList = next;
-            return;
-          }
-        } else {
-          // there is no next callback config; this must the tail of the list
-
-          if (prev !== null) {
-            // we have a prev
-
-            // callbackConfig is the tail of a list of 2 or more other nodes.
-            prev.next = null;
-            tailOfPendingCallbacksLinkedList = prev;
-            return;
-          } else {
-            // there is no previous callback config;
-            // callbackConfig is the only thing in the linked list,
-            // so both head and tail point to it.
-            headOfPendingCallbacksLinkedList = null;
-            tailOfPendingCallbacksLinkedList = null;
-            return;
-          }
-        }
+      cancelScheduledWork = function (callbackId) {
+        delete registeredCallbackIds[callbackId];
       };
     }
 
@@ -14124,7 +14001,7 @@ if (undefined !== "production") {
           // TODO: Make sure we check if this is still unmounted or do any clean
           // up necessary since we never stop tracking anymore.
           track(domElement);
-          postMountWrapper(domElement, rawProps, false);
+          postMountWrapper(domElement, rawProps);
           break;
         case 'textarea':
           // TODO: Make sure we check if this is still unmounted or do any clean
@@ -14579,7 +14456,7 @@ if (undefined !== "production") {
           // TODO: Make sure we check if this is still unmounted or do any clean
           // up necessary since we never stop tracking anymore.
           track(domElement);
-          postMountWrapper(domElement, rawProps, true);
+          postMountWrapper(domElement, rawProps);
           break;
         case 'textarea':
           // TODO: Make sure we check if this is still unmounted or do any clean
@@ -15384,6 +15261,9 @@ if (undefined !== "production") {
     // Gather advanced timing metrics for Profiler subtrees.
     var enableProfilerTimer = true;
 
+    // Fires getDerivedStateFromProps for state *or* props changes
+    var fireGetDerivedStateFromPropsOnStateUpdates = true;
+
     // Only used in www builds.
 
     // Prefix measurements so that it's possible to filter them.
@@ -16185,8 +16065,6 @@ if (undefined !== "production") {
       this.alternate = null;
 
       if (enableProfilerTimer) {
-        this.actualDuration = 0;
-        this.actualStartTime = 0;
         this.selfBaseTime = 0;
         this.treeBaseTime = 0;
       }
@@ -16257,15 +16135,6 @@ if (undefined !== "production") {
         workInProgress.nextEffect = null;
         workInProgress.firstEffect = null;
         workInProgress.lastEffect = null;
-
-        if (enableProfilerTimer) {
-          // We intentionally reset, rather than copy, actualDuration & actualStartTime.
-          // This prevents time from endlessly accumulating in new commits.
-          // This has the downside of resetting values for different priority renders,
-          // But works for yielding (the common case) and should support resuming.
-          workInProgress.actualDuration = 0;
-          workInProgress.actualStartTime = 0;
-        }
       }
 
       workInProgress.expirationTime = expirationTime;
@@ -16391,6 +16260,13 @@ if (undefined !== "production") {
       var fiber = createFiber(Profiler, pendingProps, key, mode | ProfileMode);
       fiber.type = REACT_PROFILER_TYPE;
       fiber.expirationTime = expirationTime;
+      if (enableProfilerTimer) {
+        fiber.stateNode = {
+          elapsedPauseTimeAtStart: 0,
+          duration: 0,
+          startTime: 0
+        };
+      }
 
       return fiber;
     }
@@ -16454,8 +16330,6 @@ if (undefined !== "production") {
       target.expirationTime = source.expirationTime;
       target.alternate = source.alternate;
       if (enableProfilerTimer) {
-        target.actualDuration = source.actualDuration;
-        target.actualStartTime = source.actualStartTime;
         target.selfBaseTime = source.selfBaseTime;
         target.treeBaseTime = source.treeBaseTime;
       }
@@ -17725,9 +17599,9 @@ if (undefined !== "production") {
       {
         fiberStack$1.push(fiber);
       }
-
-      fiber.actualDuration = now() - fiber.actualDuration - totalElapsedPauseTime;
-      fiber.actualStartTime = now();
+      var stateNode = fiber.stateNode;
+      stateNode.elapsedPauseTimeAtStart = totalElapsedPauseTime;
+      stateNode.startTime = now();
     }
 
     function pauseActualRenderTimerIfRunning() {
@@ -17744,10 +17618,10 @@ if (undefined !== "production") {
         return;
       }
       {
-        !(fiber === fiberStack$1.pop()) ? warning(false, 'Unexpected Fiber (%s) popped.', getComponentName(fiber)) : void 0;
+        !(fiber === fiberStack$1.pop()) ? warning(false, 'Unexpected Fiber popped.') : void 0;
       }
-
-      fiber.actualDuration = now() - totalElapsedPauseTime - fiber.actualDuration;
+      var stateNode = fiber.stateNode;
+      stateNode.duration += now() - (totalElapsedPauseTime - stateNode.elapsedPauseTimeAtStart) - stateNode.startTime;
     }
 
     function resetActualRenderTimer() {
@@ -18354,8 +18228,10 @@ if (undefined !== "production") {
       }
 
       if (typeof getDerivedStateFromProps === 'function') {
-        applyDerivedStateFromProps(workInProgress, getDerivedStateFromProps, newProps);
-        newState = workInProgress.memoizedState;
+        if (fireGetDerivedStateFromPropsOnStateUpdates || oldProps !== newProps) {
+          applyDerivedStateFromProps(workInProgress, getDerivedStateFromProps, newProps);
+          newState = workInProgress.memoizedState;
+        }
       }
 
       var shouldUpdate = checkHasForceUpdateAfterProcessing() || checkShouldComponentUpdate(workInProgress, oldProps, newProps, oldState, newState, newContext);
@@ -19236,8 +19112,7 @@ if (undefined !== "production") {
         // Handle top level unkeyed fragments as if they were arrays.
         // This leads to an ambiguity between <>{[...]}</> and <>...</>.
         // We treat the ambiguous cases above the same.
-        var isUnkeyedTopLevelFragment = typeof newChild === 'object' && newChild !== null && newChild.type === REACT_FRAGMENT_TYPE && newChild.key === null;
-        if (isUnkeyedTopLevelFragment) {
+        if (typeof newChild === 'object' && newChild !== null && newChild.type === REACT_FRAGMENT_TYPE && newChild.key === null) {
           newChild = newChild.props.children;
         }
 
@@ -19274,7 +19149,7 @@ if (undefined !== "production") {
             warnOnFunctionType();
           }
         }
-        if (typeof newChild === 'undefined' && !isUnkeyedTopLevelFragment) {
+        if (typeof newChild === 'undefined') {
           // If the new child is undefined, and the return fiber is a composite
           // component, throw an error. If Fiber return types are disabled,
           // we already threw above.
@@ -19685,6 +19560,11 @@ if (undefined !== "production") {
     function updateProfiler(current, workInProgress) {
       var nextProps = workInProgress.pendingProps;
       if (enableProfilerTimer) {
+        // Start render timer here and push start time onto queue
+        markActualRenderTimeStarted(workInProgress);
+
+        // Let the "complete" phase know to stop the timer,
+        // And the scheduler to record the measured time.
         workInProgress.effectTag |= Update;
       }
       if (workInProgress.memoizedProps === nextProps) {
@@ -20392,6 +20272,11 @@ if (undefined !== "production") {
         case ContextProvider:
           pushProvider(workInProgress);
           break;
+        case Profiler:
+          if (enableProfilerTimer) {
+            markActualRenderTimeStarted(workInProgress);
+          }
+          break;
       }
       // TODO: What if this is currently in progress?
       // How can that happen? How is this not being cloned?
@@ -20410,12 +20295,6 @@ if (undefined !== "production") {
     }
 
     function beginWork(current, workInProgress, renderExpirationTime) {
-      if (enableProfilerTimer) {
-        if (workInProgress.mode & ProfileMode) {
-          markActualRenderTimeStarted(workInProgress);
-        }
-      }
-
       if (workInProgress.expirationTime === NoWork || workInProgress.expirationTime > renderExpirationTime) {
         return bailoutOnLowPriority(current, workInProgress);
       }
@@ -20620,13 +20499,6 @@ if (undefined !== "production") {
 
     function completeWork(current, workInProgress, renderExpirationTime) {
       var newProps = workInProgress.pendingProps;
-
-      if (enableProfilerTimer) {
-        if (workInProgress.mode & ProfileMode) {
-          recordElapsedActualRenderTime(workInProgress);
-        }
-      }
-
       switch (workInProgress.tag) {
         case FunctionalComponent:
           return null;
@@ -20759,6 +20631,9 @@ if (undefined !== "production") {
         case Mode:
           return null;
         case Profiler:
+          if (enableProfilerTimer) {
+            recordElapsedActualRenderTime(workInProgress);
+          }
           return null;
         case HostPortal:
           popHostContainer(workInProgress);
@@ -21486,7 +21361,11 @@ if (undefined !== "production") {
           {
             if (enableProfilerTimer) {
               var onRender = finishedWork.memoizedProps.onRender;
-              onRender(finishedWork.memoizedProps.id, current === null ? 'mount' : 'update', finishedWork.actualDuration, finishedWork.treeBaseTime, finishedWork.actualStartTime, getCommitTime());
+              onRender(finishedWork.memoizedProps.id, current === null ? 'mount' : 'update', finishedWork.stateNode.duration, finishedWork.treeBaseTime, finishedWork.stateNode.startTime, getCommitTime());
+
+              // Reset actualTime after successful commit.
+              // By default, we append to this time to account for errors and pauses.
+              finishedWork.stateNode.duration = 0;
             }
             return;
           }
@@ -21693,12 +21572,6 @@ if (undefined !== "production") {
     }
 
     function unwindWork(workInProgress, renderIsExpired, renderExpirationTime) {
-      if (enableProfilerTimer) {
-        if (workInProgress.mode & ProfileMode) {
-          recordElapsedActualRenderTime(workInProgress);
-        }
-      }
-
       switch (workInProgress.tag) {
         case ClassComponent:
           {
@@ -21747,14 +21620,6 @@ if (undefined !== "production") {
     }
 
     function unwindInterruptedWork(interruptedWork) {
-      if (enableProfilerTimer) {
-        if (interruptedWork.mode & ProfileMode) {
-          // Resume in case we're picking up on work that was paused.
-          resumeActualRenderTimerIfPaused();
-          recordElapsedActualRenderTime(interruptedWork);
-        }
-      }
-
       switch (interruptedWork.tag) {
         case ClassComponent:
           {
@@ -21777,6 +21642,13 @@ if (undefined !== "production") {
           break;
         case ContextProvider:
           popProvider(interruptedWork);
+          break;
+        case Profiler:
+          if (enableProfilerTimer) {
+            // Resume in case we're picking up on work that was paused.
+            resumeActualRenderTimerIfPaused();
+            recordElapsedActualRenderTime(interruptedWork);
+          }
           break;
         default:
           break;
@@ -21916,10 +21788,6 @@ if (undefined !== "production") {
           clearCaughtError();
 
           if (enableProfilerTimer) {
-            if (failedUnitOfWork.mode & ProfileMode) {
-              recordElapsedActualRenderTime(failedUnitOfWork);
-            }
-
             // Stop "base" render timer again (after the re-thrown error).
             stopBaseRenderTimerIfRunning();
           }
@@ -22153,8 +22021,6 @@ if (undefined !== "production") {
       stopCommitSnapshotEffectsTimer();
 
       if (enableProfilerTimer) {
-        // Mark the current commit time to be shared by all Profilers in this batch.
-        // This enables them to be grouped later.
         recordCommitTime();
       }
 
@@ -22683,7 +22549,7 @@ if (undefined !== "production") {
     function computeAsyncExpiration(currentTime) {
       // Given the current clock time, returns an expiration time. We use rounding
       // to batch like updates together.
-      // Should complete within ~5000ms. 5250ms max.
+      // Should complete within ~1000ms. 1200ms max.
       var expirationMs = 5000;
       var bucketSizeMs = 250;
       return computeExpirationBucket(currentTime, expirationMs, bucketSizeMs);
@@ -22870,7 +22736,7 @@ if (undefined !== "production") {
     var lastScheduledRoot = null;
 
     var callbackExpirationTime = NoWork;
-    var callbackID = void 0;
+    var callbackID = -1;
     var isRendering = false;
     var nextFlushedRoot = null;
     var nextFlushedExpirationTime = NoWork;
@@ -22899,11 +22765,9 @@ if (undefined !== "production") {
           // Existing callback has sufficient timeout. Exit.
           return;
         } else {
-          if (callbackID !== null) {
-            // Existing callback has insufficient timeout. Cancel and schedule a
-            // new one.
-            cancelDeferredCallback(callbackID);
-          }
+          // Existing callback has insufficient timeout. Cancel and schedule a
+          // new one.
+          cancelDeferredCallback(callbackID);
         }
         // The request callback timer is already running. Don't start a new one.
       } else {
@@ -23092,7 +22956,7 @@ if (undefined !== "production") {
       // If we're inside a callback, set this to false since we just completed it.
       if (deadline !== null) {
         callbackExpirationTime = NoWork;
-        callbackID = null;
+        callbackID = -1;
       }
       // If there's work left over, schedule a new callback.
       if (nextFlushedExpirationTime !== NoWork) {
@@ -23159,6 +23023,7 @@ if (undefined !== "production") {
           // This root is already complete. We can commit it.
           completeRoot(root, finishedWork, expirationTime);
         } else {
+          root.finishedWork = null;
           finishedWork = renderRoot(root, expirationTime, false);
           if (finishedWork !== null) {
             // We've completed the root. Commit it.
@@ -23172,6 +23037,7 @@ if (undefined !== "production") {
           // This root is already complete. We can commit it.
           completeRoot(root, _finishedWork, expirationTime);
         } else {
+          root.finishedWork = null;
           _finishedWork = renderRoot(root, expirationTime, true);
           if (_finishedWork !== null) {
             // We've completed the root. Check the deadline one more time
@@ -23525,7 +23391,7 @@ if (undefined !== "production") {
 
     // TODO: this is special because it gets imported during build.
 
-    var ReactVersion = '16.4.1';
+    var ReactVersion = '16.4.0';
 
     // TODO: This type is shared between the reconciler and ReactDOM, but will
     // eventually be lifted out to the renderer.
@@ -23969,8 +23835,6 @@ if (undefined !== "production") {
 
       unstable_deferredUpdates: deferredUpdates,
 
-      unstable_interactiveUpdates: interactiveUpdates$1,
-
       flushSync: flushSync,
 
       unstable_flushControlled: flushControlled,
@@ -24025,7 +23889,7 @@ if (undefined !== "production") {
     module.exports = reactDom;
   })();
 }
-},{"fbjs/lib/invariant":26,"react":4,"fbjs/lib/warning":28,"fbjs/lib/ExecutionEnvironment":39,"object-assign":25,"fbjs/lib/emptyFunction":29,"prop-types/checkPropTypes":30,"fbjs/lib/getActiveElement":40,"fbjs/lib/shallowEqual":42,"fbjs/lib/containsNode":41,"fbjs/lib/emptyObject":27,"fbjs/lib/hyphenateStyleName":43,"fbjs/lib/camelizeStyleName":44}],6:[function(require,module,exports) {
+},{"fbjs/lib/invariant":37,"react":9,"fbjs/lib/warning":35,"fbjs/lib/ExecutionEnvironment":38,"object-assign":33,"fbjs/lib/emptyFunction":36,"prop-types/checkPropTypes":44,"fbjs/lib/getActiveElement":39,"fbjs/lib/shallowEqual":40,"fbjs/lib/containsNode":41,"fbjs/lib/emptyObject":34,"fbjs/lib/hyphenateStyleName":43,"fbjs/lib/camelizeStyleName":42}],11:[function(require,module,exports) {
 'use strict';
 
 function checkDCE() {
@@ -24061,80 +23925,73 @@ if (undefined === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":8}],105:[function(require,module,exports) {
-var bundleURL = null;
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
+},{"./cjs/react-dom.development.js":16}],3:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// import Timeline from './displayTimelinePage.js';
+
+var MainPage = function (_Component) {
+  _inherits(MainPage, _Component);
+
+  function MainPage(props) {
+    _classCallCheck(this, MainPage);
+
+    var _this = _possibleConstructorReturn(this, (MainPage.__proto__ || Object.getPrototypeOf(MainPage)).call(this, props));
+
+    _this.state = {
+      appName: 'Track It'
+    };
+    return _this;
   }
 
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
-    if (matches) {
-      return getBaseURL(matches[0]);
+  _createClass(MainPage, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        _react.Fragment,
+        null,
+        _react2.default.createElement(
+          'h1',
+          { id: 'mainTitle' },
+          this.state.appName
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut posuere libero nulla, ac lobortis libero tincidunt non. Nulla magna nisi, vehicula vitae neque at, cursus varius massa. Pellentesque sollicitudin enim vitae sollicitudin pulvinar. Quisque a risus vel erat mollis aliquet.'
+        ),
+        _react2.default.createElement(
+          'h2',
+          null,
+          'Begin tracking now!'
+        )
+      );
     }
-  }
+  }]);
 
-  return '/';
-}
+  return MainPage;
+}(_react.Component);
 
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],104:[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-  newLink.onload = function () {
-    link.remove();
-  };
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":105}],102:[function(require,module,exports) {
-
-        var reloadCSS = require('_css_loader');
-        module.hot.dispose(reloadCSS);
-        module.hot.accept(reloadCSS);
-      
-},{"_css_loader":104}],103:[function(require,module,exports) {
-
-        var reloadCSS = require('_css_loader');
-        module.hot.dispose(reloadCSS);
-        module.hot.accept(reloadCSS);
-      
-},{"_css_loader":104}],112:[function(require,module,exports) {
+exports.default = MainPage;
+},{"react":9}],72:[function(require,module,exports) {
 var define;
 (function(){
     var root = this;
@@ -24272,7 +24129,7 @@ var define;
     }
 
 }).call(this);
-},{}],115:[function(require,module,exports) {
+},{}],80:[function(require,module,exports) {
 // Unique ID creation requires a high quality random # generator.  In the
 // browser this is a little complicated due to unknown quality of Math.random()
 // and inconsistent support for the `crypto` API.  We do the best we can via
@@ -24306,7 +24163,7 @@ if (getRandomValues) {
   };
 }
 
-},{}],116:[function(require,module,exports) {
+},{}],81:[function(require,module,exports) {
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -24331,7 +24188,7 @@ function bytesToUuid(buf, offset) {
 
 module.exports = bytesToUuid;
 
-},{}],113:[function(require,module,exports) {
+},{}],74:[function(require,module,exports) {
 var rng = require('./lib/rng');
 var bytesToUuid = require('./lib/bytesToUuid');
 
@@ -24362,7 +24219,7 @@ function v4(options, buf, offset) {
 
 module.exports = v4;
 
-},{"./lib/rng":115,"./lib/bytesToUuid":116}],110:[function(require,module,exports) {
+},{"./lib/rng":80,"./lib/bytesToUuid":81}],46:[function(require,module,exports) {
 'use strict';
 
 var sha1 = require('sha-1'),
@@ -24398,7 +24255,7 @@ uuidv4.fromString = function (text) {
 };
 
 module.exports = uuidv4;
-},{"sha-1":112,"uuid/v4":113}],108:[function(require,module,exports) {
+},{"sha-1":72,"uuid/v4":74}],13:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24451,6 +24308,11 @@ var TaskForm = function (_Component) {
           completed: false
         };
         _this.props.addTask(createdTask); //post request to db
+        // this.setState({
+        //   name: '',
+        //   begin: new Date(),
+        //   end: new Date(),
+        // })
       } else {
         var newValue = {};
         Object.assign(newValue, _this.props.tasks, _this.state);
@@ -24461,6 +24323,9 @@ var TaskForm = function (_Component) {
     };
 
     _this.state = {
+      name: _this.props.name,
+      // begin: new Date(),
+      // end: new Date(),
       isEditing: false,
       completed: false
     };
@@ -24472,24 +24337,43 @@ var TaskForm = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'form',
-        {
-          onSubmit: this.handleSubmit },
+        { id: 'task-form', onSubmit: this.handleSubmit },
         _react2.default.createElement('input', {
+          id: 'form-name',
           onChange: this.handleChange,
+          type: 'text',
           name: 'name',
-          type: 'text',
-          placeholder: 'name'
+          value: this.state.name,
+          placeholder: 'Event Name'
         }),
+        _react2.default.createElement(
+          'label',
+          { 'for': 'date' },
+          'Start Date:'
+        ),
         _react2.default.createElement('input', {
+          id: 'date',
           onChange: this.handleChange,
-          name: 'items',
-          type: 'text',
-          placeholder: 'items'
+          type: 'date',
+          name: 'begin',
+          placeholder: 'start date'
+        }),
+        _react2.default.createElement(
+          'label',
+          { 'for': 'date' },
+          'End Date:'
+        ),
+        _react2.default.createElement('input', {
+          id: 'date',
+          onChange: this.handleChange,
+          type: 'date',
+          name: 'end',
+          placeholder: 'end date'
         }),
         _react2.default.createElement(
           'button',
-          { type: 'submit' },
-          this.props.buttonText === 'create' ? 'Submit' : 'Update',
+          { id: 'event-button', type: 'submit' },
+          this.props.buttonText === 'create' ? 'Submit' : 'Create Event',
           ' '
         )
       );
@@ -24500,7 +24384,90 @@ var TaskForm = function (_Component) {
 }(_react.Component);
 
 exports.default = TaskForm;
-},{"react":4,"uuidv4":110}],117:[function(require,module,exports) {
+},{"react":9,"uuidv4":46}],4:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _taskForm = require('./tasks/taskForm.js');
+
+var _taskForm2 = _interopRequireDefault(_taskForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CreateTimelinePage = function (_Component) {
+  _inherits(CreateTimelinePage, _Component);
+
+  function CreateTimelinePage(props) {
+    _classCallCheck(this, CreateTimelinePage);
+
+    var _this = _possibleConstructorReturn(this, (CreateTimelinePage.__proto__ || Object.getPrototypeOf(CreateTimelinePage)).call(this, props));
+
+    _this.addTask = function (task) {
+      console.log('task', task);
+      var newTask = {};
+      Object.assign(newTask, _this.state);
+      newTask.tasks.push(task);
+      console.log('new Task', newTask);
+      _this.setState({ newTask: newTask });
+    };
+
+    _this.removeTask = function (id) {
+      var remainder = _this.state.tasks.filter(function (task) {
+        return task.id !== id;
+      });
+      _this.setState({ tasks: remainder });
+    };
+
+    _this.state = {
+      tasks: [{
+        name: 'Food',
+        begin: new Date(),
+        end: new Date()
+      }]
+    };
+    return _this;
+  }
+
+  _createClass(CreateTimelinePage, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        _react.Fragment,
+        null,
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'p',
+            { id: 'createItem-intro' },
+            'Begin by creating an Event to Track!'
+          ),
+          _react2.default.createElement(_taskForm2.default, { addTask: this.addTask, buttonText: 'Create' })
+        )
+      );
+    }
+  }]);
+
+  return CreateTimelinePage;
+}(_react.Component);
+
+exports.default = CreateTimelinePage;
+},{"react":9,"./tasks/taskForm.js":13}],14:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24598,7 +24565,95 @@ var ElementForm = function (_Component) {
 }(_react.Component);
 
 exports.default = ElementForm;
-},{"react":4}],114:[function(require,module,exports) {
+},{"react":9}],5:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _elementForm = require('./elements/elementForm.js');
+
+var _elementForm2 = _interopRequireDefault(_elementForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// import TaskList from './tasks/taskList';
+// import TaskForm from './tasks/taskForm';
+
+
+var AddItemsPage = function (_Component) {
+  _inherits(AddItemsPage, _Component);
+
+  function AddItemsPage(props) {
+    _classCallCheck(this, AddItemsPage);
+
+    var _this = _possibleConstructorReturn(this, (AddItemsPage.__proto__ || Object.getPrototypeOf(AddItemsPage)).call(this, props));
+
+    _this.addTask = function (task) {
+      console.log('task', task);
+      var newTask = {};
+      Object.assign(newTask, _this.state);
+      newTask.tasks.push(task);
+      console.log('new Task', newTask);
+      _this.setState({ newTask: newTask });
+    };
+
+    _this.removeTask = function (id) {
+      var remainder = _this.state.tasks.filter(function (task) {
+        return task.id !== id;
+      });
+      _this.setState({ tasks: remainder });
+    };
+
+    _this.state = {
+      name: _this.props.name
+    };
+    return _this;
+  }
+
+  _createClass(AddItemsPage, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        _react.Fragment,
+        null,
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h1',
+            null,
+            this.props.name
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Now add important dates and milestones to your event!'
+          ),
+          _react2.default.createElement(_elementForm2.default, { addTask: this.addTask, buttonText: 'create' })
+        )
+      );
+    }
+  }]);
+
+  return AddItemsPage;
+}(_react.Component);
+
+exports.default = AddItemsPage;
+},{"react":9,"./elements/elementForm.js":14}],85:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24692,7 +24747,7 @@ var Item = function (_Component) {
 }(_react.Component);
 
 exports.default = Item;
-},{"react":4,"react-router-dom":5,"./elementForm":117}],111:[function(require,module,exports) {
+},{"react":9,"react-router-dom":10,"./elementForm":14}],71:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24762,7 +24817,7 @@ var ElementList = function (_Component) {
 }(_react.Component);
 
 exports.default = ElementList;
-},{"react":4,"./element":114}],109:[function(require,module,exports) {
+},{"react":9,"./element":85}],45:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24922,7 +24977,7 @@ var TaskItem = function (_Component) {
 }(_react.Component);
 
 exports.default = TaskItem;
-},{"react":4,"react-router-dom":5,"./taskForm":108,"../elements/elementList":111}],107:[function(require,module,exports) {
+},{"react":9,"react-router-dom":10,"./taskForm":13,"../elements/elementList":71}],17:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24939,9 +24994,9 @@ var _taskItem = require('./taskItem');
 
 var _taskItem2 = _interopRequireDefault(_taskItem);
 
-var _timeline = require('../timeline');
+var _displayTimelinePage = require('../displayTimelinePage.js');
 
-var _timeline2 = _interopRequireDefault(_timeline);
+var _displayTimelinePage2 = _interopRequireDefault(_displayTimelinePage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25001,7 +25056,7 @@ var TaskList = function (_Component) {
 }(_react.Component);
 
 exports.default = TaskList;
-},{"react":4,"./taskItem":109,"../timeline":106}],106:[function(require,module,exports) {
+},{"react":9,"./taskItem":45,"../displayTimelinePage.js":6}],6:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25030,13 +25085,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Timeline = function (_Component) {
-  _inherits(Timeline, _Component);
+var DisplayTimelinePage = function (_Component) {
+  _inherits(DisplayTimelinePage, _Component);
 
-  function Timeline(props) {
-    _classCallCheck(this, Timeline);
+  function DisplayTimelinePage(props) {
+    _classCallCheck(this, DisplayTimelinePage);
 
-    var _this = _possibleConstructorReturn(this, (Timeline.__proto__ || Object.getPrototypeOf(Timeline)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (DisplayTimelinePage.__proto__ || Object.getPrototypeOf(DisplayTimelinePage)).call(this, props));
 
     _this.addTask = function (task) {
       console.log('task', task);
@@ -25055,60 +25110,200 @@ var Timeline = function (_Component) {
     };
 
     _this.state = {
-      begin: new Date(),
       tasks: [{
-        // dailyTasks: [{
-        name: 'Food',
-        items: [{ name: 'run', description: 'meet Andy at Greenlake' }]
-      }],
-      // weeklyTasks: [{
-      //   name: '',
-      //   items: [],
-      // }],
-      // monthlyTasks: [{
-      //   name: '',
-      //   items: [],
-      // }],
-      // milestones: {
-      //   date: Date(),
-      //   // Image: Image(),
-      //   Alert: 'Congratulations!',
-      // },
-      // }],
-      end: new Date()
+        name: '',
+        begin: new Date(),
+        end: new Date()
+      }]
     };
     return _this;
   }
 
-  _createClass(Timeline, [{
+  _createClass(DisplayTimelinePage, [{
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
-          'h1',
-          null,
-          'Create Tasks to Reach Your Goal!'
+          'section',
+          { 'class': 'timeline' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            this.props.tasks.name
+          ),
+          _react2.default.createElement(
+            'ul',
+            null,
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                  'h3',
+                  null,
+                  'Eat'
+                ),
+                'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium',
+                _react2.default.createElement(
+                  'button',
+                  { 'class': 'edit-btn' },
+                  _react2.default.createElement('i', { 'class': 'fa fa-pencil' })
+                ),
+                _react2.default.createElement(
+                  'button',
+                  { 'class': 'trash-btn' },
+                  _react2.default.createElement('i', { 'class': 'fa fa-close' })
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                  'h3',
+                  null,
+                  'Run'
+                ),
+                'Proin quam velit, efficitur vel neque vitae, rhoncus commodo mi. Suspendisse finibus mauris et bibendum molestie. Aenean ex augue, varius et pulvinar in, pretium non nisi.',
+                _react2.default.createElement(
+                  'button',
+                  { 'class': 'edit-btn' },
+                  _react2.default.createElement('i', { 'class': 'fa fa-pencil' })
+                ),
+                _react2.default.createElement(
+                  'button',
+                  { 'class': 'trash-btn' },
+                  _react2.default.createElement('i', { 'class': 'fa fa-close' })
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                  'h3',
+                  null,
+                  'Bike'
+                ),
+                'In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat mattis. Vestibulum id magna est.',
+                _react2.default.createElement(
+                  'button',
+                  { 'class': 'edit-btn' },
+                  _react2.default.createElement('i', { 'class': 'fa fa-pencil' })
+                ),
+                _react2.default.createElement(
+                  'button',
+                  { 'class': 'trash-btn' },
+                  _react2.default.createElement('i', { 'class': 'fa fa-close' })
+                )
+              )
+            )
+          )
         ),
-        _react2.default.createElement(_taskForm2.default, { addTask: this.addTask,
-          buttonText: 'create' }),
-        _react2.default.createElement(_taskList2.default, { tasks: this.state.tasks,
-          removeTask: this.removeTask })
+        _react2.default.createElement(
+          'button',
+          { 'class': 'add-btn' },
+          _react2.default.createElement(
+            'i',
+            { 'class': 'fa fa-plus-circle' },
+            'Add Milestone'
+          )
+        ),
+        _react2.default.createElement(_taskForm2.default, { addTask: this.addTask, buttonText: 'create' }),
+        _react2.default.createElement(_taskList2.default, { tasks: this.state.tasks, removeTask: this.removeTask })
       );
     }
   }]);
 
-  return Timeline;
+  return DisplayTimelinePage;
 }(_react.Component);
 
-exports.default = Timeline;
-},{"react":4,"./tasks/taskList":107,"./tasks/taskForm":108}],2:[function(require,module,exports) {
-'use strict';
+exports.default = DisplayTimelinePage;
+},{"react":9,"./tasks/taskList":17,"./tasks/taskForm":13}],32:[function(require,module,exports) {
+var bundleURL = null;
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],15:[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+  newLink.onload = function () {
+    link.remove();
+  };
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":32}],7:[function(require,module,exports) {
+
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+},{"_css_loader":15}],8:[function(require,module,exports) {
+
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+},{"_css_loader":15}],2:[function(require,module,exports) {
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -25122,13 +25317,25 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _mainPage = require('./components/mainPage.js');
+
+var _mainPage2 = _interopRequireDefault(_mainPage);
+
+var _createTimelinePage = require('./components/createTimelinePage.js');
+
+var _createTimelinePage2 = _interopRequireDefault(_createTimelinePage);
+
+var _addItemsPage = require('./components/addItemsPage.js');
+
+var _addItemsPage2 = _interopRequireDefault(_addItemsPage);
+
+var _displayTimelinePage = require('./components/displayTimelinePage.js');
+
+var _displayTimelinePage2 = _interopRequireDefault(_displayTimelinePage);
+
 require('./style/main.css');
 
 require('./style/timeLine.css');
-
-var _timeline = require('./components/timeline');
-
-var _timeline2 = _interopRequireDefault(_timeline);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25138,7 +25345,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// Timeline Funcionality
+// Begin Timeline Funcionality -- LEAVE, dk's STUFF!
 function isElementInViewport(el) {
   var rect = el.getBoundingClientRect();
   return rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth);
@@ -25157,38 +25364,16 @@ function callbackFunc() {
 
 window.addEventListener('load', callbackFunc);
 window.addEventListener('scroll', callbackFunc);
-// End Timeline Functionality
+// End Timeline Functionality -- LEAVE, dk's stuff!
 
-// class MainPage extends Component {
-//   render() {
-//     return <Fragment>
-//       <h1 id="mainTitle">Track It</h1>
-//       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut posuere libero nulla, ac lobortis libero tincidunt non. Nulla magna nisi, vehicula vitae neque at, cursus varius massa. Pellentesque sollicitudin enim vitae sollicitudin pulvinar. Quisque a risus vel erat mollis aliquet.</p>
-//       <h2>Begin tracking now!</h2>
-//       <p><Link to="/create-timeline">Create-timeline</Link></p>
-//     </Fragment>;
-//   }
-// }
-
-// class App extends Component {
-//   render() {
-//     return <BrowserRouter>
-//       <Fragment>
-//         <Route exact path="/" component={MainPage} />
-//       </Fragment>
-//     </BrowserRouter>;
-//   }
-// }
-
-// import MainPage from './components/mainPage';
 
 var App = function (_Component) {
   _inherits(App, _Component);
 
-  function App() {
+  function App(props) {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
   }
 
   _createClass(App, [{
@@ -25200,33 +25385,10 @@ var App = function (_Component) {
         _react2.default.createElement(
           _react.Fragment,
           null,
-          _react2.default.createElement(
-            'nav',
-            null,
-            _react2.default.createElement(
-              'h1',
-              null,
-              'TimeLine App'
-            ),
-            _react2.default.createElement(
-              'ul',
-              null,
-              _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                  _reactRouterDom.Link,
-                  { to: '/create-timeline' },
-                  'Timeline'
-                )
-              )
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/create-timeline', component: _timeline2.default })
-          )
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _mainPage2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/create-timeline', component: _createTimelinePage2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/add-item', component: _addItemsPage2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/display-timeline', component: _displayTimelinePage2.default })
         )
       );
     }
@@ -25235,12 +25397,9 @@ var App = function (_Component) {
   return App;
 }(_react.Component);
 
-exports.default = App;
-
-
 var root = document.getElementById('root');
 _reactDom2.default.render(_react2.default.createElement(App, null), root);
-},{"react":4,"react-router-dom":5,"react-dom":6,"./style/main.css":102,"./style/timeLine.css":103,"./components/timeline":106}],101:[function(require,module,exports) {
+},{"react":9,"react-router-dom":10,"react-dom":11,"./components/mainPage.js":3,"./components/createTimelinePage.js":4,"./components/addItemsPage.js":5,"./components/displayTimelinePage.js":6,"./style/main.css":7,"./style/timeLine.css":8}],86:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -25269,7 +25428,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '51123' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '62884' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -25410,5 +25569,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[101,2], null)
-//# sourceMappingURL=/app.990afd55.map
+},{}]},{},[86,2], null)
+//# sourceMappingURL=/app.1aafb5ba.map
