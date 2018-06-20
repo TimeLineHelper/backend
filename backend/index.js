@@ -4,23 +4,27 @@ let { google } = require('googleapis');
 let privatekey = require('./client_secret.json');
 let superagent = require('superagent');
 let cookie = require('cookie');
-// const mongoose = require('mongoose');
-// mongoose.connect(process.env.MONGODB_URI);
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/timelinehelper');
 const express = require('express');
 const app = express();
 const User = require('./models/user.js');
 
-app.use('/', require('./routes/timelineRoutes.js'));
+app.use('/', require('./routes/timelineRouter'));
+
+// const mongoose = require('mongoose');
+// mongoose.connect(process.env.MONGODB_URI);
 
 
-//make a route that uses quickstart as middleware
-
+// app.use('/home', require('./routes/timelineRouter.js'));
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {
+    console.log('inside get line 21');
     res.redirect(process.env.CLIENT_URL);
+
   } else {
-    console.log('CODE:', req.query.code);
+
     superagent.post('https://www.googleapis.com/oauth2/v4/token')
       .type('form')
       .send({
@@ -31,22 +35,25 @@ app.get('/callback', (req, res) => {
         redirect_uri: `${process.env.API_URL}/callback`
       })
       .then(response => {
-        console.log('35========== res.body', response.body);
+
         return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
-        .set('Authorization', `Bearer ${response.body.access_token}`);
-      }).then( response => { 
-        console.log('open id google pluse', response.body);
-        return User.mongoOAUTH(response.body);
+          .set('Authorization', `Bearer ${response.body.access_token}`);
+      })
+      .then(response => {
+        User.mongoOAUTH(response.body);
+        res.write('<h1>' + response.body.email + '</h1>');
+        res.write('<h1>' + response.body.name + '</h1>');
+        res.write('<img src=' + response.body.picture + '>');
+        res.end();
       })
       .catch(response => {
-        console.log('response', response.body);
+        console.log('response!!!!!!!!!!!!!!!!!!!!!!!!!!!!11  index.js line 43', response.body);
+        //Initial request, not to be confused with the response we passed through 
+        res.cookie('cookie', cookieToken);
+        res.redirect(process.env.CLIENT_URL);
       });
   }
 });
-
-
-
-
 
 const Bundler = require('parcel-bundler');
 const bundler = new Bundler('./public/index.html');
