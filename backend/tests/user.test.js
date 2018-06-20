@@ -22,9 +22,9 @@ const exampleData = {
 
 describe('Info Routes', function(){
   describe('POST: /api/user/:userId/info', () => {
-    let tempSenshi = '';
+    let temp = '';
     beforeEach(done => {  
-      superagent.post('http://localhost:3000//api/user')
+      superagent.post('http://localhost:3000/api/user')
       .send(exampleData)
       .then(data => {
         temp = data;
