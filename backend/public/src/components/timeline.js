@@ -10,7 +10,7 @@ export default class Timeline extends Component {
         name: 'Food',
         begin: new Date(),
         end: new Date(),
-        items: [
+        elements: [
           {name: 'run', description: 'meet Andy at Greenlake'}
         ],
       }], 
@@ -23,11 +23,19 @@ export default class Timeline extends Component {
     Object.assign(newTask, this.state);
     newTask.tasks.push(task);
     console.log('new Task', newTask);
-    this.setState({newTask});
+    this.setState({tasks: newTask.tasks});
   }
 
-  updateTask = () => {
-    
+  updateTask = (newTask, id) => {
+    let allTasks = [...this.state.tasks]; // loop for a matching id to the given id to find the right task
+    allTasks.forEach(task => {
+      if (task.id !== id) {
+        task.name = newTask.name;
+        task.begin = newTask.begin;
+        task.end = newTask.end;
+      }
+    });
+    this.setState({tasks: allTasks});
   }
 
   removeTask = (id) => {
@@ -47,7 +55,8 @@ export default class Timeline extends Component {
       </TaskForm>
       <TaskList tasks={this.state.tasks}
         addTask={this.addTask} 
-        removeTask={this.removeTask}>
+        removeTask={this.removeTask}
+        updateTask={this.updateTask}>
       </TaskList>
     </div>;
   }

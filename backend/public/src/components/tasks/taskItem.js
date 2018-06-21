@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import TaskForm from './taskForm';
 import ElementForm from '../elements/elementForm';
 import ElementList from '../elements/elementList';
+import { RSA_SSLV23_PADDING } from 'constants';
 console.log('element list', ElementList)
 
 export default class TaskItem extends Component {
@@ -31,10 +32,14 @@ export default class TaskItem extends Component {
 
   addElement = (element) => {
     console.log('element', element);
-    let newElements = [...this.state.elements];
+    let newElements = [...this.state.task.elements];
     newElements.push(element);
-    console.log('new Task', newElement);
-    this.setState({elements: newElements});
+    let tempTask = {};
+    Object.assign(tempTask, this.state.task);
+    tempTask.elements = newElements;
+    console.log('new elements', newElements);
+    this.setState({elements: newElements, task: tempTask}); //individual task updated on this component need to update top level
+    this.props.updateTask(tempTask, tempTask.id);
   }
 
   removeElement = (id) => {
@@ -46,10 +51,10 @@ export default class TaskItem extends Component {
 
   renderList = () => {
     console.log('this.props.task', this.props.task);
-    let items = this.props.task.items.map((item, i) => {
+    let elements = this.props.task.elements.map((item, i) => {
       return <li key={i}>{item.name}{item.description}</li>
     })
-    return items
+    return elements;
   }
 
   render() {
@@ -57,7 +62,7 @@ export default class TaskItem extends Component {
       return <div>
         <li>
           <p>Name: {this.props.task.name}</p>
-          <TaskForm buttonText="update"
+        <TaskForm buttonText="update"
           task={this.props.task}
           toggleEdit={this.toggleEdit}
           addTask={this.props.addTask}>
@@ -81,7 +86,7 @@ export default class TaskItem extends Component {
           {this.props.task.name}: <ul>{this.renderList()}</ul>
         </li>
         <h3>Add Items:</h3>
-        <ElementForm addElement={this.state.addElement} buttonText='create' />
+        <ElementForm addElement={this.addElement} buttonText='create' />
         <ElementList elements={this.state.elements} 
           removeElement={this.state.removeElement}/>
         </div>

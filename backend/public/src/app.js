@@ -5,7 +5,7 @@ import {
   Link
 } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import '../../styles/main.scss';
+// import '../../styles/main.scss';
 
 import Timeline from './components/timeline';
 // import MainPage from './components/mainPage';

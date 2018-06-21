@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import uuidv4 from 'uuidv4';
-// import '../styles/main.scss';
 
 export default class TaskForm extends Component {
   constructor(props) {
@@ -23,7 +22,7 @@ export default class TaskForm extends Component {
       let createdTask = {
         id: uuidv4(),
         name: ev.target.name.value,
-        items: [],
+        elements: [],
         isEditing: false,
       }
       this.props.addTask(createdTask); //post request to db
@@ -36,7 +35,7 @@ export default class TaskForm extends Component {
       newValue.name = ev.target.name.value;
       this.props.toggleEdit();
       console.log('this.props', this.props);
-      this.props.updateTask({...newValue}); //put request to db
+      this.props.updateTask(newValue, this.props.task.id); //put request to db
     }
   }
 
@@ -49,13 +48,13 @@ export default class TaskForm extends Component {
         type='text'
         placeholder='name'
       />
-      <input 
+      {/* <input 
         onChange={this.handleChange}
         name='items'
         type='text'
-        placeholder='items'
-      />
-      <button type='submit'>{this.props.buttonText === 'create' ? 'Submit' : 'Update'} </button>
+        placeholder=''
+      /> */}
+      <button type='submit'>{this.props.buttonText === 'create' ? 'Submit Task' : 'Update Task'} </button>
     </form>;
   }
 }
