@@ -74,7 +74,7 @@ router.put('/api/user/:email', jsonParser, (req, res) => {
     })
     .then((results) => {
       console.log('song updated');
-      res.status(204).send('Song updated successefully');
+      res.status(200).send('user info updated successefully');
     })
     .catch((err) => {
       res.status(400).send('unable to update');
