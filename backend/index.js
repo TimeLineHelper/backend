@@ -11,7 +11,11 @@ const app = express();
 const User = require('./models/user.js');
 app.use('/', require('./routes/timelineRouter'));
 
-//make a route that uses quickstart as middleware
+// const mongoose = require('mongoose');
+// mongoose.connect(process.env.MONGODB_URI);
+
+
+// app.use('/home', require('./routes/timelineRouter.js'));
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {
@@ -36,6 +40,10 @@ app.get('/callback', (req, res) => {
       })
       .then(response => {
         User.mongoOAUTH(response.body);
+        res.write('<h1>' + response.body.email + '</h1>');
+        res.write('<h1>' + response.body.name + '</h1>');
+        res.write('<img src=' + response.body.picture + '>');
+        res.end();
       })
       .catch(response => {
         console.log('response!!!!!!!!!!!!!!!!!!!!!!!!!!!!11  index.js line 43', response.body);

@@ -25,17 +25,17 @@ const userSchema = new Schema({
 const User = mongoose.model('user', userSchema);
 
 User.mongoOAUTH = function (data) {
-  console.log('14 bleh', data);
+  console.log('14 bleh from user.js', data);
   return User.findOne({ email: data.email })
     .then(user => {
       if (!user) {
         throw new Error('make a new user');
       }
-      console.log('34 user model', user);
+      console.log('34 user model from user.js', user);
       return user;
     })
     .catch(() => {
-      console.log(' 38 new user');
+      console.log(' 38 new user from user.js');
       return new User({
         email: data.email
       }).save();
