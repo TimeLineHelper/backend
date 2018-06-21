@@ -26,10 +26,11 @@ router.post('/api/user', jsonParser, function (req, res, next) {
 });
 
 router.get('/api/user', function (req, res, next) {
+  console.log(req.params.email, 'req params');
   // currently setup for find all either change it to find one or add a find one route
   User.find({})
     .then(user => {
-      console.log('data line 22', user);
+      // console.log('data line 22', user);
       res.json(user);
     })
     .catch(next);
