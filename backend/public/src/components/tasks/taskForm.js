@@ -5,6 +5,9 @@ export default class TaskForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: this.props.name,
+      // begin: new Date(),
+      // end: new Date(),
       isEditing: false,
     };
   }
@@ -26,6 +29,11 @@ export default class TaskForm extends Component {
         isEditing: false,
       }
       this.props.addTask(createdTask); //post request to db
+      // this.setState({
+      //   name: '',
+      //   begin: new Date(),
+      //   end: new Date(),
+      // })
     }
     else {
       let newValue = {};
@@ -39,14 +47,15 @@ export default class TaskForm extends Component {
     }
   }
 
-  render() { 
-    return <form 
-      onSubmit={this.handleSubmit}>
-      <input 
-        onChange={this.handleChange} 
-        name='name'
+  render() {
+    return <form id="task-form" onSubmit={this.handleSubmit}>
+      <input
+        id="form-name"
+        onChange={this.handleChange}
         type='text'
-        placeholder='name'
+        name='name'
+        value={this.state.name}
+        placeholder='Event Name'
       />
       {/* <input 
         onChange={this.handleChange}
@@ -55,6 +64,25 @@ export default class TaskForm extends Component {
         placeholder=''
       /> */}
       <button type='submit'>{this.props.buttonText === 'create' ? 'Submit Task' : 'Update Task'} </button>
+
+      <label for="date">Start Date:</label>
+
+      <input
+        // id="date"
+        onChange={this.handleChange}
+        type='date'
+        name='begin'
+        placeholder='start date'
+      />
+      <label for="date">End Date:</label>
+      <input
+        // id="date" dont need date see alicia
+        onChange={this.handleChange}
+        type='date'
+        name='end'
+        placeholder='end date'
+      />
+      <button id="event-button" type='submit'>{this.props.buttonText === 'create' ? 'Submit' : 'Create Event'} </button>
     </form>;
   }
 }
