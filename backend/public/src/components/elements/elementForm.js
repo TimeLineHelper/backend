@@ -1,31 +1,32 @@
 import React, {Component} from 'react';
+import uuidv4 from 'uuid/v4';
 
 export default class ElementForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // timestamp: new Date(),
-      // name: '',
-      // description: '',
-      // taskId: this.props.taskId,
-      isEditing: false,
+      name: '',
+      description: '',
     };
   }
 
   handleChange = (ev) => {
+    console.log('handlechange before', ev.target);
     this.setState({[ev.target.name] : ev.target.value});
   }
 
   handleSubmit = (ev) => {
     ev.preventDefault();
     let createdElement = {
-      timestamp: new Date(),
-      name: '',
-      description: '',
+      name: this.state.name,
+      description: this.state.description,
+      date: new Date(),
       taskId: uuidv4(),
       isEditing: false,
     }
+    console.log('addElement function', this.props.addElement);
     this.props.addElement(createdElement);
+    this.setState({name: '', description: ''})
   }
 
   render() {
@@ -44,6 +45,13 @@ export default class ElementForm extends Component {
         type="text"
         placeholder="description"
         value={this.state.description}
+      />
+      <input
+        onChange={this.handleChange}
+        name="date"
+        type="number"
+        placeholder="date"
+        value={this.state.date}
       />
       <button 
         onClick={this.props.cancel}>

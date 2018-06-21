@@ -6,6 +6,7 @@ import {
   Link
 } from 'react-router-dom';
 import ReactDOM from 'react-dom';
+// import '../../styles/main.scss';
 
 import './style/main.css';
 import './style/timeLine.css';

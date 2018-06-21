@@ -9,16 +9,16 @@ export default class ElementList extends Component {
   }
 
   displayAllElements = () => {
-    console.log('props', this.props.elements)
-    return this.props.elements.map(element => {
+    console.log('this.props.elements', this.props.elements)
+    return this.props.elements.map((element, i) => {
       return <Element
         taskId={this.props.taskId}
-        key={element.id}
+        key={i}
         id={element.id}
         element={element}
         removeElement={this.props.removeElement}
         addElement={this.props.addElement}
-        toggleEdit={item.toggleEdit}
+        toggleEdit={this.toggleEdit}
       />;
     });
   }

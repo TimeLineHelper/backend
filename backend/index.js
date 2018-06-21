@@ -9,7 +9,6 @@ mongoose.connect('mongodb://localhost/timelinehelper');
 const express = require('express');
 const app = express();
 const User = require('./models/user.js');
-
 app.use('/', require('./routes/timelineRouter'));
 
 // const mongoose = require('mongoose');
