@@ -26,7 +26,6 @@ router.post('/api/user', jsonParser, function (req, res, next) {
 });
 
 router.get('/api/user', function (req, res, next) {
-  console.log(req.params.email, 'req params');
   // currently setup for find all either change it to find one or add a find one route
   User.find({})
     .then(user => {
@@ -35,6 +34,18 @@ router.get('/api/user', function (req, res, next) {
     })
     .catch(next);
 });
+
+router.get('/api/user/:email', function (req, res, next) {
+  console.log(req.params.email, 'req params');
+  // currently setup for find all either change it to find one or add a find one route
+  User.findOne({ email: 'blah@blah.com' })
+    .then(user => {
+      // console.log('data line 22', user);
+      res.json(user);
+    })
+    .catch(next);
+});
+
 
 // router.put('/api/user/:email', jsonParser, function (req, res, next) {
 //   User.findByOneAndUpdate(req.params.email, req.body, { new: true })
@@ -87,6 +98,7 @@ router.delete('/api/user/:email', function (req, res, next) {
   console.log(req.params, 'req params 44');
   User.findOneAndRemove({ email: req.params.email })
     .then(data => {
+      res.send(204, 'user deleted');
       console.log(data, 'data removed line 48');
     })
     .catch(err => {

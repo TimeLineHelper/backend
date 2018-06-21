@@ -19,50 +19,31 @@ const exampleData = {
 };
 
 
-describe('post and get', function () {
-
-  describe('Info Routes', function () {
-    it.skip('POST: /api/user', () => {
-      let temp = '';
-
-      console.log('inside before each line 27');
-      superagent.post('http://localhost:3000/api/user')
-
-        .send(exampleData)
-        .then(data => {
-          temp = data;
-          console.log('temp', temp.body);
-          done();
-        })
-        .catch(done => {
-          done();
-        });
-    });
-    describe('get route', function () {
-      it('get all users', done => {
-
-        superagent.get(`${url}/api/user`)
-          .then((res) => {
-            console.log('this is the response', res.status);
-
-            expect(res.status).toEqual(200);
-            done();
 
 
-          })
-          .catch(err => {
-            return done(err);
-          });
+describe('Info Routes', function () {
+  it('POST: /api/user', () => {
+    let temp = '';
+
+    console.log('inside before each line 27');
+    superagent.post('http://localhost:3000/api/user')
+
+      .send(exampleData)
+      .then(data => {
+        temp = data;
+        console.log('temp', temp.body);
+        done();
+      })
+      .catch(done => {
+        done();
       });
-    });
   });
-
   describe('get route', function () {
-    it('get one user', done => {
+    it.skip('get all users', done => {
 
       superagent.get(`${url}/api/user`)
         .then((res) => {
-          console.log('this is the response', res.status);
+          console.log('this is the response get all', res.status);
 
           expect(res.status).toEqual(200);
           done();
@@ -76,14 +57,32 @@ describe('post and get', function () {
   });
 });
 
+describe('get route', function () {
+  it.skip('get one user', done => {
+
+    superagent.get(`${url}/api/user/blah@blah.com`)
+      .then((res) => {
+        console.log('this is the response get one', res.status, res.body.email);
+
+        expect(res.status).toEqual(200);
+        expect(res.body.email).toEqual('blah@blah.com');
+        done();
+
+
+      })
+      .catch(err => {
+        return done(err);
+      });
+  });
+});
+
+
 describe('delete route', function () {
-  it.skip('email should delete a user by id', done => {
+  it.skip('should delete a user by email', done => {
 
     superagent.delete(`${url}/api/user/blah@blah.com`)
-      .then((err, res) => {
-        console.log(`${url}/api/user/blah@blah.com`);
-        console.log('this is the response', res);
-        if (err) return done(err);
+      .then((res) => {
+        console.log('this is the response', res.status);
         expect(res.status).toEqual(204);
         done();
 
@@ -96,7 +95,7 @@ describe('delete route', function () {
       });
   });
 });
-});
+
 
 describe('Update User information', () => {
   it.skip('User should be able to update information', (done) => {
