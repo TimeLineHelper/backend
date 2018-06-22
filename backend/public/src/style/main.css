@@ -1,0 +1,329 @@
+* {
+  /* font-family: 'Sunflower', sans-serif; */
+  /* font-family: 'Dosis', sans-serif; */
+  font-family: 'Open Sans Condensed', sans-serif;
+  /* font-family: 'Caveat', cursive; */
+  /* font-family: 'Shadows Into Light Two', cursive; */
+  /* font-family: 'Neucha', cursive; */
+  cursor: pointer;
+}
+
+/* #root {
+  border: 1px, solid, black;
+} */
+
+/* div {
+    border: 1px solid red;
+} */
+
+a:-webkit-any-link {
+  text-decoration: underline;
+  text-align: center;
+  cursor: pointer;
+  color: #f96257;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Nav Bar & Hamburger Menu */
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+html, body {
+    overflow-x: hidden;
+    height: 100%;
+}
+body {
+  font-family: 'Varela Round', sans-serif;
+  text-align: center;
+  background: #fff;
+  color: #3c3d3d;
+  padding: 0;
+  margin: 0;
+}
+/* Main Nav Title */
+#app-title {
+  font-size: 1.2em;
+  color: #f96257;
+  padding: .6em;
+  position: absolute;
+  top: -1.1em;
+  left: -.3em;
+}
+.header {
+    /* display: block;
+    margin: 0 auto; */
+    height: 60px!important;
+    width: 100%;
+    text-align: right;
+    font-size: 2em;
+    color: #3c3d3d;
+    float: right;
+    max-width: 100%;
+    box-shadow: none;
+    background-color: #adf6a9;
+    position: fixed;
+    /* overflow: hidden; */
+    z-index: 10;
+}
+.main {
+    margin: 0 auto;
+    display: block;
+    height: 100%;
+    margin-top: 60px;
+}
+.mainInner{
+    display: table;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+.mainInner div {
+    display:table-cell;
+    vertical-align: middle;
+    font-size: 3em;
+    font-weight: bold;
+    letter-spacing: 1.25px;
+}
+#sidebarMenu {
+    height: fit-content;
+    width: fit-content;  
+    /* height: 100%; */
+    position: fixed;
+    right: 0;
+    margin-top: 60px;
+    transform: translateX(250px);
+    transition: transform 250ms ease-in-out;
+    background: linear-gradient(180deg, #adf6a9 0%, #f96257 100%);
+}
+.sidebarMenuInner {
+    margin:0;
+    padding:0;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+.sidebarMenuInner li {
+    list-style: none;
+    /* color: #fff; */
+    color: #3c3d3d;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 20px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+.sidebarMenuInner li span {
+    display: block;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.50);
+}
+.sidebarMenuInner li a {
+    /* color: #fff; */
+    color: #3c3d3d;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+input[type="checkbox"]:checked ~ #sidebarMenu {
+    transform: translateX(0);
+}
+
+input[type=checkbox] {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    display: none;
+}
+.sidebarIconToggle {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: absolute;
+    z-index: 99;
+    top: 1em;
+    right: 0;
+    height: 2.8em;
+    width: 2.8em;
+    padding-right: 1em;
+}
+.spinner {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    /* background-color: #fff; */
+    background-color: #3c3d3d;
+}
+.horizontal {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: relative;
+    float: left;
+    margin-top: 3px;
+}
+.diagonal.part-1 {
+    position: relative;
+    transition: all 0.3s;
+    box-sizing: border-box;
+    float: left;
+}
+.diagonal.part-2 {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    position: relative;
+    float: left;
+    margin-top: 3px;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    opacity: 0;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    transform: rotate(135deg);
+    margin-top: 8px;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    transform: rotate(-135deg);
+    margin-top: -9px;
+}
+/* End Nav Bar & Hamburger Menu */
+
+#mainTitle {
+  text-align: center;
+  margin-top: 2.3em;
+  font-size: 2em;
+  color: #3c3d3d;
+}
+
+h2 {
+  margin-top: 1.8em;
+  font-size: 1.3em;
+}
+
+p {
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 10%;
+  padding-left: 10%;
+}
+
+/* Style buttons */
+.edit-btn {
+    background-color: transparent;
+    box-sizing: border-box;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: absolute;
+    cursor: pointer;
+    color: rgb(60, 61, 61, .4);
+    font-size: .6em;
+    cursor: pointer;
+    border: none;
+    z-index: 99;
+    top: -.2em;
+    right: 1.2em;
+    height: 2em;
+    width: 2em;
+}
+
+.trash-btn {
+    background-color: transparent;
+    box-sizing: border-box;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: absolute;
+    cursor: pointer;
+    color: rgb(60, 61, 61, .4);
+    font-size: .6em;
+    cursor: pointer;
+    border: none;
+    z-index: 99;
+    top: -.2em;
+    right: -.2em;
+    height: 2em;
+    width: 2em;
+}
+
+.add-btn {
+     /* background-color: transparent; */
+     box-sizing: border-box;
+     transition: all 0.3s;
+     cursor: pointer;
+     position: absolute;
+     cursor: pointer;
+     color: rgb(60, 61, 61, .4);
+     font-size: 1em;
+     cursor: pointer;
+     border: none;
+     /* z-index: 99; */
+     /* top: -.2em; */
+     /* right: -.2em; */
+     height: 2em;
+     width: fit-content;
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+    background-color: RoyalBlue;
+}
+
+/* Google OAuth */
+#googleAuth {
+  margin: auto;
+}
+
+/* Forms */
+#createItem-intro {
+    margin-top: 4em;
+    font-size: 1.5em;
+    width: 9em;
+}
+
+#task-form {
+    display: -webkit-inline-box;
+    width: 13em;
+    margin-top: 1em;
+}
+
+/* Date Picker */
+[type="date"] {
+    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+  }
+  [type="date"]::-webkit-inner-spin-button {
+    display: none;
+  }
+  [type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+  
+  #form-name {
+      margin-bottom: 2em;
+  }
+
+  label {
+    padding-right: 9em;
+  }
+
+  input {
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 3px 5px;
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+    width: 190px;
+  }
+
+  #event-button {
+    background-color: #f96257;
+    font-size: .8em;
+    margin-top: 1.2em;
+    width: 8em;
+  }

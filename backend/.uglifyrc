@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+"compress": {
+   "drop_console": false
+=======
 'compress': {
    'drop_console': false
+>>>>>>> 80d86cceab41e3c203c23600457bf140934ff5e7
 }

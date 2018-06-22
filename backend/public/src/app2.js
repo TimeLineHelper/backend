@@ -1,22 +1,17 @@
 'use strict';
 
-import React, { Component, Fragment } from 'react';
+import React, {Component, Fragment} from 'react';
 import {
   BrowserRouter,
   Route,
+  Link
 } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-// import '../../styles/main.scss';
-
-import MainPage from './components/mainPage.js';
-import CreateTimelinePage from './components/createTimelinePage.js';
-import AddItemsPage from './components/addItemsPage.js';
-import DisplayTimelinePage from './components/displayTimelinePage.js';
 
 import './style/main.css';
 import './style/timeLine.css';
 
-// Begin Timeline Funcionality -- LEAVE, dk's STUFF!
+// Timeline Funcionality
 function isElementInViewport(el) {
   var rect = el.getBoundingClientRect();
   return (
@@ -28,7 +23,7 @@ function isElementInViewport(el) {
 }
 
 var items = document.querySelectorAll('.timeline li');
-
+ 
 // code for the isElementInViewport function
 function callbackFunc() {
   for (var i = 0; i < items.length; i++) {
@@ -37,28 +32,36 @@ function callbackFunc() {
     }
   }
 }
-
+ 
 window.addEventListener('load', callbackFunc);
 window.addEventListener('scroll', callbackFunc);
-// End Timeline Functionality -- LEAVE, dk's stuff!
+// End Timeline Functionality
 
+
+class MainPage extends Component {
+  render() {
+    return <Fragment>
+      <div>
+        <h1 id="mainTitle">Marathon Timeline</h1>
+        <p>timeline goes here</p>
+      </div>
+      <div>
+        <h2>Highlights</h2>
+        <p>task info goes here</p>
+      </div>
+    </Fragment>;
+  }
+}
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
+  render(){
     return <BrowserRouter>
       <Fragment>
-        <Route exact path="/" component={MainPage} />
-        <Route exact path="/create-timeline" component={CreateTimelinePage} />
-        <Route exact path="/add-item" component={AddItemsPage} />
-        <Route exact path="/display-timeline" component={DisplayTimelinePage} />
+        <Route exact path="/" component={MainPage}/>
       </Fragment>
     </BrowserRouter>;
   }
 }
 
 let root = document.getElementById('root');
-ReactDOM.render(<App />, root);
+ReactDOM.render(<App/>, root);

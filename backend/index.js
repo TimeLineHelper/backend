@@ -1,17 +1,24 @@
 'use strict';
-require('dotenv').config();
-let { google } = require('googleapis');
-let privatekey = require('./client_secret.json');
-let superagent = require('superagent');
-let cookie = require('cookie');
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/timelinehelper');
+
 const express = require('express');
 const app = express();
 const User = require('./models/user.js');
-app.use('/', require('./routes/timelineRouter'));
+const superagent = require('superagent');
 
-//make a route that uses quickstart as middleware
+require('dotenv').config();
+const { google } = require('googleapis');
+const privatekey = require('./client_secret.json');
+const cookie = require('cookie');
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/timelinehelper');
+
+
+// const mongoose = require('mongoose');
+// mongoose.connect(process.env.MONGODB_URI);
+
+app.use('/', require('./routes/timelineRouter'));
+// app.use('/home', require('./routes/timelineRouter.js'));
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {
@@ -36,6 +43,11 @@ app.get('/callback', (req, res) => {
       })
       .then(response => {
         User.mongoOAUTH(response.body);
+        res.redirect('http://localhost:3000/create-timeline');
+        // res.write('<h1>' + response.body.email + '</h1>');
+        // res.write('<h1>' + response.body.name + '</h1>');
+        // res.write('<img src=' + response.body.picture + '>');
+        res.end();
       })
       .catch(response => {
         console.log('response!!!!!!!!!!!!!!!!!!!!!!!!!!!!11  index.js line 43', response.body);
