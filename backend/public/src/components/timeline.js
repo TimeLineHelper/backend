@@ -1,19 +1,22 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import TaskList from './tasks/taskList';
 import TaskForm from './tasks/taskForm';
+import { getMaxListeners } from 'cluster';
 
 export default class Timeline extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // email: this.props.email, fix later
+      email: 'hskrwres@gmail.com',
       tasks: [{
         name: 'Food',
         begin: new Date(),
         end: new Date(),
         elements: [
-          {name: 'run', description: 'meet Andy at Greenlake'}
+          { name: 'run', description: 'meet Andy at Greenlake' }
         ],
-      }], 
+      }],
     };
   }
 
@@ -23,7 +26,7 @@ export default class Timeline extends Component {
     Object.assign(newTask, this.state);
     newTask.tasks.push(task);
     console.log('new Task', newTask);
-    this.setState({tasks: newTask.tasks});
+    this.setState({ tasks: newTask.tasks });
   }
 
   updateTask = (newTask, id) => {
@@ -35,26 +38,38 @@ export default class Timeline extends Component {
         task.end = newTask.end;
       }
     });
-    this.setState({tasks: allTasks});
+    this.setState({ tasks: allTasks });
   }
 
   removeTask = (id) => {
     let remainder = this.state.tasks.filter(task => {
       return task.id !== id;
     });
-    this.setState({tasks: remainder});
+    this.setState({ tasks: remainder });
+  }
+
+  getUser = (email) => {
+    fetch(`http://localhost:3000/api/user/${this.state.email}`)
+      .then(user => user.json())
+      .then(user => {
+        console.log(user, 'this is user get 54');
+      })
+
   }
 
   render() {
     return <div className="create-timeline">
+
+      <button onClick={this.getUser} > get user </button>
       <h1 id="page-title">Create Tasks to Reach Your Goal!</h1>
-      <TaskForm 
+      <TaskForm
         formClassName='primary-task-form'
-        addTask={this.addTask} 
-        buttonText='create'>
+        addTask={this.addTask}
+        buttonText='create'
+        user={this.state.user}>
       </TaskForm>
       <TaskList tasks={this.state.tasks}
-        addTask={this.addTask} 
+        addTask={this.addTask}
         removeTask={this.removeTask}
         updateTask={this.updateTask}>
       </TaskList>

@@ -8,14 +8,14 @@ const fs = require('fs');
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const router = express.Router();
-let { google } = require('googleapis');
+// let { google } = require('googleapis');
 
-const readline = require('readline');
+// const readline = require('readline');
 
-const SCOPES = [
-  'https://www.googleapis.com/auth/calendar'
-];
-const TOKEN_PATH = '../credentials2.json';
+// const SCOPES = [
+//   'https://www.googleapis.com/auth/calendar'
+// ];
+// const TOKEN_PATH = '../credentials2.json';
 
 router.post('/api/user', jsonParser, function (req, res, next) {
   console.log('in timelines route b4 new user adding req', req.body);
@@ -53,7 +53,13 @@ router.get('/api/user/:email', function (req, res) {
         res.json(user);
       }
     });
-});
+//   User.findOne({ email: req.params.email })
+//     .then(user => {
+//       // console.log('data line 22', user);
+//       res.json(user);
+//     })
+//     .catch(next);
+// });
 
 
 // router.put('/api/user/:email', jsonParser, function (req, res, next) {
@@ -72,18 +78,18 @@ router.put('/api/user/:email', jsonParser, (req, res) => {
   console.log(req.body, 'this is req.body 52');
   User.findOne({
 
-    email: req.body.email
+    email: req.params.email
   })
-    .then((results) => {
-      console.log(req.body, 'this is req.body 54');
-      if (req.body.newTaskTitle) {
-        results.taskTitle = req.body.newTaskTitle;
+    .then((user) => {
+      console.log(user, 'this is req.body 54');
+      if (req.body.tasks) {
+        user.tasks = req.body.tasks;
       }
-      results.save();
+      user.save();
     })
-    .then((results) => {
-      console.log('78 send status email update');
-      results.status(200).send('user info updated successefully');
+    .then((res) => {
+      console.log('song updated');
+      res.status(200).send(user);
     })
     .catch((err) => {
       res.status(400).send('unable to update');

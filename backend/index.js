@@ -43,7 +43,7 @@ app.get('/callback', (req, res) => {
       })
       .then(response => {
         User.mongoOAUTH(response.body);
-        res.redirect('http://localhost:3000/create-timeline');
+        res.redirect(`http://localhost:3000/create-timeline`);
         // res.write('<h1>' + response.body.email + '</h1>');
         // res.write('<h1>' + response.body.name + '</h1>');
         // res.write('<img src=' + response.body.picture + '>');

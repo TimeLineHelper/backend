@@ -18,6 +18,15 @@ const exampleData = {
   items: [itemArray],
 };
 
+const badData = {
+  email: '',
+  begin: 3,
+  end: 2,
+  id: 1,
+  taskTitle: 'bad title',
+  items: [itemArray],
+};
+
 
 // post actin like a fool causing other tests to break when ran with post look into this maybe.
 
@@ -34,8 +43,8 @@ describe('Info Routes', function () {
         console.log('temp', temp.body);
         done();
       })
-      .catch(done => {
-        done();
+      .catch(err => {
+        done(err);
       });
   });
   /////////////////////////////////////////////////////////////
@@ -46,15 +55,14 @@ describe('Info Routes', function () {
         .then((res) => {
           console.log('this is the response get all', res.status);
 
-          expect(res.status).toEqual(200);
-          done();
+        expect(res.status).toEqual(200);
+        done();
 
 
-        })
-        .catch(err => {
-          return done(err);
-        });
-    });
+      })
+      .catch(err => {
+        return done(err);
+      });
   });
 });
 ///////////////////////////////////////////////////////////////////
@@ -111,7 +119,7 @@ describe('delete route', function () {
   });
 });
 
-
+// update names based on the user.js model
 describe('Update User information', () => {
   it('User should be able to update information', (done) => {
     superagent.put(`${url}/api/user/blah@blah.com`)
