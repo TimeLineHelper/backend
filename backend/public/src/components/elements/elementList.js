@@ -12,7 +12,7 @@ export default class ElementList extends Component {
     console.log('this.props.elements', this.props.elements)
     return this.props.elements.map((element, i) => {
       return <Element
-        taskId={this.props.taskId}
+        id={this.props.id}
         key={i}
         id={element.id}
         element={element}

@@ -21,7 +21,7 @@ export default class ElementForm extends Component {
       name: this.state.name,
       description: this.state.description,
       date: new Date(),
-      taskId: uuidv4(),
+      id: uuidv4(),
       isEditing: false,
     }
     console.log('addElement function', this.props.addElement);

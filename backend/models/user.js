@@ -9,19 +9,23 @@ var elementArray = new Schema(
     name: 'string',
     description: 'string',
     id: { type: Number },
-    timeStamp: { type: Number }
-
+    date: Date,
+  });
+  
+var taskArray = new Schema(
+  {
+    name: 'string',
+    begin: Date,
+    end: Date,
+    id: { type: Number },
+    elements: [elementArray],
+  
   });
 
 const userSchema = new Schema({
   // make email unique right?
   email: { type: String, required: true },
-  begin: { type: Number },
-  end: { type: Number },
-  id: { type: Number },
-  tasks: { type: String },
-  elements: [elementArray],
-
+  tasks: [taskArray],
 });
 
 

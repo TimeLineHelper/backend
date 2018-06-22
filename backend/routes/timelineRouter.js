@@ -74,22 +74,21 @@ router.get('/api/user/:email', function (req, res) {
 // });
 
 router.put('/api/user/:email', jsonParser, (req, res) => {
-  // console.log('we in here? line 50 routes');
-  // console.log(req.body, 'this is req.body 52');
   User.findOne({
 
     email: req.params.email
   })
     .then((user) => {
-      // console.log(user, 'this is req.body 54');
-      if (req.body.tasks) {
-        user.tasks = req.body.tasks;
-      }
+      console.log(req.body, 'this is req.body 54');
+      // if (req.body.tasks) {
+      //   user.tasks = req.body.tasks;
+      // }
+      user = req.body.user;
       user.save();
     })
     .then((res) => {
       // console.log('user updated');
-      res.status(200).send(user);
+      res.status(200).json(user);
     })
     .catch((err) => {
       res.status(400).send('unable to update');
