@@ -82,7 +82,7 @@ export default class TaskItem extends Component {
           onClick={this.toggleEdit}>
           Update
         </button>
-        <li key={this.props.task.id} id={this.props.taskId}>
+        <li key={this.props.task.id} id={this.props.id}>
           {this.props.task.name}: <ul>{this.renderList()}</ul>
         </li>
         <h3>Add Items:</h3>

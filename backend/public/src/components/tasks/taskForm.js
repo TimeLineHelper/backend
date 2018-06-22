@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import uuidv4 from 'uuidv4';
+// import User from '../../../../models/user.js';
 
 export default class TaskForm extends Component {
   constructor(props) {
@@ -8,6 +9,7 @@ export default class TaskForm extends Component {
       name: this.props.name,
       // begin: new Date(),
       // end: new Date(),
+      user: this.props.user,
       isEditing: false,
     };
   }
@@ -22,6 +24,7 @@ export default class TaskForm extends Component {
     ev.preventDefault();
     console.log('created task');
     if (this.props.buttonText === 'create') {
+      console.log('27 create task')
       let createdTask = {
         id: uuidv4(),
         name: ev.target.name.value,
@@ -29,11 +32,7 @@ export default class TaskForm extends Component {
         isEditing: false,
       }
       this.props.addTask(createdTask); //post request to db
-      // this.setState({
-      //   name: '',
-      //   begin: new Date(),
-      //   end: new Date(),
-      // })
+
     }
     else {
       let newValue = {};
@@ -44,6 +43,17 @@ export default class TaskForm extends Component {
       this.props.toggleEdit();
       console.log('this.props', this.props);
       this.props.updateTask(newValue, this.props.task.id); //put request to db
+      // fetch(`/api/user/${this.props.user.email}`, {
+      //   body: JSON.stringify({
+      //     id: this.props.task.id,
+      //     tasks: this.props.task,
+      //   }),
+      //   method: 'GET'
+      // })
+
+      //   .then(data => {
+      //     console.log(data, 'this is data 53 taskform');
+      //   })
     }
   }
 

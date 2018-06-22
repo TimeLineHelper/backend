@@ -30,8 +30,8 @@ const badData = {
 
 // post actin like a fool causing other tests to break when ran with post look into this maybe.
 
-describe('Post Route for legit user with email', function () {
-  it('should pass with a valid email', done => {
+describe('Info Routes', function () {
+  it('POST: /api/user', done => {
     let temp = '';
 
     console.log('inside before each line 27');
@@ -47,38 +47,13 @@ describe('Post Route for legit user with email', function () {
         done(err);
       });
   });
-});
+  /////////////////////////////////////////////////////////////
+  describe('get route', function () {
+    it('get all users', done => {
 
-//figure this shit out later
-
-// describe('Post Route for no email', function () {
-//   it('should fail with no email', done => {
-//     let temp = '';
-
-//     console.log('inside before each line 27');
-//     superagent.post('http://localhost:3000/api/user')
-
-//       .send(badData)
-//       .then(data => {
-//         console.log(res, 'res line 61');
-//         temp = data;
-//         console.log('temp', temp.body);
-//         done();
-//       })
-//       .catch(err => {
-//         console.log(res, 'this is res line 66');
-//         expect(err.status).toBe(400);
-//         return done(err);
-//       });
-//   });
-// });
-
-describe('get route', function () {
-  it('get all users', done => {
-
-    superagent.get(`${url}/api/user`)
-      .then((res) => {
-        console.log('this is the response get all', res.status);
+      superagent.get(`${url}/api/users`)
+        .then((res) => {
+          console.log('this is the response get all', res.status);
 
         expect(res.status).toEqual(200);
         done();
@@ -90,8 +65,7 @@ describe('get route', function () {
       });
   });
 });
-
-
+///////////////////////////////////////////////////////////////////
 describe('get route', function () {
   it('get one user', done => {
 
@@ -106,9 +80,23 @@ describe('get route', function () {
 
       })
       .catch(err => {
+        console.log('74 err');
         return done(err);
       });
   });
+
+  // it('returns 404 if no user', done => {
+
+  //   superagent.get(`${url}/api/user/notblah@blah.com`)
+  //     .then((res) => {
+  //       console.log('83 res', res);
+  //       expect(res.status).toEqual(404);
+
+  //       done();
+
+
+  //     });
+  // });
 });
 
 
@@ -131,7 +119,7 @@ describe('delete route', function () {
   });
 });
 
-
+// update names based on the user.js model
 describe('Update User information', () => {
   it('User should be able to update information', (done) => {
     superagent.put(`${url}/api/user/blah@blah.com`)

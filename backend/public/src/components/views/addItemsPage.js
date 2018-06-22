@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 
-// import TaskList from './tasks/taskList';
+import TaskList from '../tasks/taskList';
 // import TaskForm from './tasks/taskForm';
-import ElementForm from './elements/elementForm.js';
+import ElementForm from '../elements/elementForm.js';
 
 export default class AddItemsPage extends Component {
   constructor(props) {
@@ -31,12 +31,12 @@ export default class AddItemsPage extends Component {
   render() {
     return <Fragment>
       <div>
-          <h1>{this.props.name}</h1>
-          <p>Now add important dates and milestones to your event!</p>
+        <h1>{this.props.name}</h1>
+        <p>Now add important dates and milestones to your event!</p>
 
-          <ElementForm addTask={this.addTask} buttonText='create'></ElementForm>
+        <ElementForm addTask={this.addTask} buttonText='create'></ElementForm>
         {/* <TaskForm addTask={this.addTask} buttonText='create'></TaskForm> */}
-        {/* <TaskList tasks={this.state.tasks} removeTask={this.removeTask}></TaskList> */}
+        <TaskList tasks={this.state.tasks} removeTask={this.removeTask}></TaskList>
       </div>
     </Fragment>
   }

@@ -8,10 +8,10 @@ import {
 import ReactDOM from 'react-dom';
 // import '../../styles/main.scss';
 
-import MainPage from './components/mainPage.js';
-import CreateTimelinePage from './components/createTimelinePage.js';
-import AddItemsPage from './components/addItemsPage.js';
-import DisplayTimelinePage from './components/displayTimelinePage.js';
+import MainPage from './components/views/mainPage.js';
+import CreateTimelinePage from './components/views/createTimelinePage.js';
+import AddItemsPage from './components/views/addItemsPage.js';
+import DisplayTimelinePage from './components/views/displayTimelinePage.js';
 
 import './style/main.css';
 import './style/timeLine.css';

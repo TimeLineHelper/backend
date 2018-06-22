@@ -22,7 +22,7 @@ app.use('/', require('./routes/timelineRouter'));
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {
-    console.log('inside get line 21');
+    // console.log('inside get line 21');
     res.redirect(process.env.CLIENT_URL);
 
   } else {
@@ -43,14 +43,15 @@ app.get('/callback', (req, res) => {
       })
       .then(response => {
         User.mongoOAUTH(response.body);
-        res.redirect('http://localhost:3000/create-timeline');
+        console.log('46 response body', response.body.email);
+        res.redirect(`http://localhost:3000/create-timeline/?userurl=${response.body.email}`);
         // res.write('<h1>' + response.body.email + '</h1>');
         // res.write('<h1>' + response.body.name + '</h1>');
         // res.write('<img src=' + response.body.picture + '>');
         res.end();
       })
       .catch(response => {
-        console.log('response!!!!!!!!!!!!!!!!!!!!!!!!!!!!11  index.js line 43', response.body);
+        // console.log('response!!!!!!!!!!!!!!!!!!!!!!!!!!!!11  index.js line 43', response.body);
         //Initial request, not to be confused with the response we passed through 
         res.cookie('cookie', cookieToken);
         res.redirect(process.env.CLIENT_URL);

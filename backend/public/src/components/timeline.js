@@ -1,29 +1,34 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import TaskList from './tasks/taskList';
 import TaskForm from './tasks/taskForm';
+import { getMaxListeners } from 'cluster';
 
 export default class Timeline extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: [{
-        name: 'Food',
-        begin: new Date(),
-        end: new Date(),
-        elements: [
-          {name: 'run', description: 'meet Andy at Greenlake'}
-        ],
-      }], 
+      // email: this.props.email, fix later
+      gotUser:false,
+      tasks:[],
+      email: window.location.search.split('=')[1],
+      user: null
     };
   }
 
   addTask = (task) => {
     console.log('task', task);
-    let newTask = {};
-    Object.assign(newTask, this.state);
-    newTask.tasks.push(task);
-    console.log('new Task', newTask);
-    this.setState({tasks: newTask.tasks});
+    let newUser = {};
+    Object.assign(newUser, this.state.user);
+    newUser.tasks.push(task);
+    console.log('23 new user', newUser);
+    fetch(`/api/user/${this.state.email}`, {body: JSON.stringify(newUser), method: 'PUT', headers: {
+      'Content-Type':'application/json'
+    }})
+    .then(user => user.json())
+    .then(user => {
+      console.log('29 user after parsed', user);
+      this.setState({user: user});
+    })
   }
 
   updateTask = (newTask, id) => {
@@ -35,29 +40,46 @@ export default class Timeline extends Component {
         task.end = newTask.end;
       }
     });
-    this.setState({tasks: allTasks});
+    this.setState({ tasks: allTasks });
   }
 
   removeTask = (id) => {
     let remainder = this.state.tasks.filter(task => {
       return task.id !== id;
     });
-    this.setState({tasks: remainder});
+    this.setState({ tasks: remainder });
+  }
+
+  getUser = (email) => {
+    fetch(`http://localhost:3000/api/user/${this.state.email}`)
+      .then(user => user.json())
+      .then(user => {
+        console.log(user, 'this is user get 54');
+        this.setState({user:user, gotUser:true});
+        
+      })
+
   }
 
   render() {
+    if(!this.state.gotUser){
+      this.getUser();
+      return <h1>loading user</h1>
+    }else{
     return <div className="create-timeline">
       <h1 id="page-title">Create Tasks to Reach Your Goal!</h1>
-      <TaskForm 
+      <TaskForm
         formClassName='primary-task-form'
-        addTask={this.addTask} 
-        buttonText='create'>
+        addTask={this.addTask}
+        buttonText='create'
+        user={this.state.user}>
       </TaskForm>
       <TaskList tasks={this.state.tasks}
-        addTask={this.addTask} 
+        addTask={this.addTask}
         removeTask={this.removeTask}
         updateTask={this.updateTask}>
       </TaskList>
     </div>;
+    }
   }
 }

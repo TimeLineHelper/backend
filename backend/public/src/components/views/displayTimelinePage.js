@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
-import TaskList from './tasks/taskList';
-import TaskForm from './tasks/taskForm';
+import TaskList from '../tasks/taskList';
+import TaskForm from '../tasks/taskForm';
 
 export default class DisplayTimelinePage extends Component {
   constructor(props) {
@@ -67,7 +67,7 @@ export default class DisplayTimelinePage extends Component {
       </section>
 
       <button class="add-btn"><i class="fa fa-plus-circle">Add Milestone</i></button>
-      
+
       <TaskForm addTask={this.addTask} buttonText='create'></TaskForm>
       <TaskList tasks={this.state.tasks} removeTask={this.removeTask}></TaskList>
     </div>;
