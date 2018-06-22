@@ -6,8 +6,6 @@ export default class TaskForm extends Component {
     super(props);
     this.state = {
       name: this.props.name,
-      // begin: new Date(),
-      // end: new Date(),
       isEditing: false,
     };
   }
@@ -29,11 +27,6 @@ export default class TaskForm extends Component {
         isEditing: false,
       }
       this.props.addTask(createdTask); //post request to db
-      // this.setState({
-      //   name: '',
-      //   begin: new Date(),
-      //   end: new Date(),
-      // })
     }
     else {
       let newValue = {};

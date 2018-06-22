@@ -1,18 +1,15 @@
-import React, {Component, Fragment} from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
 
 import TaskForm from './taskForm';
 import ElementForm from '../elements/elementForm';
 import ElementList from '../elements/elementList';
-import { RSA_SSLV23_PADDING } from 'constants';
-console.log('element list', ElementList)
 
 export default class TaskItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       task: this.props.task,
-      elements: [], // props
+      elements: [], // pass through props
       isEditing: false,
     };
   }
@@ -20,10 +17,6 @@ export default class TaskItem extends Component {
   toggleEdit = (ev) => {
     return this.setState({isEditing: !this.state.isEditing});
   }
-
-  // toggleOffEdit = (ev) => {
-  //   return this.props.addTask({isEditing: false, id: this.props.task.id});
-  // }
 
   handleRemove = (ev) => {
     ev.preventDefault();
@@ -38,7 +31,7 @@ export default class TaskItem extends Component {
     Object.assign(tempTask, this.state.task);
     tempTask.elements = newElements;
     console.log('new elements', newElements);
-    this.setState({elements: newElements, task: tempTask}); //individual task updated on this component need to update top level
+    this.setState({elements: newElements, task: tempTask}); // individual task updated on this component need to update top level
     this.props.updateTask(tempTask, tempTask.id);
   }
 
