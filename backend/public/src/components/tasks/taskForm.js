@@ -5,8 +5,10 @@ export default class TaskForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: this.props.name,
+      // begin: new Date(),
+      // end: new Date(),
       isEditing: false,
-      completed: false,
     };
   }
 
@@ -23,37 +25,64 @@ export default class TaskForm extends Component {
       let createdTask = {
         id: uuidv4(),
         name: ev.target.name.value,
-        items: [ev.target.items.value],
+        elements: [],
         isEditing: false,
-        completed: false,
       }
       this.props.addTask(createdTask); //post request to db
+      // this.setState({
+      //   name: '',
+      //   begin: new Date(),
+      //   end: new Date(),
+      // })
     }
     else {
       let newValue = {};
-      Object.assign(newValue, this.props.tasks, this.state);
+      Object.assign(newValue, this.props.task);
       console.log('new val', newValue);
+      console.log('this.props.task', this.props.task);
+      newValue.name = ev.target.name.value;
       this.props.toggleEdit();
-      this.props.addTask({...newValue}); //put request to db
+      console.log('this.props', this.props);
+      this.props.updateTask(newValue, this.props.task.id); //put request to db
     }
   }
 
-  render() { 
-    return <form 
-      onSubmit={this.handleSubmit}>
-      <input 
-        onChange={this.handleChange} 
-        name='name'
+  render() {
+    return <form id="task-form" onSubmit={this.handleSubmit}>
+      <input
+        id="form-name"
+        onChange={this.handleChange}
         type='text'
-        placeholder='name'
+        name='name'
+        value={this.state.name}
+        placeholder='Event Name'
       />
-      <input 
+      {/* <input 
         onChange={this.handleChange}
         name='items'
         type='text'
-        placeholder='items'
+        placeholder=''
+      /> */}
+      <button type='submit'>{this.props.buttonText === 'create' ? 'Submit Task' : 'Update Task'} </button>
+
+      <label for="date">Start Date:</label>
+
+      <input
+        // id="date"
+        onChange={this.handleChange}
+        type='date'
+        name='begin'
+        placeholder='start date'
       />
-      <button type='submit'>{this.props.buttonText === 'create' ? 'Submit' : 'Update'} </button>
+      <label for="date">End Date:</label>
+      <input
+        // id="date" dont need date see alicia
+        onChange={this.handleChange}
+        type='date'
+        name='end'
+        placeholder='end date'
+      />
+      <button id="event-button" type='submit'>{this.props.buttonText === 'create' ? 'Submit' : 'Create Event'} </button>
     </form>;
   }
 }

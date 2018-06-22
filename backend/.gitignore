@@ -1,5 +1,7 @@
 .env
 credentials.json
+credentials1.json
+credentials2.json
 node_modules/
 yarn.lock
 .cache/

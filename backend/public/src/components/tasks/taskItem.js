@@ -2,8 +2,9 @@ import React, {Component, Fragment} from 'react';
 import { Link } from 'react-router-dom';
 
 import TaskForm from './taskForm';
-// import ElementForm from '../elements/elementForm';
+import ElementForm from '../elements/elementForm';
 import ElementList from '../elements/elementList';
+import { RSA_SSLV23_PADDING } from 'constants';
 console.log('element list', ElementList)
 
 export default class TaskItem extends Component {
@@ -17,14 +18,12 @@ export default class TaskItem extends Component {
   }
 
   toggleEdit = (ev) => {
-    ev.preventDefault();
     return this.setState({isEditing: !this.state.isEditing});
   }
 
-  toggleOffEdit = (ev) => {
-    ev.preventDefault();
-    return this.props.addTask({isEditing: false, id: this.props.task.id});
-  }
+  // toggleOffEdit = (ev) => {
+  //   return this.props.addTask({isEditing: false, id: this.props.task.id});
+  // }
 
   handleRemove = (ev) => {
     ev.preventDefault();
@@ -33,10 +32,14 @@ export default class TaskItem extends Component {
 
   addElement = (element) => {
     console.log('element', element);
-    let newElements = [...this.state.elements];
+    let newElements = [...this.state.task.elements];
     newElements.push(element);
-    console.log('new Task', newElement);
-    this.setState({elements: newElements});
+    let tempTask = {};
+    Object.assign(tempTask, this.state.task);
+    tempTask.elements = newElements;
+    console.log('new elements', newElements);
+    this.setState({elements: newElements, task: tempTask}); //individual task updated on this component need to update top level
+    this.props.updateTask(tempTask, tempTask.id);
   }
 
   removeElement = (id) => {
@@ -47,11 +50,11 @@ export default class TaskItem extends Component {
   }
 
   renderList = () => {
-    console.log('this.props', this.props);
-    let items = this.props.task.items.map((item, i) => {
+    console.log('this.props.task', this.props.task);
+    let elements = this.props.task.elements.map((item, i) => {
       return <li key={i}>{item.name}{item.description}</li>
     })
-    return items
+    return elements;
   }
 
   render() {
@@ -59,26 +62,33 @@ export default class TaskItem extends Component {
       return <div>
         <li>
           <p>Name: {this.props.task.name}</p>
-          Items: <ol>{this.renderList()}</ol>
-        </li>
-        <TaskForm name="update"
-          name={this.props.task}
-          toggleEdit={this.toggleEdit}>
+        <TaskForm buttonText="update"
+          task={this.props.task}
+          toggleEdit={this.toggleEdit}
+          addTask={this.props.addTask}>
         </TaskForm>
+        Items: <ol>{this.renderList()}</ol>
+        </li>
         </div>
     }
-      return <li 
-          key={this.props.task.id} id={this.props.taskId}>
-          {this.props.task.name}: <ul>{this.renderList()}</ul>
+      return <div>
+        <button
+          id={this.props.task.id}
+          onClick={this.handleRemove}>
+          Delete
+        </button>
         <button 
           id={this.props.task.id}
           onClick={this.toggleEdit}>
           Update
         </button>
-        <h3>Add Task</h3>
-        {/* <ElementForm addElement={this.state.addElement} buttonText='create' /> */}
+        <li key={this.props.task.id} id={this.props.taskId}>
+          {this.props.task.name}: <ul>{this.renderList()}</ul>
+        </li>
+        <h3>Add Items:</h3>
+        <ElementForm addElement={this.addElement} buttonText='create' />
         <ElementList elements={this.state.elements} 
           removeElement={this.state.removeElement}/>
-        </li>
+        </div>
     }
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import TaskItem from './taskItem';
-import Timeline from '../timeline';
+import Timeline from '../displayTimelinePage.js';
 
 export default class TaskList extends Component {
   constructor(props) {
@@ -14,6 +14,7 @@ export default class TaskList extends Component {
         {this.props.tasks.map((task, i) => (
           <TaskItem 
             removeTask={this.props.removeTask}
+            addTask={this.props.addTask}
             updateTask={this.props.updateTask}
             task={task} key={i} index={task.isEditing}
           />

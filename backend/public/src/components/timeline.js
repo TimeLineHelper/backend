@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 import TaskList from './tasks/taskList';
 import TaskForm from './tasks/taskForm';
 
@@ -7,29 +6,14 @@ export default class Timeline extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      begin: new Date(),
       tasks: [{
-        // dailyTasks: [{
         name: 'Food',
-        items: [
+        begin: new Date(),
+        end: new Date(),
+        elements: [
           {name: 'run', description: 'meet Andy at Greenlake'}
         ],
       }], 
-        // weeklyTasks: [{
-        //   name: '',
-        //   items: [],
-        // }],
-        // monthlyTasks: [{
-        //   name: '',
-        //   items: [],
-        // }],
-        // milestones: {
-        //   date: Date(),
-        //   // Image: Image(),
-        //   Alert: 'Congratulations!',
-        // },
-      // }],
-      end: new Date(),
     };
   }
 
@@ -39,7 +23,19 @@ export default class Timeline extends Component {
     Object.assign(newTask, this.state);
     newTask.tasks.push(task);
     console.log('new Task', newTask);
-    this.setState({newTask});
+    this.setState({tasks: newTask.tasks});
+  }
+
+  updateTask = (newTask, id) => {
+    let allTasks = [...this.state.tasks]; // loop for a matching id to the given id to find the right task
+    allTasks.forEach(task => {
+      if (task.id !== id) {
+        task.name = newTask.name;
+        task.begin = newTask.begin;
+        task.end = newTask.end;
+      }
+    });
+    this.setState({tasks: allTasks});
   }
 
   removeTask = (id) => {
@@ -50,13 +46,17 @@ export default class Timeline extends Component {
   }
 
   render() {
-    return <div>
-      <h1>Create Tasks to Reach Your Goal!</h1>
-      <TaskForm addTask={this.addTask} 
+    return <div className="create-timeline">
+      <h1 id="page-title">Create Tasks to Reach Your Goal!</h1>
+      <TaskForm 
+        formClassName='primary-task-form'
+        addTask={this.addTask} 
         buttonText='create'>
       </TaskForm>
-      <TaskList tasks={this.state.tasks} 
-        removeTask={this.removeTask}>
+      <TaskList tasks={this.state.tasks}
+        addTask={this.addTask} 
+        removeTask={this.removeTask}
+        updateTask={this.updateTask}>
       </TaskList>
     </div>;
   }
