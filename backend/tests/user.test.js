@@ -22,7 +22,7 @@ const exampleData = {
 // post actin like a fool causing other tests to break when ran with post look into this maybe.
 
 describe('Info Routes', function () {
-  it.skip('POST: /api/user', () => {
+  it('POST: /api/user', done => {
     let temp = '';
 
     console.log('inside before each line 27');
@@ -38,10 +38,11 @@ describe('Info Routes', function () {
         done();
       });
   });
+  /////////////////////////////////////////////////////////////
   describe('get route', function () {
-    it.skip('get all users', done => {
+    it('get all users', done => {
 
-      superagent.get(`${url}/api/user`)
+      superagent.get(`${url}/api/users`)
         .then((res) => {
           console.log('this is the response get all', res.status);
 
@@ -56,9 +57,9 @@ describe('Info Routes', function () {
     });
   });
 });
-
+///////////////////////////////////////////////////////////////////
 describe('get route', function () {
-  it.skip('get one user', done => {
+  it('get one user', done => {
 
     superagent.get(`${url}/api/user/blah@blah.com`)
       .then((res) => {
@@ -71,14 +72,28 @@ describe('get route', function () {
 
       })
       .catch(err => {
+        console.log('74 err');
         return done(err);
       });
   });
+
+  // it('returns 404 if no user', done => {
+
+  //   superagent.get(`${url}/api/user/notblah@blah.com`)
+  //     .then((res) => {
+  //       console.log('83 res', res);
+  //       expect(res.status).toEqual(404);
+
+  //       done();
+
+
+  //     });
+  // });
 });
 
 
 describe('delete route', function () {
-  it.skip('should delete a user by email', done => {
+  it('should delete a user by email', done => {
 
     superagent.delete(`${url}/api/user/blah@blah.com`)
       .then((res) => {
