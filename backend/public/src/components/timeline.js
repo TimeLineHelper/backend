@@ -8,7 +8,8 @@ export default class Timeline extends Component {
     super(props);
     this.state = {
       // email: this.props.email, fix later
-      email: 'hskrwres@gmail.com',
+      gotUser:false,
+      email: window.location.search.split('=')[1],
       tasks: [{
         name: 'Food',
         begin: new Date(),
@@ -53,14 +54,19 @@ export default class Timeline extends Component {
       .then(user => user.json())
       .then(user => {
         console.log(user, 'this is user get 54');
+        this.setState({user:user, gotUser:true});
+        
+
       })
 
   }
 
   render() {
+    if(!this.state.gotUser){
+      this.getUser();
+      return <h1>loading user</h1>
+    }else{
     return <div className="create-timeline">
-
-      <button onClick={this.getUser} > get user </button>
       <h1 id="page-title">Create Tasks to Reach Your Goal!</h1>
       <TaskForm
         formClassName='primary-task-form'
@@ -74,5 +80,6 @@ export default class Timeline extends Component {
         updateTask={this.updateTask}>
       </TaskList>
     </div>;
+    }
   }
 }
