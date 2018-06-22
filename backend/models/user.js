@@ -2,9 +2,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var itemArray = new Schema(
+// change begin end and timestamp to dates()
+
+var elementArray = new Schema(
   {
-    itemTitle: 'string',
+    name: 'string',
     description: 'string',
     id: { type: Number },
     timeStamp: { type: Number }
@@ -17,8 +19,8 @@ const userSchema = new Schema({
   begin: { type: Number },
   end: { type: Number },
   id: { type: Number },
-  taskTitle: { type: String },
-  items: [itemArray],
+  tasks: { type: String },
+  elements: [elementArray],
 
 });
 

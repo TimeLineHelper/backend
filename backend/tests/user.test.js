@@ -131,7 +131,7 @@ describe('delete route', function () {
   });
 });
 
-
+// update names based on the user.js model
 describe('Update User information', () => {
   it('User should be able to update information', (done) => {
     superagent.put(`${url}/api/user/blah@blah.com`)

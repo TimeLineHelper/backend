@@ -39,7 +39,7 @@ router.get('/api/user', function (req, res, next) {
 router.get('/api/user/:email', function (req, res, next) {
   console.log(req.params.email, 'req params');
   // currently setup for find all either change it to find one or add a find one route
-  User.findOne({ email: 'blah@blah.com' })
+  User.findOne({ email: req.params.email })
     .then(user => {
       // console.log('data line 22', user);
       res.json(user);
@@ -64,18 +64,18 @@ router.put('/api/user/:email', jsonParser, (req, res) => {
   console.log(req.body, 'this is req.body 52');
   User.findOne({
 
-    email: req.body.email
+    email: req.params.email
   })
-    .then((results) => {
-      console.log(req.body, 'this is req.body 54');
-      if (req.body.newTaskTitle) {
-        results.taskTitle = req.body.newTaskTitle;
+    .then((user) => {
+      console.log(user, 'this is req.body 54');
+      if (req.body.tasks) {
+        user.tasks = req.body.tasks;
       }
-      results.save();
+      user.save();
     })
-    .then((results) => {
+    .then((res) => {
       console.log('song updated');
-      res.status(200).send('user info updated successefully');
+      res.status(200).send(user);
     })
     .catch((err) => {
       res.status(400).send('unable to update');
