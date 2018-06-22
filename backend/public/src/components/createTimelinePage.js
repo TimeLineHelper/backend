@@ -30,6 +30,14 @@ export default class CreateTimelinePage extends Component {
     this.setState({ tasks: remainder });
   }
 
+  // event listener to hide (items) elements when rendering timeline component
+  let 
+  hideElements = (ev) => {
+    ev.preventDefault();
+    let hide = document.getElementById('hide');
+    hide.timeline.remove('shrink');
+  };
+
   render() {
     return <Fragment>
       <div>
