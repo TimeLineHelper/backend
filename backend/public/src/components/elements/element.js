@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import ElementForm from './elementForm';
 
-export default class Item extends Component {
+export default class Element extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,9 +26,10 @@ export default class Item extends Component {
   render() {
     if(this.state.isEditing === true) {
       return <div>
-        <ElementForm action='update'
+        <ElementForm buttonText='update'
           element={this.props.element}
           toggleEdit={this.toggleEdit}
+          addElement={this.props.addElement}
           cancel={this.cancel}>
         </ElementForm>
       </div>;
@@ -36,8 +37,10 @@ export default class Item extends Component {
       return (
         <div>
           <li>
-            {this.props.name}
-            {this.props.description}
+            {this.props.element.name}
+          </li>
+          <li>
+            {this.props.element.description}
           </li>
           <button onClick={this.handleDelete}>Delete</button>
           <button onClick={this.toggleEdit}>Cancel</button>

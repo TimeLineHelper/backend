@@ -9,7 +9,6 @@ export default class TaskForm extends Component {
       // begin: new Date(),
       // end: new Date(),
       isEditing: false,
-      completed: false,
     };
   }
 
@@ -26,9 +25,8 @@ export default class TaskForm extends Component {
       let createdTask = {
         id: uuidv4(),
         name: ev.target.name.value,
-        items: [ev.target.items.value],
+        elements: [],
         isEditing: false,
-        completed: false,
       }
       this.props.addTask(createdTask); //post request to db
       // this.setState({
@@ -39,34 +37,46 @@ export default class TaskForm extends Component {
     }
     else {
       let newValue = {};
-      Object.assign(newValue, this.props.tasks, this.state);
+      Object.assign(newValue, this.props.task);
       console.log('new val', newValue);
+      console.log('this.props.task', this.props.task);
+      newValue.name = ev.target.name.value;
       this.props.toggleEdit();
-      this.props.addTask({...newValue}); //put request to db
+      console.log('this.props', this.props);
+      this.props.updateTask(newValue, this.props.task.id); //put request to db
     }
   }
 
-  render() { 
+  render() {
     return <form id="task-form" onSubmit={this.handleSubmit}>
       <input
         id="form-name"
-        onChange={this.handleChange} 
+        onChange={this.handleChange}
         type='text'
         name='name'
         value={this.state.name}
         placeholder='Event Name'
       />
+      {/* <input 
+        onChange={this.handleChange}
+        name='items'
+        type='text'
+        placeholder=''
+      /> */}
+      <button type='submit'>{this.props.buttonText === 'create' ? 'Submit Task' : 'Update Task'} </button>
+
       <label for="date">Start Date:</label>
-      <input 
-        id="date"
-        onChange={this.handleChange} 
+
+      <input
+        // id="date"
+        onChange={this.handleChange}
         type='date'
         name='begin'
         placeholder='start date'
       />
       <label for="date">End Date:</label>
-      <input 
-        id="date"
+      <input
+        // id="date" dont need date see alicia
         onChange={this.handleChange}
         type='date'
         name='end'

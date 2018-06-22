@@ -17,8 +17,8 @@ mongoose.connect('mongodb://localhost/timelinehelper');
 // const mongoose = require('mongoose');
 // mongoose.connect(process.env.MONGODB_URI);
 
-// app.use('/', require('./routes/timelineRouter'));
-app.use('/home', require('./routes/timelineRouter.js'));
+app.use('/', require('./routes/timelineRouter'));
+// app.use('/home', require('./routes/timelineRouter.js'));
 
 app.get('/callback', (req, res) => {
   if (!req.query.code) {

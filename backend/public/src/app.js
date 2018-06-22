@@ -6,6 +6,7 @@ import {
   Route,
 } from 'react-router-dom';
 import ReactDOM from 'react-dom';
+// import '../../styles/main.scss';
 
 import MainPage from './components/mainPage.js';
 import CreateTimelinePage from './components/createTimelinePage.js';

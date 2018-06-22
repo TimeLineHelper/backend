@@ -310,6 +310,7 @@ p {
 
   label {
     padding-right: 9em;
+    display: inline-block;
   }
 
   input {
