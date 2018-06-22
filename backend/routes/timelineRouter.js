@@ -8,14 +8,14 @@ const fs = require('fs');
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const router = express.Router();
-let { google } = require('googleapis');
+// let { google } = require('googleapis');
 
-const readline = require('readline');
+// const readline = require('readline');
 
-const SCOPES = [
-  'https://www.googleapis.com/auth/calendar'
-];
-const TOKEN_PATH = '../credentials2.json';
+// const SCOPES = [
+//   'https://www.googleapis.com/auth/calendar'
+// ];
+// const TOKEN_PATH = '../credentials2.json';
 
 router.post('/api/user', jsonParser, function (req, res, next) {
   console.log('in timelines route b4 new user adding req', req.body);

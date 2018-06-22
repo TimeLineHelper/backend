@@ -12,6 +12,7 @@ var itemArray = new Schema(
   });
 
 const userSchema = new Schema({
+  // make email unique right?
   email: { type: String, required: true },
   begin: { type: Number },
   end: { type: Number },
