@@ -6,18 +6,18 @@ const Schema = mongoose.Schema;
 
 var elementArray = new Schema(
   {
-    name: 'string',
-    description: 'string',
-    id: { type: Number },
-    date: Date,
+    name: String,
+    description: String,
+    id: String,
+    date: String,
   });
   
 var taskArray = new Schema(
   {
-    name: 'string',
-    begin: Date,
-    end: Date,
-    id: { type: Number },
+    name: String,
+    begin: String,
+    end: String,
+    id:  String,
     elements: [elementArray],
   
   });
