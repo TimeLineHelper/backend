@@ -1,3 +1,5 @@
-"compress": {
-   "drop_console": false
+{
+	"compress": {
+	   "drop_console": false
+	}
 }
