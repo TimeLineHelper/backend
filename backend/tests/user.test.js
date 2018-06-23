@@ -33,7 +33,7 @@ const badData = {
 // post actin like a fool causing other tests to break when ran with post look into this maybe.
 
 describe('Info Routes', function () {
-  it.skip('POST: /api/user', done => {
+  it('POST: /api/user', done => {
     let temp = '';
 
     console.log('inside before each line 27');
@@ -51,12 +51,12 @@ describe('Info Routes', function () {
   });
 });
 
-// describe('Info Routes', function () {
-//   it.skip('POST: /api/user', done => {
-//     let temp = '';
-/////////////////////////////////////////////////////////////
-describe('get route', function () {
-  it.skip('get all users', done => {
+describe('Info Routes', function () {
+  it.skip('POST: /api/user', done => {
+    let temp = '';
+    /////////////////////////////////////////////////////////////
+    // describe('get route', function () {
+    //   it('get all users', done => {
 
     console.log('inside before each line 27');
     superagent.post('http://localhost:3000/api/user')
@@ -94,7 +94,7 @@ describe('get route', function () {
 });
 ///////////////////////////////////////////////////////////////////
 describe('get route', function () {
-  it.skip('get one user', done => {
+  it('get one user', done => {
 
     superagent.get(`${url}/api/user/blah@blah.com`)
       .then((res) => {
@@ -129,7 +129,7 @@ describe('get route', function () {
 
 
 describe('delete route', function () {
-  it.skip('should delete a user by email', done => {
+  it('should delete a user by email', done => {
 
     superagent.delete(`${url}/api/user/blah@blah.com`)
       .then((res) => {
@@ -149,7 +149,7 @@ describe('delete route', function () {
 
 // update names based on the user.js model
 describe('Update User information', () => {
-  it.skip('User should be able to update information', (done) => {
+  it('User should be able to update information', (done) => {
     superagent.put(`${url}/api/user/blah@blah.com`)
       .send({
         email: 'blah@blah.com',
