@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import TaskList from './tasks/taskList';
 import TaskForm from './tasks/taskForm';
-import { getMaxListeners } from 'cluster';
+
+// import EventForm from './tasks/eventForm';
+// import { getMaxListeners } from 'cluster';
 
 export default class Timeline extends Component {
   constructor(props) {
@@ -14,6 +16,10 @@ export default class Timeline extends Component {
       user: null
     };
   }
+  // addEvent = (event) => {
+  //   console.log('event', event);
+  //   this.setState({tasks: newTask.tasks});
+  // }
 
   addTask = (task) => {
     console.log('task', task);
@@ -21,6 +27,7 @@ export default class Timeline extends Component {
     Object.assign(newUser, this.state.user);
     newUser.tasks.push(task);
     console.log('23 new user', newUser);
+
     fetch(`/api/user/${this.state.email}`, {
       body: JSON.stringify(newUser), method: 'PUT', headers: {
         'Content-Type': 'application/json'
@@ -30,9 +37,17 @@ export default class Timeline extends Component {
       .then(user => {
         console.log('29 user after parsed', user);
         this.setState({ user: user });
+        this.setState({ tasks: newUser.tasks });
+      })
+      .then(user => user.json())
+      .then(user => {
+        console.log('29 user after parsed', user);
+        this.setState({ user: user });
       })
   }
 
+  // this.setState({tasks: newUser.tasks});
+  //ix:TODO update and remove not working
   updateTask = (newTask, id) => {
     let allTasks = [...this.state.tasks]; // loop for a matching id to the given id to find the right task
     allTasks.forEach(task => {
@@ -49,6 +64,7 @@ export default class Timeline extends Component {
     let remainder = this.state.tasks.filter(task => {
       return task.id !== id;
     });
+
     this.setState({ tasks: remainder });
   }
 
@@ -62,6 +78,7 @@ export default class Timeline extends Component {
       })
 
   }
+
 
   render() {
     if (!this.state.gotUser) {
