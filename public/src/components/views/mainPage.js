@@ -13,7 +13,7 @@ export default class MainPage extends Component {
   render() {
     return <Fragment>
       <h1 id="mainTitle">{this.state.appName}</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut posuere libero nulla, ac lobortis libero tincidunt non. Nulla magna nisi, vehicula vitae neque at, cursus varius massa. Pellentesque sollicitudin enim vitae sollicitudin pulvinar. Quisque a risus vel erat mollis aliquet.</p>
+      <p>Welcome to Track It Timeline App! Log in to start your personalized timeline experience. Dreams, goals, lifetime milestones, the BEST ideas need a plan. </p>
       <h2>Begin tracking now!</h2>
     </Fragment>;
   }
