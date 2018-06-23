@@ -1,0 +1,56 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel ./public/index.html",
+    "build": "parcel build .public/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimeLineHelper/backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TimeLineHelper/backend/issues"
+  },
+  "homepage": "https://github.com/TimeLineHelper/backend#readme",
+  "dependencies": {
+    "babel-plugin-autobind-class-methods": "^5.0.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "body-parser": "^1.18.3",
+    "css-loader": "^0.28.11",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "googleapis": "^27.0.0",
+    "jest": "^23.1.0",
+    "mongoose": "^5.1.5",
+    "node-sass": "^4.9.0",
+    "parcel-bundler": "^1.8.1",
+    "react": "^16.4.0",
+    "react-chronos": "^1.0.4",
+    "react-dom": "^16.4.0",
+    "react-google-calendar-api": "^1.0.7",
+    "react-router-dom": "^4.3.1",
+    "sass-loader": "^7.0.3",
+    "superagent": "^3.8.3",
+    "uuidv4": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "src/*",
+      "dist/*",
+      ".cache/*"
+    ]
+  }
+}
