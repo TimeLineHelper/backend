@@ -7,25 +7,27 @@ const PORT = process.env.PORT || 3000;
 require('jest');
 const url = `http://localhost:${PORT}`;
 
-let itemArray = { itemTitle: 'uuuuugggggg', description: 'striuuuuuggggggng', id: 123456789, timeStamp: 656 };
+let elementArray = { name: 'test me', description: 'testing 123', id: 123456789 };
+
+const taskArray = {
+  email: 'blah@blah.com',
+  begin: '12',
+  end: '48',
+  id: '123456789',
+  task: 'TESTING',
+  elements: [elementArray],
+};
 
 const exampleData = {
   email: 'blah@blah.com',
-  begin: 12,
-  end: 48,
-  id: 123456789,
-  taskTitle: 'blllleeeehhhhh',
-  items: [itemArray],
+  tasks: [taskArray],
 };
 
 const badData = {
   email: '',
-  begin: 3,
-  end: 2,
-  id: 1,
-  taskTitle: 'bad title',
-  items: [itemArray],
+  tasks: [taskArray],
 };
+
 
 
 // post actin like a fool causing other tests to break when ran with post look into this maybe.
@@ -47,13 +49,35 @@ describe('Info Routes', function () {
         done(err);
       });
   });
-  /////////////////////////////////////////////////////////////
-  describe('get route', function () {
-    it('get all users', done => {
+});
 
-      superagent.get(`${url}/api/users`)
-        .then((res) => {
-          console.log('this is the response get all', res.status);
+describe('Info Routes', function () {
+  it.skip('POST: /api/user', done => {
+    let temp = '';
+
+    console.log('inside before each line 27');
+    superagent.post('http://localhost:3000/api/user')
+
+      .send(badData)
+      .then(data => {
+        temp = data;
+        console.log('temp', temp.body);
+        expect(res.status).toEqual(404);
+        // done();
+      })
+      .catch(err => {
+
+        done(err);
+      });
+  });
+});
+/////////////////////////////////////////////////////////////
+describe('get route', function () {
+  it('get all users', done => {
+
+    superagent.get(`${url}/api/users`)
+      .then((res) => {
+        console.log('this is the response get all', res.status);
 
         expect(res.status).toEqual(200);
         done();
@@ -85,18 +109,19 @@ describe('get route', function () {
       });
   });
 
-  // it('returns 404 if no user', done => {
 
-  //   superagent.get(`${url}/api/user/notblah@blah.com`)
-  //     .then((res) => {
-  //       console.log('83 res', res);
-  //       expect(res.status).toEqual(404);
+  it.skip('returns 404 if no user', done => {
 
-  //       done();
+    superagent.get(`${url}/api/user/notblah@blah.com`)
+      .then((res) => {
+        console.log('83 res', res);
+        expect(res.status).toEqual(404);
+
+        done();
 
 
-  //     });
-  // });
+      });
+  });
 });
 
 
@@ -136,4 +161,3 @@ describe('Update User information', () => {
       });
   });
 });
-

@@ -8,14 +8,7 @@ const fs = require('fs');
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const router = express.Router();
-// let { google } = require('googleapis');
 
-// const readline = require('readline');
-
-// const SCOPES = [
-//   'https://www.googleapis.com/auth/calendar'
-// ];
-// const TOKEN_PATH = '../credentials2.json';
 
 router.post('/api/user', jsonParser, function (req, res, next) {
   // console.log('in timelines route b4 new user adding req', req.body);
@@ -34,7 +27,10 @@ router.get('/api/users', function (req, res, next) {
       // console.log('data line 22', users);
       res.json(users);
     })
-    .catch(next);
+    .catch((err) => {
+      console.log('87 err', err);
+      res.status(404).send('user not found');
+    });
 });
 
 router.get('/api/user/:email', function (req, res) {
@@ -62,54 +58,21 @@ router.get('/api/user/:email', function (req, res) {
 });
 
 
-// router.put('/api/user/:email', jsonParser, function (req, res, next) {
-//   User.findByOneAndUpdate(req.params.email, req.body, { new: true })
-//     .then(user => res.json(user))
-//     .catch(err => {
-//       console.log(err, 'err line 51');
-//     });
-
-
-
-// });
 
 router.put('/api/user/:email', jsonParser, (req, res) => {
-  User.findOne({
+  console.log('this is req.body 54', req.body);
 
+  User.findOneAndUpdate({
     email: req.params.email
-  })
-
-    .then((user) => {
-      // console.log(req.body, 'this is req.body 54');
-      // console.log(req.body.tasks, 'this is req.body 54');
-      // console.log(req.body.user, 'this is req.body 54');
-      // if (req.body.tasks) {
-      //   user.tasks = req.body.tasks;
-      // }
-      user = req.body;
-      console.log(user, 'what is the motherfucking user');
-      user.save();
-    })
-    .then((res) => {
-      console.log('user updated right here!!!!', res.body);
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      console.log('is there a user in here?', err);
-      res.status(400).send('unable to update');
-    });
+  }, { $set: { tasks: req.body.tasks } }).then((user) => {
+    console.log('85 new user', req.body);
+    res.json(user);
+  }).catch((err) => {
+    console.log('87 err', err);
+  });
 });
 
-// router.delete('/api/user/:id', function (req, res, next) {
-//   console.log(req.params.id, 'req params 44');
-//   User.findOneAndRemove({ _id: req.params.id })
-//     .then(data => {
-//       console.log(data, 'data removed line 48');
-//     })
-//     .catch(err => {
-//       console.log(err, 'err line 51');
-//     });
-// });
+
 
 // yo actually make a var that holds the value for email from the users model pass it through the url so the db can identify it and remove it thanks - love past ix.... :3
 
@@ -117,7 +80,7 @@ router.delete('/api/user/:email', function (req, res, next) {
   // console.log(req.params, 'req params 44');
   User.findOneAndRemove({ email: req.params.email })
     .then(data => {
-      res.send(204, 'user deleted');
+      res.status(204).send('user deleted');
       // console.log(data, 'data removed line 48');
     })
     .catch(err => {
