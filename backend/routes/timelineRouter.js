@@ -40,15 +40,15 @@ router.get('/api/users', function (req, res, next) {
 router.get('/api/user/:email', function (req, res) {
   console.log(req.params.email, ' 40 req params');
   // currently setup for find all either change it to find one or add a find one route
-  User.findOne({email: req.params.email})
+  User.findOne({ email: req.params.email })
     .then((user, err) => {
       console.log(req.params.email, ' 40 req params after find one get');
       console.log('45 user after find one get', user);
-      if(!user || !Object.keys(user).length){
+      if (!user || !Object.keys(user).length) {
         // console.log('data line 47', user);
         // console.log('data line 47', err);
         res.status(404).send('user not found');
-      }else{
+      } else {
         // console.log('data line 51', err);
         // console.log('data line 52', user);
         res.json(user);
@@ -78,19 +78,24 @@ router.put('/api/user/:email', jsonParser, (req, res) => {
 
     email: req.params.email
   })
+
     .then((user) => {
-      console.log(req.body, 'this is req.body 54');
+      // console.log(req.body, 'this is req.body 54');
+      // console.log(req.body.tasks, 'this is req.body 54');
+      // console.log(req.body.user, 'this is req.body 54');
       // if (req.body.tasks) {
       //   user.tasks = req.body.tasks;
       // }
-      user = req.body.user;
+      user = req.body;
+      console.log(user, 'what is the motherfucking user');
       user.save();
     })
     .then((res) => {
-      // console.log('user updated');
+      console.log('user updated right here!!!!', res.body);
       res.status(200).json(user);
     })
     .catch((err) => {
+      console.log('is there a user in here?', err);
       res.status(400).send('unable to update');
     });
 });

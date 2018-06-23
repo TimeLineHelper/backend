@@ -8,8 +8,8 @@ export default class Timeline extends Component {
     super(props);
     this.state = {
       // email: this.props.email, fix later
-      gotUser:false,
-      tasks:[],
+      gotUser: false,
+      tasks: [],
       email: window.location.search.split('=')[1],
       user: null
     };
@@ -21,14 +21,16 @@ export default class Timeline extends Component {
     Object.assign(newUser, this.state.user);
     newUser.tasks.push(task);
     console.log('23 new user', newUser);
-    fetch(`/api/user/${this.state.email}`, {body: JSON.stringify(newUser), method: 'PUT', headers: {
-      'Content-Type':'application/json'
-    }})
-    .then(user => user.json())
-    .then(user => {
-      console.log('29 user after parsed', user);
-      this.setState({user: user});
+    fetch(`/api/user/${this.state.email}`, {
+      body: JSON.stringify(newUser), method: 'PUT', headers: {
+        'Content-Type': 'application/json'
+      }
     })
+      .then(user => user.json())
+      .then(user => {
+        console.log('29 user after parsed', user);
+        this.setState({ user: user });
+      })
   }
 
   updateTask = (newTask, id) => {
@@ -55,31 +57,31 @@ export default class Timeline extends Component {
       .then(user => user.json())
       .then(user => {
         console.log(user, 'this is user get 54');
-        this.setState({user:user, gotUser:true});
-        
+        this.setState({ user: user, gotUser: true });
+
       })
 
   }
 
   render() {
-    if(!this.state.gotUser){
+    if (!this.state.gotUser) {
       this.getUser();
       return <h1>loading user</h1>
-    }else{
-    return <div className="create-timeline">
-      <h1 id="page-title">Create Tasks to Reach Your Goal!</h1>
-      <TaskForm
-        formClassName='primary-task-form'
-        addTask={this.addTask}
-        buttonText='create'
-        user={this.state.user}>
-      </TaskForm>
-      <TaskList tasks={this.state.tasks}
-        addTask={this.addTask}
-        removeTask={this.removeTask}
-        updateTask={this.updateTask}>
-      </TaskList>
-    </div>;
+    } else {
+      return <div className="create-timeline">
+        <h1 id="page-title">Create Tasks to Reach Your Goal!</h1>
+        <TaskForm
+          formClassName='primary-task-form'
+          addTask={this.addTask}
+          buttonText='create'
+          user={this.state.user}>
+        </TaskForm>
+        <TaskList tasks={this.state.tasks}
+          addTask={this.addTask}
+          removeTask={this.removeTask}
+          updateTask={this.updateTask}>
+        </TaskList>
+      </div>;
     }
   }
 }

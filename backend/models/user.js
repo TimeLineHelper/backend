@@ -11,7 +11,7 @@ var elementArray = new Schema(
     id: { type: Number },
     date: Date,
   });
-  
+
 var taskArray = new Schema(
   {
     name: 'string',
@@ -19,7 +19,7 @@ var taskArray = new Schema(
     end: Date,
     id: { type: Number },
     elements: [elementArray],
-  
+
   });
 
 const userSchema = new Schema({
