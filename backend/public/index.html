@@ -8,12 +8,13 @@
   <link href="https://fonts.googleapis.com/css?family=Caveat|Dosis|Neucha|Open+Sans+Condensed:300|Shadows+Into+Light+Two|Sunflower:300"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <title>Time Line Helper App</title>
   <link rel="icon" href="../assets/logo.png">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <title>Time Line Helper App</title>
 </head>
 
 <body>
+  <!-- Nav Bar -->
   <div class="header">
     <h1 id="app-title">Track It</h1>
   </div>
@@ -36,6 +37,56 @@
       </li>
     </ul>
   </div>
+
+<!-- <section class="timeline">
+    <h1>{Insert Name} Timeline</h1>
+    <ul>
+      <li>
+        <div>
+          <time>Eat</time>
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium At vero eos et accusamus et iusto odio
+          dignissimos ducimus qui blanditiis praesentium
+          <button class="edit-btn">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="trash-btn">
+            <i class="fa fa-trash"></i>
+          </button>
+        </div>
+      </li>
+      <li>
+        <div>
+          <time>Run</time>
+          Proin quam velit, efficitur vel neque vitae, rhoncus commodo mi. Suspendisse finibus mauris et bibendum molestie. Aenean
+          ex augue, varius et pulvinar in, pretium non nisi.
+          <button class="edit-btn">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="trash-btn">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+      </li>
+      <li>
+        <div>
+          <time>Bike</time>
+          In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat mattis. Vestibulum id magna est.
+          <button class="edit-btn">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="trash-btn">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+      </li>
+  </section> -->
+
+  <div id="root"></div>
+  <script src="./src/app.js"></script>
+  <!-- <script src="./src/app2.js"></script> -->
+  <!-- <button class="add-btn">
+    <i class="fa fa-plus-circle">Add Milestone</i>
+  </button> -->
 
   <script>
     let loginYall = document.getElementById('loginYall');
@@ -62,12 +113,6 @@
       }
     }
   </script>
-  </div>
-  <div class="about-container">
-    <h1>Join 365 Timeline!</h1>
-    <div id="root"></div>
-    <script src="./src/app.js"></script>
-  </div>
 </body>
 
 </html>

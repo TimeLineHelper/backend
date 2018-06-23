@@ -10,8 +10,8 @@ export default class Timeline extends Component {
     super(props);
     this.state = {
       // email: this.props.email, fix later
-      gotUser:false,
-      tasks:[],
+      gotUser: false,
+      tasks: [],
       email: window.location.search.split('=')[1],
       user: null
     };
@@ -27,19 +27,21 @@ export default class Timeline extends Component {
     Object.assign(newUser, this.state.user);
     newUser.tasks.push(task);
     console.log('23 new user', newUser);
-    fetch(`/api/user/${this.state.email}`, {body: JSON.stringify(newUser), method: 'PUT', headers: {
-      'Content-Type':'application/json'
-    }})
-    .then(user => user.json())
-    .then(user => {
-      console.log('29 user after parsed', user);
-      this.setState({user: user});
-      this.setState({tasks: newUser.tasks});
+    fetch(`/api/user/${this.state.email}`, {
+      body: JSON.stringify(newUser), method: 'PUT', headers: {
+        'Content-Type': 'application/json'
+      }
     })
+      .then(user => user.json())
+      .then(user => {
+        console.log('29 user after parsed', user);
+        this.setState({ user: user });
+        this.setState({ tasks: newUser.tasks });
+      })
   }
 
   // this.setState({tasks: newUser.tasks});
-//ix:TODO update and remove not working
+  //ix:TODO update and remove not working
 
   updateTask = (newTask, id) => {
     let allTasks = [...this.state.user.tasks]; // loop for a matching id to the given id to find the right task
@@ -57,7 +59,7 @@ export default class Timeline extends Component {
     let remainder = this.state.user.tasks.filter(task => {
       return task.id !== id;
     });
-    
+
     this.setState({ tasks: remainder });
   }
 
@@ -66,31 +68,80 @@ export default class Timeline extends Component {
       .then(user => user.json())
       .then(user => {
         console.log(user, 'this is user get 54');
-        this.setState({user:user, gotUser:true});
+        this.setState({ user: user, gotUser: true });
       })
   }
 
 
   render() {
-    if(!this.state.gotUser){
+    if (!this.state.gotUser) {
       this.getUser();
       return <h1>loading user</h1>
-    }else{
-    return <div className="create-timeline">
-      <h1 id="page-title">Create Tasks to Reach Your Goal!</h1>
-      {/* <h2>{this.state.user.tasks.name}</h2> */}
+    } else {
+      return <div className="create-timeline">
+        <h1 id="page-title">Create Tasks to Reach Your Goal!</h1>
+        {/* <h2>{this.state.user.tasks.name}</h2> */}
+
+        <section class="timeline">
+          {/* <h1>{Insert Name} Timeline</h1> */}
+          <ul>
+            <li>
+              <div>
+                <time>Eat</time>
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium At vero eos et accusamus et iusto odio
+                dignissimos ducimus qui blanditiis praesentium
+          {/* <button class="btn"><i class="fa fa-close"></i></button> */}
+          <button class="edit-btn">
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button class="trash-btn">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </li>
+            <li>
+              <div>
+                <time>Run</time>
+                Proin quam velit, efficitur vel neque vitae, rhoncus commodo mi. Suspendisse finibus mauris et bibendum molestie. Aenean
+                ex augue, varius et pulvinar in, pretium non nisi.
+          <button class="edit-btn">
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button class="trash-btn">
+                  <i class="fa fa-close"></i>
+                </button>
+              </div>
+            </li>
+            <li>
+              <div>
+                <time>Bike</time>
+                In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse varius volutpat mattis. Vestibulum id magna est.
+          <button class="edit-btn">
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button class="trash-btn">
+                  <i class="fa fa-close"></i>
+                </button>
+              </div>
+            </li>
+          </ul>
+  </section>
+  <button class="add-btn">
+    <i class="fa fa-plus-circle">Add Milestone</i>
+  </button>
+        
       <TaskForm
-        formClassName='primary-task-form'
-        addTask={this.addTask}
-        buttonText='create'
-        user={this.state.user}>
-      </TaskForm>
-      <TaskList tasks={this.state.user.tasks}
-        addTask={this.addTask}
-        removeTask={this.removeTask}
-        updateTask={this.updateTask}>
-      </TaskList>
+            formClassName='primary-task-form'
+            addTask={this.addTask}
+            buttonText='create'
+            user={this.state.user}>
+          </TaskForm>
+          <TaskList tasks={this.state.user.tasks}
+            addTask={this.addTask}
+            removeTask={this.removeTask}
+            updateTask={this.updateTask}>
+          </TaskList>
     </div>;
-    }
-  }
+        }
+      }
 }
