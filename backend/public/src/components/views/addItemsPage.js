@@ -12,32 +12,29 @@ export default class AddItemsPage extends Component {
     }
   }
 
-  addTask = (task) => {
-    console.log('task', task);
-    let newTask = {};
-    Object.assign(newTask, this.state);
-    newTask.tasks.push(task);
-    console.log('new Task', newTask);
-    this.setState({ newTask });
-  }
-
-  removeTask = (id) => {
-    let remainder = this.state.tasks.filter(task => {
-      return task.id !== id;
-    });
-    this.setState({ tasks: remainder });
-  }
-
   render() {
     return <Fragment>
       <div>
         <h1>{this.props.name}</h1>
         <p>Now add important dates and milestones to your event!</p>
 
-        <ElementForm addTask={this.addTask} buttonText='create'></ElementForm>
+        <ElementForm></ElementForm>
         {/* <TaskForm addTask={this.addTask} buttonText='create'></TaskForm> */}
-        <TaskList tasks={this.state.tasks} removeTask={this.removeTask}></TaskList>
+        {/* <TaskList></TaskList> */}
       </div>
     </Fragment>
   }
 }
+
+// render() {
+//   return <Fragment>
+//     <div>
+//       <p id="createItem-intro">Begin by creating an Event!</p>
+//       <TaskForm buttonText="update"
+//         task={this.props.task}
+//         toggleEdit={this.toggleEdit}
+//         addTask={this.props.addTask} />
+//       <Link to="/create-timeline"></Link>
+//     </div>
+//   </Fragment>;
+// }

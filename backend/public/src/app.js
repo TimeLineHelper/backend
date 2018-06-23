@@ -46,14 +46,14 @@ window.addEventListener('scroll', callbackFunc);
 class App extends Component {
   constructor(props) {
     super(props);
-  }
 
+  }
   render() {
     return <BrowserRouter>
       <Fragment>
         <Route exact path="/" component={MainPage} />
         <Route exact path="/create-timeline" component={CreateTimelinePage} />
-        <Route exact path="/add-item" component={AddItemsPage} />
+        <Route exact path="/add-items" component={AddItemsPage} />
         <Route exact path="/display-timeline" component={DisplayTimelinePage} />
       </Fragment>
     </BrowserRouter>;

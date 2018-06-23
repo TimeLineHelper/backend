@@ -69,7 +69,12 @@ export default class DisplayTimelinePage extends Component {
       <button class="add-btn"><i class="fa fa-plus-circle">Add Milestone</i></button>
 
       <TaskForm addTask={this.addTask} buttonText='create'></TaskForm>
-      <TaskList tasks={this.state.tasks} removeTask={this.removeTask}></TaskList>
+      {/* <TaskList tasks={this.state.tasks} removeTask={this.removeTask}></TaskList> */}
+      <TaskList tasks={this.state.tasks}
+        addTask={this.addTask}
+        removeTask={this.removeTask}
+        updateTask={this.updateTask}>
+      </TaskList>
     </div>;
   }
 }

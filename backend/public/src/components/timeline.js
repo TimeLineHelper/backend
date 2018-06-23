@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { getMaxListeners } from 'cluster';
+
 import TaskList from './tasks/taskList';
 import TaskForm from './tasks/taskForm';
-import { getMaxListeners } from 'cluster';
 
 export default class Timeline extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class Timeline extends Component {
   }
 
   addTask = (task) => {
-    console.log('task', task);
+    console.log('ADDTASK=', task);
     let newUser = {};
     Object.assign(newUser, this.state.user);
     newUser.tasks.push(task);
@@ -64,11 +65,11 @@ export default class Timeline extends Component {
   render() {
     if(!this.state.gotUser){
       this.getUser();
-      return <h1>loading user</h1>
+      return <h1>Loading user...</h1>
     }else{
     return <div className="create-timeline">
-      <h1 id="page-title">Create Tasks to Reach Your Goal!</h1>
       <TaskForm
+        onSubmit={this.handleSubmit}
         formClassName='primary-task-form'
         addTask={this.addTask}
         buttonText='create'

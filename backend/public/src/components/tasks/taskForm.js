@@ -1,4 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import {
+  Link
+} from 'react-router-dom';
+
 import uuidv4 from 'uuidv4';
 // import User from '../../../../models/user.js';
 
@@ -22,17 +26,16 @@ export default class TaskForm extends Component {
 
   handleSubmit = (ev) => {
     ev.preventDefault();
-    console.log('created task');
     if (this.props.buttonText === 'create') {
-      console.log('27 create task')
       let createdTask = {
         id: uuidv4(),
         name: ev.target.name.value,
         elements: [],
         isEditing: false,
       }
-      this.props.addTask(createdTask); //post request to db
-
+      console.log('function prop', this.props);
+      this.props.addTask(createdTask) //post request to db
+      console.log('BELOW');
     }
     else {
       let newValue = {};
@@ -58,41 +61,41 @@ export default class TaskForm extends Component {
   }
 
   render() {
-    return <form id="task-form" onSubmit={this.handleSubmit}>
-      <input
-        id="form-name"
-        onChange={this.handleChange}
-        type='text'
-        name='name'
-        value={this.state.name}
-        placeholder='Event Name'
-      />
-      {/* <input 
+    return <Fragment>
+      <form id="task-form" onSubmit={this.handleSubmit}>
+        <input
+          id="form-name"
+          onChange={this.handleChange}
+          type='text'
+          name='name'
+          value={this.state.name}
+          placeholder='Event Name'
+        />
+        {/* <input 
         onChange={this.handleChange}
         name='items'
         type='text'
         placeholder=''
       /> */}
-      <button type='submit'>{this.props.buttonText === 'create' ? 'Submit Task' : 'Update Task'} </button>
-
-      <label for="date">Start Date:</label>
-
-      <input
-        // id="date"
-        onChange={this.handleChange}
-        type='date'
-        name='begin'
-        placeholder='start date'
-      />
-      <label for="date">End Date:</label>
-      <input
-        // id="date" dont need date see alicia
-        onChange={this.handleChange}
-        type='date'
-        name='end'
-        placeholder='end date'
-      />
-      <button id="event-button" type='submit'>{this.props.buttonText === 'create' ? 'Submit' : 'Create Event'} </button>
-    </form>;
+        <label for="date">Start Date:</label>
+        <input
+          // id="date"
+          onChange={this.handleChange}
+          type='date'
+          name='begin'
+          placeholder='start date'
+        />
+        <label for="date">End Date:</label>
+        <input
+          // id="date" dont need date see alicia
+          onChange={this.handleChange}
+          type='date'
+          name='end'
+          placeholder='end date'
+        />
+        <button id="event-button" type='submit'>{this.props.buttonText === 'create' ? 'Update Event' : 'Create Event'} </button>
+        {/* <button id="event-button" type='submit'>{this.props.buttonText === 'create' ? 'submit' : 'Update Task'} </button> */}
+      </form >
+    </Fragment>
   }
 }
