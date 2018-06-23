@@ -52,6 +52,8 @@ export default class TaskForm extends Component {
       newValue.name = ev.target.name.value;
       newValue.itemName = ev.target.itemName.value;
       newValue.description = ev.target.description.value;
+      newValue.startDate = ev.target.startDate.value;
+      newValue.endDate = ev.target.endDate.value;
       this.props.toggleEdit();
       console.log('this.props', this.props);
       this.props.updateTask(newValue, this.props.task.id); //put request to db
@@ -68,8 +70,6 @@ export default class TaskForm extends Component {
       //   })
     }
   }
-
-
 
   render() {
 

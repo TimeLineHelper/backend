@@ -48,8 +48,8 @@ export default class Timeline extends Component {
         task.name = newTask.name;
         task.itemName = newTask.itemName;
         task.description = newTask.description;
-        task.begin = newTask.begin;
-        task.end = newTask.end;
+        task.startDate = newTask.startDate;
+        task.endDate = newTask.endDate;
       }
     });
     tempUser.tasks = allTasks;

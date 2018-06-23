@@ -1,12 +1,15 @@
 'use strict';
 
 import React, { Component, Fragment } from 'react';
+
 import {
   BrowserRouter,
   Route,
 } from 'react-router-dom';
+
 import ReactDOM from 'react-dom';
 // import '../../styles/main.scss';
+// console.log(BrowserRouter);
 
 import MainPage from './components/views/mainPage.js';
 import CreateTimelinePage from './components/views/createTimelinePage.js';

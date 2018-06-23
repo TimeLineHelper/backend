@@ -84,6 +84,8 @@ export default class TaskItem extends Component {
           <ul>{this.props.task.name}</ul>
           <li>{this.props.task.itemName}</li>
           <li>{this.props.task.description}</li>
+          <li>{this.props.task.startDate}</li>
+          <li>{this.props.task.endDate}</li>
 
         </li>
         {/* <h3>Add Items:</h3>
