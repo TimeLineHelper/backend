@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TaskList from './tasks/taskList';
 import TaskForm from './tasks/taskForm';
+
+// import EventForm from './tasks/eventForm';
 // import { getMaxListeners } from 'cluster';
 
 export default class Timeline extends Component {
@@ -14,6 +16,10 @@ export default class Timeline extends Component {
       user: null
     };
   }
+  // addEvent = (event) => {
+  //   console.log('event', event);
+  //   this.setState({tasks: newTask.tasks});
+  // }
 
   addTask = (task) => {
     console.log('task', task);
@@ -51,6 +57,7 @@ export default class Timeline extends Component {
     let remainder = this.state.user.tasks.filter(task => {
       return task.id !== id;
     });
+    
     this.setState({ tasks: remainder });
   }
 
@@ -63,6 +70,7 @@ export default class Timeline extends Component {
       })
   }
 
+
   render() {
     if(!this.state.gotUser){
       this.getUser();
@@ -70,6 +78,7 @@ export default class Timeline extends Component {
     }else{
     return <div className="create-timeline">
       <h1 id="page-title">Create Tasks to Reach Your Goal!</h1>
+      {/* <h2>{this.state.user.tasks.name}</h2> */}
       <TaskForm
         formClassName='primary-task-form'
         addTask={this.addTask}

@@ -15,10 +15,11 @@ var elementArray = new Schema(
 var taskArray = new Schema(
   {
     name: String,
-    begin: String,
-    end: String,
+    startDate: String,
+    endDate: String,
     id:  String,
-    elements: [elementArray],
+    description: String,
+    // elements: [elementArray],
   
   });
 

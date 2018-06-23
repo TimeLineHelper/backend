@@ -57,8 +57,7 @@ router.get('/api/user/:email', function (req, res) {
 
 
 router.put('/api/user/:email', jsonParser, (req, res) => {
-  console.log( 'this is req.body 54', req.body);
- 
+  console.log('req.body.tasks', req.body.tasks);
   User.findOneAndUpdate({
     email: req.params.email
   }, {$set: {tasks:req.body.tasks}}).then((user) => {
@@ -74,9 +73,10 @@ router.put('/api/user/:email', jsonParser, (req, res) => {
 
 // yo actually make a var that holds the value for email from the users model pass it through the url so the db can identify it and remove it thanks - love past ix.... :3
 
-router.delete('/api/user/:email', function (req, res, next) {
-  // console.log(req.params, 'req params 44');
-  User.findOneAndRemove({ email: req.params.email })
+router.delete('/api/user/delete/:email', function (req, res) {
+  console.log('req params 44 delte router', req.params);
+  User.findOneAndUpdate({ email: req.params.email }, 
+  {$pull:{task: {name:{}}}})
     .then(data => {
       res.send(204, 'user deleted');
       // console.log(data, 'data removed line 48');

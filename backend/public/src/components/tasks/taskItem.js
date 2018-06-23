@@ -87,14 +87,13 @@ export default class TaskItem extends Component {
           onClick={this.toggleEdit}>
           Update
         </button>
-        <li key={this.props.task.id} id={this.props.id}>
+        <li key={this.props.task.id} id={this.props.taskId}>
           {this.props.task.name}: <ul>{this.renderList()}</ul>
         </li>
-        <h3>Add Items:</h3>
-        <ElementForm addElement={this.addElement} buttonText='create' />
-        <ElementList elements={this.state.task.elements} 
-          updateElement={this.updateElement}
-          removeElement={this.removeElement}/>
+        {/* <h3>Add Items:</h3> */}
+        {/* <ElementForm addElement={this.addElement} buttonText='create' />
+        <ElementList elements={this.state.elements} 
+          removeElement={this.state.removeElement}/> */}
         </div>
     }
   }

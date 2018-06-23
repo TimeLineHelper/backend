@@ -7,14 +7,20 @@ export default class TaskForm extends Component {
     super(props);
     this.state = {
       name: this.props.name,
+      startDate: this.props.startDate || '',
+      endDate: this.props.endDate || '',
       user: this.props.user,
       isEditing: false,
+      description: this.props.description
     };
   }
 
   handleChange = (ev) => {
     this.setState({
       [ev.target.name]: ev.target.value
+    });
+    this.setState({
+      [ev.target.description]: ev.target.value
     });
   }
 
@@ -25,18 +31,24 @@ export default class TaskForm extends Component {
       let createdTask = {
         id: uuidv4(),
         name: ev.target.name.value,
+        description: ev.target.description.value,
+        startDate: ev.target.startDate.value,
+        endDate: ev.target.endDate.value,
         elements: [],
         isEditing: false,
       }
       this.props.addTask(createdTask); //post request to db
+
 
     }
     else {
       let newValue = {};
       Object.assign(newValue, this.props.task);
       console.log('new val', newValue);
-      console.log('this.props.task', this.props.task);
+      console.log('42 this.props.user', this.props.user);
+      console.log('43 this.props.user.task', this.props.user.task);
       newValue.name = ev.target.name.value;
+      newValue.description = ev.target.name.description;
       this.props.toggleEdit();
       console.log('this.props', this.props);
       this.props.updateTask(newValue, this.props.task.id); //put request to db
@@ -54,7 +66,10 @@ export default class TaskForm extends Component {
     }
   }
 
+
+
   render() {
+
     return <form id="task-form" onSubmit={this.handleSubmit}>
       <input
         id="form-name"
@@ -64,6 +79,14 @@ export default class TaskForm extends Component {
         value={this.state.name}
         placeholder='Event Name'
       />
+
+      <input 
+        onChange={this.handleChange}
+        name='description'
+        type='text'
+        value={this.state.description}
+        placeholder='Event description'
+      />
       <button id="event-button" type='submit'>{this.props.buttonText === 'create' ? 'Submit Task' : 'Update Task'} </button>
 
       <label for="date">Start Date:</label>
@@ -72,7 +95,8 @@ export default class TaskForm extends Component {
         // id="date"
         onChange={this.handleChange}
         type='date'
-        name='begin'
+        name='startDate'
+        value={this.props.startDate}
         placeholder='start date'
       />
       <label for="date">End Date:</label>
@@ -80,9 +104,11 @@ export default class TaskForm extends Component {
         // id="date" dont need date see alicia
         onChange={this.handleChange}
         type='date'
-        name='end'
+        name='endDate'
+        value={this.props.endDate}
         placeholder='end date'
       />
     </form>;
+
   }
 };
