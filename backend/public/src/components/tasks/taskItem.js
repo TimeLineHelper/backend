@@ -54,14 +54,6 @@ export default class TaskItem extends Component {
     this.setState({elements: remainder});
   }
 
-  renderList = () => {
-    console.log('this.props.task', this.props.task);
-    let elements = this.props.task.elements.map((item, i) => {
-      return <li key={i}>{item.name}{item.description}</li>
-    })
-    return elements;
-  }
-
   render() {
     if(this.state.isEditing === true) {
       return <div>
@@ -72,7 +64,6 @@ export default class TaskItem extends Component {
           toggleEdit={this.toggleEdit}
           addTask={this.props.addTask}>
         </TaskForm>
-        Items: <ol>{this.renderList()}</ol>
         </li>
         </div>
     }
@@ -88,7 +79,10 @@ export default class TaskItem extends Component {
           Update
         </button>
         <li key={this.props.task.id} id={this.props.taskId}>
-          {this.props.task.name}: <ul>{this.renderList()}</ul>
+          <ul>{this.props.task.name}</ul>
+          <li>{this.props.task.itemName}</li>
+          <li>{this.props.task.description}</li>
+
         </li>
         {/* <h3>Add Items:</h3>
         <ElementForm addElement={this.addElement} buttonText='create' />
