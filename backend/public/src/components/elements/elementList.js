@@ -9,8 +9,8 @@ export default class ElementList extends Component {
   }
 
   displayAllElements = () => {
-    console.log('this.props.elements', this.props.tasks.elements)
-    return this.props.tasks.elements.map((element, i) => {
+    console.log('this.props.task.elements', this.props.task.elements)
+    return this.props.task.elements.map((element, i) => {
       return <Element
         id={this.props.id}
         key={i}

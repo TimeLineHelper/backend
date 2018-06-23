@@ -93,8 +93,8 @@ export default class TaskItem extends Component {
         <h3>Add Items:</h3>
         <ElementForm addElement={this.addElement} buttonText='create' />
         <ElementList elements={this.state.task.elements} 
-          updateElement={this.newElement}
-          removeElement={this.state.removeElement}/>
+          updateElement={this.updateElement}
+          removeElement={this.removeElement}/>
         </div>
     }
   }

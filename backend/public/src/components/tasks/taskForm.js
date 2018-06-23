@@ -7,8 +7,6 @@ export default class TaskForm extends Component {
     super(props);
     this.state = {
       name: this.props.name,
-      // begin: new Date(),
-      // end: new Date(),
       user: this.props.user,
       isEditing: false,
     };
