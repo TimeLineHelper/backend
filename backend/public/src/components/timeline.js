@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TaskList from './tasks/taskList';
 import TaskForm from './tasks/taskForm';
-import { getMaxListeners } from 'cluster';
+// import { getMaxListeners } from 'cluster';
 
 export default class Timeline extends Component {
   constructor(props) {
@@ -28,9 +28,13 @@ export default class Timeline extends Component {
     .then(user => {
       console.log('29 user after parsed', user);
       this.setState({user: user});
+      this.setState({tasks: newUser.tasks});
     })
   }
-//started here to refactor user into tasks
+
+  // this.setState({tasks: newUser.tasks});
+//ix:TODO update and remove not working
+
   updateTask = (newTask, id) => {
     let allTasks = [...this.state.user.tasks]; // loop for a matching id to the given id to find the right task
     allTasks.forEach(task => {
