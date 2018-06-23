@@ -11,13 +11,7 @@ import Timeline from '../timeline.js';
 export default class CreateTimelinePage extends Component {
   constructor(props) {
     super(props);
-
-
   }
-
-
-
-
 
   render() {
     return <BrowserRouter>
@@ -27,6 +21,6 @@ export default class CreateTimelinePage extends Component {
           <Route path="/create-timeline" component={Timeline} />
         </div>
       </Fragment>
-    </BrowserRouter>
+    </BrowserRouter>;
   }
 }

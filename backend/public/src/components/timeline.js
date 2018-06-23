@@ -30,9 +30,9 @@ export default class Timeline extends Component {
       this.setState({user: user});
     })
   }
-
+//started here to refactor user into tasks
   updateTask = (newTask, id) => {
-    let allTasks = [...this.state.tasks]; // loop for a matching id to the given id to find the right task
+    let allTasks = [...this.state.user.tasks]; // loop for a matching id to the given id to find the right task
     allTasks.forEach(task => {
       if (task.id !== id) {
         task.name = newTask.name;
@@ -44,7 +44,7 @@ export default class Timeline extends Component {
   }
 
   removeTask = (id) => {
-    let remainder = this.state.tasks.filter(task => {
+    let remainder = this.state.user.tasks.filter(task => {
       return task.id !== id;
     });
     this.setState({ tasks: remainder });
@@ -56,9 +56,7 @@ export default class Timeline extends Component {
       .then(user => {
         console.log(user, 'this is user get 54');
         this.setState({user:user, gotUser:true});
-        
       })
-
   }
 
   render() {
@@ -74,7 +72,7 @@ export default class Timeline extends Component {
         buttonText='create'
         user={this.state.user}>
       </TaskForm>
-      <TaskList tasks={this.state.tasks}
+      <TaskList tasks={this.state.user.tasks}
         addTask={this.addTask}
         removeTask={this.removeTask}
         updateTask={this.updateTask}>

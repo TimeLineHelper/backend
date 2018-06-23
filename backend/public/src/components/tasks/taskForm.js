@@ -24,7 +24,6 @@ export default class TaskForm extends Component {
     ev.preventDefault();
     console.log('created task');
     if (this.props.buttonText === 'create') {
-      console.log('27 create task')
       let createdTask = {
         id: uuidv4(),
         name: ev.target.name.value,
@@ -67,13 +66,7 @@ export default class TaskForm extends Component {
         value={this.state.name}
         placeholder='Event Name'
       />
-      {/* <input 
-        onChange={this.handleChange}
-        name='items'
-        type='text'
-        placeholder=''
-      /> */}
-      <button type='submit'>{this.props.buttonText === 'create' ? 'Submit Task' : 'Update Task'} </button>
+      <button id="event-button" type='submit'>{this.props.buttonText === 'create' ? 'Submit Task' : 'Update Task'} </button>
 
       <label for="date">Start Date:</label>
 
@@ -92,7 +85,6 @@ export default class TaskForm extends Component {
         name='end'
         placeholder='end date'
       />
-      <button id="event-button" type='submit'>{this.props.buttonText === 'create' ? 'Submit' : 'Create Event'} </button>
     </form>;
   }
-}
+};

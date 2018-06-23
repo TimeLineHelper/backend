@@ -4,15 +4,12 @@ import { Link } from 'react-router-dom';
 import TaskForm from './taskForm';
 import ElementForm from '../elements/elementForm';
 import ElementList from '../elements/elementList';
-import { RSA_SSLV23_PADDING } from 'constants';
-console.log('element list', ElementList)
 
 export default class TaskItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       task: this.props.task,
-      elements: [], // props
       isEditing: false,
     };
   }
@@ -20,10 +17,6 @@ export default class TaskItem extends Component {
   toggleEdit = (ev) => {
     return this.setState({isEditing: !this.state.isEditing});
   }
-
-  // toggleOffEdit = (ev) => {
-  //   return this.props.addTask({isEditing: false, id: this.props.task.id});
-  // }
 
   handleRemove = (ev) => {
     ev.preventDefault();
@@ -40,6 +33,18 @@ export default class TaskItem extends Component {
     console.log('new elements', newElements);
     this.setState({elements: newElements, task: tempTask}); //individual task updated on this component need to update top level
     this.props.updateTask(tempTask, tempTask.id);
+  }
+
+  updateElement = (newElement, id) => { 
+    let allElements = [...this.state.task.elements]; // loop for a matching id to the given id to find the right element
+    allElements.forEach(element => {
+      if (element.id !== id) {
+        element.name = newElement.name;
+        element.begin = newElement.begin;
+        element.end = newElement.end;
+      }
+    });
+    this.setState({ elements: allElements });
   }
 
   removeElement = (id) => {
@@ -87,7 +92,8 @@ export default class TaskItem extends Component {
         </li>
         <h3>Add Items:</h3>
         <ElementForm addElement={this.addElement} buttonText='create' />
-        <ElementList elements={this.state.elements} 
+        <ElementList elements={this.state.task.elements} 
+          updateElement={this.newElement}
           removeElement={this.state.removeElement}/>
         </div>
     }
