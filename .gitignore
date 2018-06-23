@@ -4,7 +4,7 @@ dist
 package-lock.json
 node 
 .env
-client_secret.json
+
 credentials.json
 credentials1.json
 credentials2.json
