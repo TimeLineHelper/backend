@@ -18,7 +18,8 @@ var taskArray = new Schema(
     begin: String,
     end: String,
     id:  String,
-    elements: [elementArray],
+    description:String,
+    // elements: [elementArray],
   
   });
 

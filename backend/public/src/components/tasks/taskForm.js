@@ -11,12 +11,16 @@ export default class TaskForm extends Component {
       // end: new Date(),
       user: this.props.user,
       isEditing: false,
+      description: this.props.description
     };
   }
 
   handleChange = (ev) => {
     this.setState({
       [ev.target.name]: ev.target.value
+    });
+    this.setState({
+      [ev.target.description]: ev.target.value
     });
   }
 
@@ -28,18 +32,22 @@ export default class TaskForm extends Component {
       let createdTask = {
         id: uuidv4(),
         name: ev.target.name.value,
+        description: ev.target.description.value,
         elements: [],
         isEditing: false,
       }
       this.props.addTask(createdTask); //post request to db
+
 
     }
     else {
       let newValue = {};
       Object.assign(newValue, this.props.task);
       console.log('new val', newValue);
-      console.log('this.props.task', this.props.task);
+      console.log('42 this.props.user', this.props.user);
+      console.log('43 this.props.user.task', this.props.user.task);
       newValue.name = ev.target.name.value;
+      newValue.description = ev.target.name.description;
       this.props.toggleEdit();
       console.log('this.props', this.props);
       this.props.updateTask(newValue, this.props.task.id); //put request to db
@@ -57,7 +65,10 @@ export default class TaskForm extends Component {
     }
   }
 
+
+
   render() {
+
     return <form id="task-form" onSubmit={this.handleSubmit}>
       <input
         id="form-name"
@@ -67,12 +78,13 @@ export default class TaskForm extends Component {
         value={this.state.name}
         placeholder='Event Name'
       />
-      {/* <input 
+      <input 
         onChange={this.handleChange}
-        name='items'
+        name='description'
         type='text'
-        placeholder=''
-      /> */}
+        value={this.state.description}
+        placeholder='Event description'
+      />
       <button type='submit'>{this.props.buttonText === 'create' ? 'Submit Task' : 'Update Task'} </button>
 
       <label for="date">Start Date:</label>
@@ -94,5 +106,6 @@ export default class TaskForm extends Component {
       />
       <button id="event-button" type='submit'>{this.props.buttonText === 'create' ? 'Submit' : 'Create Event'} </button>
     </form>;
+
   }
 }
