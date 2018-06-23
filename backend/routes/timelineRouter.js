@@ -36,7 +36,7 @@ router.get('/api/user/:email', function (req, res) {
   User.findOne({email: req.params.email})
     .then((user, err) => {
       console.log(req.params.email, ' 40 req params after find one get');
-      console.log('45 user after find one get', user);
+      console.log('find one get', user);
       if(!user || !Object.keys(user).length){
         // console.log('data line 47', user);
         // console.log('data line 47', err);
@@ -57,10 +57,10 @@ router.get('/api/user/:email', function (req, res) {
 
 
 router.put('/api/user/:email', jsonParser, (req, res) => {
-  console.log('req.body.tasks', req.body.tasks);
+  console.log('req.body.tasks', JSON.stringify(req.body.tasks));
   User.findOneAndUpdate({
     email: req.params.email
-  }, {$set: {tasks:req.body.tasks}}).then((user) => {
+  }, {$set: {tasks: req.body.tasks}}).then((user) => {
     console.log('85 new user', req.body);
     res.json(user);
   }).catch((err) => {

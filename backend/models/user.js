@@ -18,9 +18,9 @@ var taskArray = new Schema(
     startDate: String,
     endDate: String,
     id:  String,
-    description: String,
+    itemName: String,
+    description: String, 
     // elements: [elementArray],
-  
   });
 
 const userSchema = new Schema({

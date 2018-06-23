@@ -11,6 +11,7 @@ export default class TaskForm extends Component {
       endDate: this.props.endDate || '',
       user: this.props.user,
       isEditing: false,
+      itemName: this.props.itemName,
       description: this.props.description
     };
   }
@@ -31,6 +32,7 @@ export default class TaskForm extends Component {
       let createdTask = {
         id: uuidv4(),
         name: ev.target.name.value,
+        itemName: ev.target.itemName.value,
         description: ev.target.description.value,
         startDate: ev.target.startDate.value,
         endDate: ev.target.endDate.value,
@@ -48,7 +50,8 @@ export default class TaskForm extends Component {
       console.log('42 this.props.user', this.props.user);
       console.log('43 this.props.user.task', this.props.user.task);
       newValue.name = ev.target.name.value;
-      newValue.description = ev.target.name.description;
+      newValue.itemName = ev.target.itemName.value;
+      newValue.description = ev.target.description.value;
       this.props.toggleEdit();
       console.log('this.props', this.props);
       this.props.updateTask(newValue, this.props.task.id); //put request to db
@@ -79,7 +82,13 @@ export default class TaskForm extends Component {
         value={this.state.name}
         placeholder='Event Name'
       />
-
+      <input 
+        onChange={this.handleChange}
+        name='itemName'
+        type='text'
+        value={this.state.itemName}
+        placeholder='Item name'
+      />
       <input 
         onChange={this.handleChange}
         name='description'
