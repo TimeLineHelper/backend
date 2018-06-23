@@ -6,9 +6,6 @@ const User = require('./models/user.js');
 const superagent = require('superagent');
 
 require('dotenv').config();
-const { google } = require('googleapis');
-const privatekey = require('./client_secret.json');
-const cookie = require('cookie');
 
 const mongoose = require('mongoose');
 // mongoose.connect('mongodb://localhost/timelinehelper');
