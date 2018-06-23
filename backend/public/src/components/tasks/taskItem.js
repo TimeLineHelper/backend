@@ -19,8 +19,9 @@ export default class TaskItem extends Component {
   }
 
   handleRemove = (ev) => {
+    console.log('handle Remove inside task item')
     ev.preventDefault();
-    return this.props.removeTask(this.props.task.id);
+    return this.props.removeTask(this.state.task.id);
   }
 
   addElement = (element) => {
@@ -62,7 +63,8 @@ export default class TaskItem extends Component {
         <TaskForm buttonText="update"
           task={this.props.task}
           toggleEdit={this.toggleEdit}
-          addTask={this.props.addTask}>
+          addTask={this.props.addTask}
+          updateTask={this.props.updateTask}>
         </TaskForm>
         </li>
         </div>

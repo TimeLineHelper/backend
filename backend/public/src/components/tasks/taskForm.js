@@ -48,7 +48,7 @@ export default class TaskForm extends Component {
       Object.assign(newValue, this.props.task);
       console.log('new val', newValue);
       console.log('42 this.props.user', this.props.user);
-      console.log('43 this.props.user.task', this.props.user.task);
+      console.log('43 this.props.task', this.props.task);
       newValue.name = ev.target.name.value;
       newValue.itemName = ev.target.itemName.value;
       newValue.description = ev.target.description.value;

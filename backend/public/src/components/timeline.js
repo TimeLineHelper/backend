@@ -39,23 +39,37 @@ export default class Timeline extends Component {
 //ix:TODO update and remove not working
 
   updateTask = (newTask, id) => {
-    let allTasks = [...this.state.user.tasks]; // loop for a matching id to the given id to find the right task
+    let tempUser = {};
+    console.log('update task id', id)
+    Object.assign(tempUser, this.state.user);
+    let allTasks = [...tempUser.tasks]; // loop for a matching id to the given id to find the right task
     allTasks.forEach(task => {
-      if (task.id !== id) {
+      if (task.id === id) {
         task.name = newTask.name;
+        task.itemName = newTask.itemName;
+        task.description = newTask.description;
         task.begin = newTask.begin;
         task.end = newTask.end;
       }
     });
-    this.setState({ tasks: allTasks });
+    tempUser.tasks = allTasks;
+    this.setState({ user: tempUser });
   }
 
   removeTask = (id) => {
-    let remainder = this.state.user.tasks.filter(task => {
-      return task.id !== id;
+    let tempUser = {};
+    console.log('remove task id', id)
+    Object.assign(tempUser, this.state.user);
+    console.log('user', this.state.user);
+    let remainder = tempUser.tasks.filter(task => {
+      console.log('task.id', task.id, 'id', id)
+      if (task.id !== id) {
+        return task;
+      }
     });
-    
-    this.setState({ tasks: remainder });
+    tempUser.tasks = remainder;
+    console.log('remainder', remainder);
+    this.setState({ user: tempUser });
   }
 
   getUser = (email) => {
