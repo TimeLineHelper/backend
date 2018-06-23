@@ -11,8 +11,8 @@ const privatekey = require('./client_secret.json');
 const cookie = require('cookie');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/timelinehelper');
-
+// mongoose.connect('mongodb://localhost/timelinehelper');
+mongoose.connect(process.env.MONGOLAB_CYAN_URI);
 
 // const mongoose = require('mongoose');
 // mongoose.connect(process.env.MONGODB_URI);
